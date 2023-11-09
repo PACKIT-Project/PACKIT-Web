@@ -1,25 +1,27 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import LoginPage from "../pages/LoginPage";
-import TripCreatePage from "../pages/TripCreatePage";
-import TripDetailPage from "../pages/TripDetailPage";
-import LoginCompletePage from "../pages/LoginComplatePage";
-import CheckListPage from "../pages/CheckListPage";
-import MainPage from "../pages/MainPage";
-import CreateComplatePage from "../pages/CreateComplatePage";
-import MyPage from "../pages/MyPage";
-import EditMyInfoPage from "../pages/EditMyInfoPage";
-import MyTemplatePage from "../pages/MyTemplatePage";
-import EditTripInfoPage from "@pages/EditTripInfoPage";
-import TripRemindPage from "@pages/TripRemindPage";
-import DoubleCheckPage from "@pages/DoubleCheckPage";
-import LoginRedirect from "@pages/LoginPage/LoginRedirect";
-import EmailAuthPage from "@pages/EmailAuthPage";
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import LoginPage from '../pages/LoginPage';
+import TripCreatePage from '../pages/TripCreatePage';
+import TripDetailPage from '../pages/TripDetailPage';
+import LoginCompletePage from '../pages/LoginComplatePage';
+import CheckListPage from '../pages/CheckListPage';
+import MainPage from '../pages/MainPage';
+import CreateComplatePage from '../pages/CreateComplatePage';
+import MyPage from '../pages/MyPage';
+import EditMyInfoPage from '../pages/EditMyInfoPage';
+import MyTemplatePage from '../pages/MyTemplatePage';
+import EditTripInfoPage from '@pages/EditTripInfoPage';
+import TripRemindPage from '@pages/TripRemindPage';
+import DoubleCheckPage from '@pages/DoubleCheckPage';
+import LoginRedirect from '@pages/LoginPage/LoginRedirect';
+import EmailAuthPage from '@pages/EmailAuthPage';
+import OnBoardingPage from '@pages/OnBoardingPage';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/init" element={<OnBoardingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/auth" element={<LoginRedirect />} />
         <Route path="/login/complate" element={<LoginCompletePage />} />
