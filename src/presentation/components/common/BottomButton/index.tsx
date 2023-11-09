@@ -1,7 +1,7 @@
-import React from "react";
-import COLOR from "@styles/colors";
-import { styled } from "styled-components";
-import TextButton from "../TextButton";
+import React from 'react';
+import COLOR from '@styles/colors';
+import { styled } from 'styled-components';
+import TextButton from '../TextButton';
 
 type BottomButtonType = {
   text: string;
@@ -49,8 +49,9 @@ const BottomButtonWrapper = styled.div`
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
-  @media (min-width: 480px) {
-    width: 480px;
+
+  @media (min-width: 390px) {
+    width: 390px;
   }
 `;
 const Button = styled.button`
@@ -60,7 +61,7 @@ const Button = styled.button`
   border: none;
   border-radius: 8px;
   background-color: ${({ disabled }) =>
-    disabled ? COLOR.GRAY_200 : COLOR.MAIN_GREEN};
+    disabled ? COLOR.MAIN_INACTIVE : COLOR.MAIN_BLUE};
   outline: none;
 
   color: ${COLOR.WHITE};

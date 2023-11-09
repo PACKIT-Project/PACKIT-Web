@@ -1,7 +1,6 @@
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
-import { MAX_WIDTH } from "@constants";
-import COLOR from "@styles/colors";
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+import COLOR from '@styles/colors';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -9,7 +8,6 @@ const GlobalStyle = createGlobalStyle`
   body,
   #root {
     background-color: ${COLOR.WHITE};
-    max-width: ${MAX_WIDTH};
     width:100%;
     height: 100%;
     margin: 0 auto;
@@ -20,6 +18,14 @@ const GlobalStyle = createGlobalStyle`
   input,
   textarea {
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  @media (min-width: 1024px) {
+    html,
+    body,
+    #root {
+      max-width: 390px;
+    }
   }
 `;
 
