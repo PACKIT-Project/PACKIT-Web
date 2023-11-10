@@ -15,13 +15,15 @@ import DoubleCheckPage from '@pages/DoubleCheckPage';
 import LoginRedirect from '@pages/LoginPage/LoginRedirect';
 import EmailAuthPage from '@pages/EmailAuthPage';
 import OnBoardingPage from '@pages/OnBoardingPage';
+import SignUpPage from '@pages/SignUpPage';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/init" element={<OnBoardingPage />} />
+        <Route path="/onboarding" element={<OnBoardingPage />} />
+        <Route path="/onboarding/profile" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/auth" element={<LoginRedirect />} />
         <Route path="/login/complate" element={<LoginCompletePage />} />

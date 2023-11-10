@@ -36,7 +36,7 @@ const BottomButton = ({
 
 const BottomButtonWrapper = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -50,7 +50,7 @@ const BottomButtonWrapper = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
 
-  @media (min-width: 390px) {
+  @media (min-width: 1024px) {
     width: 390px;
   }
 `;

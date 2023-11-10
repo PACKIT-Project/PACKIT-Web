@@ -1,6 +1,7 @@
 export { default as AuthLogo } from './auth/AuthLogo';
 export { default as AuthKakao } from './auth/AuthKakao';
 export { default as AuthNaver } from './auth/AuthNaver';
+export { default as AuthApple } from './auth/AuthApple';
 export { default as LoginComplete } from './auth/LoginComplete';
 
 export { default as Time } from './onBoarding/Time';
@@ -21,6 +22,7 @@ export { default as Plane } from './Plane';
 export { default as Check } from './Check';
 export { default as UnCheck } from './UnCheck';
 export { default as InputChecked } from './InputChecked';
+export { default as InputError } from './InputError';
 export { default as Checked } from './Checked';
 export { default as Plus } from './Plus';
 
@@ -50,6 +52,7 @@ export { default as Complate } from './Complate';
 export { default as Beach } from './Beach';
 export { default as Family } from './Family';
 export { default as Profile } from './Profile';
+export { default as Camera } from './Camera';
 
 export { default as ModalXButton } from './ModalXButton';
 export { default as EditProfile } from './EditProfile';
