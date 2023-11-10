@@ -22,6 +22,7 @@ export { default as Plane } from './Plane';
 export { default as Check } from './Check';
 export { default as UnCheck } from './UnCheck';
 export { default as InputChecked } from './InputChecked';
+export { default as InputError } from './InputError';
 export { default as Checked } from './Checked';
 export { default as Plus } from './Plus';
 
