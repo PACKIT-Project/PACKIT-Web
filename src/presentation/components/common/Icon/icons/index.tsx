@@ -1,6 +1,7 @@
 export { default as AuthLogo } from './auth/AuthLogo';
 export { default as AuthKakao } from './auth/AuthKakao';
 export { default as AuthNaver } from './auth/AuthNaver';
+export { default as AuthApple } from './auth/AuthApple';
 export { default as LoginComplete } from './auth/LoginComplete';
 
 export { default as Time } from './onBoarding/Time';
