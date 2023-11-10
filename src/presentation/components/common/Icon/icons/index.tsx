@@ -52,6 +52,7 @@ export { default as Complate } from './Complate';
 export { default as Beach } from './Beach';
 export { default as Family } from './Family';
 export { default as Profile } from './Profile';
+export { default as Camera } from './Camera';
 
 export { default as ModalXButton } from './ModalXButton';
 export { default as EditProfile } from './EditProfile';
