@@ -1,7 +1,7 @@
-import React from "react";
-import { css, styled } from "styled-components";
-import Icon from "../Icon";
-import COLOR from "@styles/colors";
+import React from 'react';
+import { css, styled } from 'styled-components';
+import Icon from '../Icon';
+import COLOR from '@styles/colors';
 
 type InputType = {
   placeholder: string;
@@ -26,7 +26,7 @@ const Input = ({
   maxLength,
   error,
   success,
-  textCountInside
+  textCountInside,
 }: InputType) => {
   return (
     <InputWrapper>
@@ -38,20 +38,26 @@ const Input = ({
           value={value}
           padding={padding}
           maxLength={maxLength}
-          error={error}
+          $error={error}
+          $success={success}
         />
         {textCountInside && maxLength && (
           <div className="checked-icon">
             <TextCount>{`${value.length}/${maxLength}`}</TextCount>
           </div>
         )}
-        {success === "true" && (
+        {success === 'true' && (
           <div className="checked-icon">
             <Icon icon="InputChecked" />
           </div>
         )}
+        {error === 'true' && (
+          <div className="checked-icon">
+            <Icon icon="InputError" />
+          </div>
+        )}
       </InputContainer>
-      
+
       {textCount && maxLength && (
         <TextCount>{`${value.length}/${maxLength}`}</TextCount>
       )}
@@ -76,39 +82,52 @@ const InputContainer = styled.div`
   }
 `;
 
-const CustomInput = styled.input<{ padding?: string; error?: string }>`
+const CustomInput = styled.input<{
+  padding?: string;
+  $error?: string;
+  $success?: string;
+}>`
   width: 100%;
-  height: 57px;
-  padding: 16.5px 15px;
+  height: 50px;
+  padding: 16px 15px;
 
   box-sizing: border-box;
-  border-radius: 12px;
-  border: 1px solid ${COLOR.GRAY_400};
+  border-radius: 8px;
+  border: none;
   outline: none;
-  background-color: transparent;
+  background-color: ${COLOR.UI_GRAY_1};
 
-  color: ${COLOR.GRAY_800};
+  color: ${COLOR.COOL_GRAY_500};
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
 
   &::placeholder {
-    color: ${COLOR.GRAY_500};
+    color: ${COLOR.UI_GRAY_3};
     font-size: 18px;
-    font-style: normal;
     font-weight: 500;
-    line-height: 140%;
+    line-height: 18px;
+    letter-spacing: -0.5px;
   }
 
   &:focus {
-    outline: 1px solid ${COLOR.MAIN_GREEN};
+    outline: 1px solid ${COLOR.COOL_GRAY_300};
   }
 
-  ${({ error }) =>
-    error === "true" &&
+  ${({ $error }) =>
+    $error === 'true' &&
     css`
-      border: 1px solid ${COLOR.WARNING};
+      border: 1.5px solid ${COLOR.ALERT_WARNING};
+      &:focus {
+        outline: none;
+      }
+    `}
+
+  ${({ $success }) =>
+    $success === 'true' &&
+    css`
+      border: 1.5px solid ${COLOR.MAIN_BLUE};
       &:focus {
         outline: none;
       }
