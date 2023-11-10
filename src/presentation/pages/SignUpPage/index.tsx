@@ -6,6 +6,7 @@ import BottomButton from '@components/common/BottomButton';
 import Input from '@components/common/Input';
 import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
+import { useDropzone } from 'react-dropzone';
 
 const SignUpPage = () => {
   const [nickname, setNickname] = useState('');
@@ -21,6 +22,13 @@ const SignUpPage = () => {
     setIsValid(isValid);
   };
 
+  const onDrop = async (acceptedFiles: any) => {};
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { 'image/*': ['.heic', '.heif'] },
+  });
+
   return (
     <SignUpPageWrapper>
       <BackHeader />
@@ -29,9 +37,14 @@ const SignUpPage = () => {
 
       <MainWrapper>
         <ProfileWrapper>
-          <Icon icon="Profile" />
-          <div className="camera">
-            <Icon icon="Camera" />
+          <div className="profile">
+            <Icon icon="Profile" />
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <div className="camera">
+                <Icon icon="Camera" />
+              </div>
+            </div>
           </div>
         </ProfileWrapper>
         <Spacing size={36} />
@@ -46,7 +59,7 @@ const SignUpPage = () => {
             error={(nickname.length >= 2 && !isValid).toString()}
           />
           <div className="explain text">
-            2~13자의 한글, 영문, 숫자, -,_조합 사용 가능
+            2~13자의 한글, 영문, 숫자, -, _ 조합 사용 가능
           </div>
           <div
             className={
@@ -100,13 +113,21 @@ const MainWrapper = styled.div`
 `;
 
 const ProfileWrapper = styled.div`
-  position: relative;
-  .camera {
-    position: absolute;
-    bottom: 0;
-    left: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    cursor: pointer;
+  .profile {
+    position: relative;
+    width: fit-content;
+
+    .camera {
+      position: absolute;
+      bottom: 3px;
+      right: 0;
+
+      cursor: pointer;
+    }
   }
 `;
 
