@@ -1,6 +1,8 @@
 :root {
+  --MAIN_BLUE: #0ea8ff;
+  --MAIN_INACTIVE: #bfebff;
+
   --MAIN_GREEN: #00c388;
-  --MAIN_BLUE: #6b5ffb;
   --MAIN_YELLOW: #fff8f1;
   --GRAY_900: #232527;
   --GRAY_800: #404244;
@@ -108,7 +110,7 @@
 .react-calendar .react-calendar__tile--rangeStart abbr,
 .react-calendar .react-calendar__tile--rangeEnd abbr {
   border-radius: 16px !important;
-  background-color: var(--MAIN_GREEN) !important;
+  background-color: var(--MAIN_BLUE) !important;
   height: 40px;
   width: 40px;
   margin: 0 auto;
@@ -124,7 +126,6 @@
 .react-calendar .react-calendar__tile--rangeEnd {
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
-  background-color: #f0fbf8;
   color: var(--WHITE) !important;
   padding: 0;
 }
@@ -136,7 +137,8 @@
 }
 
 .react-calendar .react-calendar__tile--range {
-  background-color: #f0fbf8;
+  background-color: var(--MAIN_INACTIVE);
+  color: var(--MAIN_BLUE);
 }
 
 .react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend.saturday {

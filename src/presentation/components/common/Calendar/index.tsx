@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { styled } from "styled-components";
-import Calendar from "react-calendar";
-import "./Calendar.css";
-import { changeTripRange } from "../../../../application/reducer/slices/createTrip/createTripSlice";
-import Spacing from "../Spacing";
-import { toLocalISOString } from "../../../../application/utils/getDate";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { styled } from 'styled-components';
+import Calendar from 'react-calendar';
+import './Calendar.css';
+import { changeTripRange } from '../../../../application/reducer/slices/createTrip/createTripSlice';
+import Spacing from '../Spacing';
+import { toLocalISOString } from '../../../../application/utils/getDate';
 
 type CustomCalendarProps = {
   defaultStartDay?: number[];
@@ -23,10 +23,6 @@ const CustomCalendar = ({
   const dispatch = useDispatch();
   const [dateRange, setDateRange] = useState([new Date(), new Date()]);
 
-  const formatMonthYear = (locale: string | undefined, date: Date) => {
-    return date.toLocaleString(locale, { month: "long" }) + " " + date.getFullYear();
-  };
-
   const formatDay = (locale: string | undefined, date: Date) => {
     return date.getDate().toString();
   };
@@ -37,7 +33,7 @@ const CustomCalendar = ({
       onChangeEndDay && onChangeEndDay(date);
       dispatch(
         changeTripRange({
-          type: "end",
+          type: 'end',
           value: toLocalISOString(date),
         })
       );
@@ -47,25 +43,25 @@ const CustomCalendar = ({
       onChangeEndDay && onChangeEndDay(date);
       dispatch(
         changeTripRange({
-          type: "start",
+          type: 'start',
           value: toLocalISOString(date),
         })
       );
       dispatch(
         changeTripRange({
-          type: "end",
-          value: "",
+          type: 'end',
+          value: '',
         })
       );
     }
   };
 
   const titleClassName = ({ date, view }: { date: Date; view: string }) => {
-    if (view === "month") {
+    if (view === 'month') {
       if (date.getDay() === 0) {
-        return "sunday";
+        return 'sunday';
       } else if (date.getDay() === 6) {
-        return "saturday";
+        return 'saturday';
       }
     }
   };
@@ -77,7 +73,6 @@ const CustomCalendar = ({
           calendarType="hebrew"
           locale="ko-KR"
           selectRange={true}
-          formatMonthYear={formatMonthYear}
           formatDay={formatDay}
           onClickDay={updateDateRange}
           tileClassName={titleClassName}
@@ -93,7 +88,6 @@ const CustomCalendar = ({
           calendarType="hebrew"
           locale="ko-KR"
           selectRange={true}
-          formatMonthYear={formatMonthYear}
           formatDay={formatDay}
           onClickDay={updateDateRange}
           tileClassName={titleClassName}
@@ -107,7 +101,7 @@ const CustomCalendar = ({
 };
 
 const CalendarWrapper = styled.div<{ isEditMode: boolean }>`
-  border-bottom: ${({ isEditMode }) => (isEditMode ? "" : "1px solid #dbdbdb")};
+  border-bottom: ${({ isEditMode }) => (isEditMode ? '' : '1px solid #dbdbdb')};
 `;
 
 export default CustomCalendar;
