@@ -36,7 +36,7 @@ const BottomButton = ({
 
 const BottomButtonWrapper = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
 
