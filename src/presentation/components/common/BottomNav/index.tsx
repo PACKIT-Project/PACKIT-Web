@@ -11,7 +11,7 @@ const BottomNav = () => {
   const routerObj = [
     { key: 'Home', value: '홈', clicked: pathname === '/', path: '/' },
     { key: 'Feed', value: '피드', clicked: pathname === '/feed', path: '/feed' },
-    { key: 'User', value: '내 여행', clicked: pathname === '/my', path: '/my' },
+    { key: 'My', value: '내 여행', clicked: pathname === '/my', path: '/my' },
   ];
 
   return (

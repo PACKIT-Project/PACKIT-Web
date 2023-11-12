@@ -6,7 +6,7 @@ export { default as LoginComplete } from './auth/LoginComplete';
 
 export { default as Feed } from './bottomNav/Feed';
 export { default as Home } from './bottomNav/Home';
-export { default as User } from './bottomNav/User';
+export { default as My } from './bottomNav/My';
 
 export { default as Time } from './onBoarding/Time';
 export { default as Vacation } from './onBoarding/Vacation';
