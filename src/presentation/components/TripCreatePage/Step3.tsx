@@ -1,73 +1,83 @@
-import React from "react";
-import { styled } from "styled-components";
-import CustomCalendar from "../common/Calendar";
-import TextBox from "./components/TextBox";
-import Spacing from "../common/Spacing";
-import BottomButton from "../common/BottomButton";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store";
-import { useNavigate } from "react-router-dom";
-import { initializeCreateTripInfo } from "../../../application/reducer/slices/createTrip/createTripSlice";
-import CalendarRange from "@components/common/CalendarRange";
-import { createTravel } from "../../../infrastructure/api/travel";
-import useGetMyInfo from "../../../application/hooks/queries/user/useGetMyInfo";
+import React, { useState } from 'react';
+import { styled } from 'styled-components';
+import TextBox from './components/TextBox';
+import Spacing from '../common/Spacing';
+import BottomButton from '../common/BottomButton';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { initializeCreateTripInfo } from '../../../application/reducer/slices/createTrip/createTripSlice';
+import Icon from '@components/common/Icon';
+import COLOR from '@styles/colors';
 
 const Step3 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data } = useGetMyInfo();
-  const { tripRange, state } = useSelector((state: RootState) => state.createTrip);
-  const createTrip = useSelector((state: RootState) => state.createTrip);
 
-  const handleClickNextBtn = async () => {
-    const travelInfo = {
-      memberId: data.memberId,
-      title: createTrip.tripName || "",
-      destinationType: createTrip.tripType || "",
-      startDate: createTrip.tripRange?.start || "",
-      endDate: createTrip.tripRange?.end || "",
-    };
-    const res = await createTravel(travelInfo);
-    if (res.message === "새로운 여행이 생성되었습니다.") {
-      if (state === "main") {
-        navigate(`/trip/${res.data}`); // 여행 상세 페이지로 이동
-      } else {
-        navigate("/trip-create/complate");
-      }
-    } else {
-      navigate(-2);
-    }
-  };
+  const [team, setTeam] = useState(''); // 여러명이서 떠나면 인원 체크 바텀시트를 띄우기 위해
+
+  const teamInfo = [
+    { key: 'User', value: '혼자 떠나요!' },
+    { key: 'Team', value: '여러명이서 떠나요!' },
+  ];
+
   const handleClickSkipBtn = () => {
     dispatch(initializeCreateTripInfo());
-    navigate("/");
+    navigate('/');
   };
+
   return (
     <StepWrapper>
-      <Spacing size={28} />
-      <TextBox>언제 여행을 떠나시나요?</TextBox>
-      <Spacing size={26} />
-      <CalendarWrapper>
-        <CustomCalendar />
-        <Spacing size={23} />
-        <CalendarRange />
-      </CalendarWrapper>
+      <TextBox>
+        여행 인원을
+        <br />
+        선택해주세요
+      </TextBox>
+      <Spacing size={38} />
+      <ButtonWrapper>
+        {teamInfo.map((isTeam) => (
+          <Button
+            key={isTeam.key}
+            onClick={() => setTeam(isTeam.key)}
+            clicked={isTeam.key === team}
+          >
+            <Icon icon={isTeam.key} />
+            {isTeam.value}
+          </Button>
+        ))}
+      </ButtonWrapper>
       <BottomButton
-        disabled={tripRange?.start === "" || tripRange?.end === ""}
-        text="체크리스트 만들기"
-        onClick={handleClickNextBtn}
-        textButton={true}
-        textButtonOnClick={handleClickSkipBtn}
-        textButtonChild="다음에 할래요"
+        disabled={team === ''}
+        text="다음"
+        onClick={handleClickSkipBtn}
       />
     </StepWrapper>
   );
 };
 
 const StepWrapper = styled.div``;
-
-const CalendarWrapper = styled.div`
-  padding: 16px;
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
+const Button = styled.button<{ clicked: boolean }>`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 
+  width: 100%;
+  padding: 16px 0;
+
+  border-radius: 8px;
+  border: 2px solid ${({ clicked }) => (clicked ? COLOR.MAIN_BLUE : COLOR.GRAY_100)};
+  background: #f7f9fc;
+
+  color: ${COLOR.GRAY_800};
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
 export default Step3;
