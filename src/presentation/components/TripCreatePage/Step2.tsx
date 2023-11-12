@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Spacing from '../common/Spacing';
-import COLOR from '@styles/colors';
 import TextBox from './components/TextBox';
 import BottomButton from '../common/BottomButton';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +19,6 @@ const Step2 = () => {
 
   return (
     <StepWrapper>
-      <Spacing size={28} />
       <TextBox>
         언제 여행을
         <br />

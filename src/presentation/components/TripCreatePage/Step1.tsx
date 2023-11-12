@@ -51,7 +51,6 @@ const Step1 = () => {
 
   return (
     <StepWrapper>
-      <Spacing size={28} />
       <TextContainer>
         <TextBox>
           <div>
