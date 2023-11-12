@@ -94,6 +94,4 @@ const PlusButton = styled.button`
   border-radius: 50%;
   outline: none;
   border: none;
-
-  cursor: pointer;
 `;
