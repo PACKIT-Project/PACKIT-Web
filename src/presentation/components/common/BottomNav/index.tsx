@@ -25,7 +25,7 @@ const BottomNav = () => {
         </IconWrapper>
       ))}
       <PlusButtonWrapper>
-        <PlusButton>
+        <PlusButton onClick={() => navigate('/trip-create/1')}>
           <Icon icon="Plus" width={36} height={36} fill="#FFF" />
         </PlusButton>
       </PlusButtonWrapper>
