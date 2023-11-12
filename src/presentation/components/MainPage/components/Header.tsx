@@ -1,7 +1,7 @@
-import React from "react";
-import { styled } from "styled-components";
-import Icon from "@components/common/Icon";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { styled } from 'styled-components';
+import Icon from '@components/common/Icon';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -11,7 +11,7 @@ const Header = () => {
         <Link to="/my-template">
           <Icon icon="FilledHeart" color="#8B95A1" fill="#8B95A1" />
         </Link>
-        <Link to="/mypage">
+        <Link to="/my">
           <Icon icon="Profile" />
         </Link>
       </div>

@@ -4,6 +4,10 @@ export { default as AuthNaver } from './auth/AuthNaver';
 export { default as AuthApple } from './auth/AuthApple';
 export { default as LoginComplete } from './auth/LoginComplete';
 
+export { default as Feed } from './bottomNav/Feed';
+export { default as Home } from './bottomNav/Home';
+export { default as User } from './bottomNav/User';
+
 export { default as Time } from './onBoarding/Time';
 export { default as Vacation } from './onBoarding/Vacation';
 export { default as HandShake } from './onBoarding/HandShake';
@@ -38,7 +42,6 @@ export { default as LinkOutlined } from './LinkOutlined';
 
 export { default as Logo } from './Logo';
 export { default as Folder } from './Folder';
-export { default as User } from './User';
 
 export { default as NotExistCheckList } from './NotExistCheckList';
 export { default as TripCreateButton } from './TripCreateButton';

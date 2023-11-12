@@ -31,9 +31,9 @@ const Router = () => {
         <Route path="/trip-create/:step" element={<TripCreatePage />} />
         <Route path="/trip-create/complate" element={<CreateComplatePage />} />
         <Route path="/trip-update/:tripId" element={<EditTripInfoPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/my" element={<MyPage />} />
         <Route path="/trip/:tripId" element={<TripDetailPage />} />
-        <Route path="/mypage/edit" element={<EditMyInfoPage />} />
+        <Route path="/my/edit" element={<EditMyInfoPage />} />
         <Route path="/my-template" element={<MyTemplatePage />} />
         <Route path="/checklist/:id" element={<CheckListPage />} />
         <Route path="/remind/:id" element={<TripRemindPage />} />
