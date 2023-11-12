@@ -1,18 +1,18 @@
-import React from "react";
-import BackHeader from "@components/common/BackHeader";
-import COLOR from "@styles/colors";
-import { styled } from "styled-components";
-import useGetMyInfo from "../../../application/hooks/queries/user/useGetMyInfo";
-import { useNavigate } from "react-router-dom";
-import useModal from "../../../application/hooks/useModal";
-import Spacing from "@components/common/Spacing";
-import Button from "@components/common/Button";
-import Text from "@components/common/Text";
-import Modal from "@components/common/Modal";
-import LogoutModal from "@components/MyPage/components/LogoutModal";
-import LeaveModal from "@components/MyPage/components/LeaveModal";
-import { requestEmailAuth } from "@api/emailAuth";
-import EmailAuthModal from "@components/MainPage/components/EmailAuthModal";
+import React from 'react';
+import BackHeader from '@components/common/BackHeader';
+import COLOR from '@styles/colors';
+import { styled } from 'styled-components';
+import useGetMyInfo from '../../../application/hooks/queries/user/useGetMyInfo';
+import { useNavigate } from 'react-router-dom';
+import useModal from '../../../application/hooks/useModal';
+import Spacing from '@components/common/Spacing';
+import Button from '@components/common/Button';
+import Text from '@components/common/Text';
+import Modal from '@components/common/Modal';
+import LogoutModal from '@components/MyPage/components/LogoutModal';
+import LeaveModal from '@components/MyPage/components/LeaveModal';
+import { requestEmailAuth } from '@api/emailAuth';
+import EmailAuthModal from '@components/MainPage/components/EmailAuthModal';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const MyPage = () => {
 
   const handleClickEmailAuth = async () => {
     const res = await requestEmailAuth();
-    if (res.message === "성공적으로 인증 메일이 발송되었습니다.") {
+    if (res.message === '성공적으로 인증 메일이 발송되었습니다.') {
       toggleEmailAuth();
     }
   };
@@ -48,7 +48,7 @@ const MyPage = () => {
   };
 
   const handleClickEditInfo = () => {
-    navigate("/mypage/edit");
+    navigate('/my/edit');
   };
 
   return (
