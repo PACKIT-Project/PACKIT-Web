@@ -16,7 +16,7 @@ const PageIndicator = () => {
         color={COLOR.MAIN_BLUE}
       />
       <Text
-        text="/3 Step"
+        text="/3"
         fontSize={16}
         fontWeight={400}
         lineHeight="125%"
