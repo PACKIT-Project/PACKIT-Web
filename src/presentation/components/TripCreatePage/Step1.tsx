@@ -1,38 +1,40 @@
-import React, { useEffect } from "react";
-import { styled } from "styled-components";
-import COLOR from "@styles/colors";
-import Spacing from "../common/Spacing";
-import TextBox from "./components/TextBox";
-import OnboardingButton from "../common/OnboardingButton";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store";
+import React, { useEffect, useState } from 'react';
+import { styled } from 'styled-components';
+import COLOR from '@styles/colors';
+import Spacing from '../common/Spacing';
+import TextBox from './components/TextBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@store';
 import {
   changeCreateTripState,
   initializeCreateTripInfo,
-} from "../../../application/reducer/slices/createTrip/createTripSlice";
-import BottomButton from "../common/BottomButton";
-import { useNavigate } from "react-router-dom";
-import Text from "@components/common/Text";
-import useGetMyInfo from "../../../application/hooks/queries/user/useGetMyInfo";
+} from '../../../application/reducer/slices/createTrip/createTripSlice';
+import BottomButton from '../common/BottomButton';
+import { useNavigate } from 'react-router-dom';
+import Icon from '@components/common/Icon';
 
 const Step1 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data } = useGetMyInfo();
-  const userName = data?.nickname;
 
-  const { tripType, state } = useSelector((state: RootState) => state.createTrip);
-  const tripObj = [
-    { dest: "DOMESTIC", text: "국내 여행" },
-    { dest: "OVERSEAS", text: "해외 여행" },
+  const { state } = useSelector((state: RootState) => state.createTrip);
+  const [place, setPlace] = useState('');
+  const recent = [
+    '도쿄',
+    '베를린',
+    '시드니',
+    '상하이',
+    '이스탄불',
+    '유럽',
+    '제주도',
   ];
 
   useEffect(() => {
-    if (state === "main") {
+    if (state === 'main') {
       dispatch(
         changeCreateTripState({
-          type: "state",
-          value: "main",
+          type: 'state',
+          value: 'main',
         })
       );
     } else {
@@ -40,60 +42,61 @@ const Step1 = () => {
     }
   }, []);
 
-  const handleClickOnboarding = (dest: string) => {
-    dispatch(
-      changeCreateTripState({
-        type: "tripType",
-        value: dest,
-      })
-    );
+  const handleChangeTripPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlace(e.target.value);
   };
   const handleClickNextBtn = () => {
-    navigate("/trip-create/2");
+    navigate('/trip-create/2');
   };
 
-  const handleClickSkipBtn = () => {
-    dispatch(initializeCreateTripInfo());
-    navigate("/");
-  };
   return (
     <StepWrapper>
       <Spacing size={28} />
       <TextContainer>
         <TextBox>
           <div>
-            {`${userName}님 반가워요,`}
+            여행을 떠날 지역을
             <br />
-            어떤 여행을 준비하고 계신가요?
+            입력해주세요
           </div>
         </TextBox>
-        <Text
-          text="여행지 유형에 따라 기본 체크리스트가 제공돼요"
-          color={COLOR.GRAY_600}
-          fontSize={16}
-          fontWeight={600}
-          lineHeight="132%"
-        />
+        <Spacing size={50} />
       </TextContainer>
-      <Spacing size={38} />
-      <OnboardingButtonContainer>
-        {tripObj.map((trip: { dest: string; text: string }) => (
-          <OnboardingButton
-            key={trip.dest}
-            dest={trip.dest}
-            text={trip.text}
-            onClick={() => handleClickOnboarding(trip.dest)}
-            isChecked={tripType === trip.dest}
-          ></OnboardingButton>
-        ))}
-      </OnboardingButtonContainer>
+      <InputContainer>
+        <input
+          type="text"
+          placeholder="어디로 여행을 떠나시나요?"
+          value={place}
+          onChange={handleChangeTripPlace}
+        />
+        <div className="icon">
+          <Icon icon="Search" fill={place !== '' ? '#000' : '#B9BFC7'} />
+        </div>
+      </InputContainer>
+      {recent && (
+        <>
+          <Spacing size={40} />
+          <RecentKeyword>
+            <div className="title">최근 검색어</div>
+            <div className="keywords">
+              {recent.map((keyword) => (
+                <div
+                  key={keyword}
+                  className="keyword"
+                  onClick={() => setPlace(keyword)}
+                >
+                  {keyword}
+                </div>
+              ))}
+            </div>
+          </RecentKeyword>
+        </>
+      )}
+
       <BottomButton
-        disabled={tripType === "" ? true : false}
+        disabled={place === '' ? true : false}
         text="다음"
         onClick={handleClickNextBtn}
-        textButton={true}
-        textButtonOnClick={handleClickSkipBtn}
-        textButtonChild="다음에 할래요"
       />
     </StepWrapper>
   );
@@ -106,10 +109,61 @@ const TextContainer = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
-const OnboardingButtonContainer = styled.div`
+
+const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
+  input {
+    width: 100%;
+    height: 31px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 140%;
+
+    &::placeholder {
+      color: #b9bfc7;
+    }
+  }
+  .icon {
+    position: absolute;
+    right: 10px;
+  }
+`;
+
+const RecentKeyword = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 11px;
+
+  color: ${COLOR.MAIN_BLACK};
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%;
+
+  .keywords {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    overflow: auto;
+    height: 100%;
+    font-weight: 500;
+    line-height: 9.8px;
+
+    .keyword {
+      padding: 10px;
+      border: 1.2px solid #e4e9ef;
+      border-radius: 6px;
+      background-color: #f4f6f9;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+  }
 `;
 
 export default Step1;
