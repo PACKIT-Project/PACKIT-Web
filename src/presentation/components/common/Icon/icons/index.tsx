@@ -50,7 +50,6 @@ export { default as TripCreateButton } from './TripCreateButton';
 export { default as MenuXButton } from './MenuXButton';
 export { default as Clip } from './Clip';
 export { default as PlusCircle } from './PlusCircle';
-
 export { default as Chevron } from './Chevron';
 
 export { default as Beach } from './Beach';
@@ -71,3 +70,6 @@ export { default as SliceOutlined } from './SliceOutlined';
 export { default as CalendarGreen } from './CalendarGreen';
 export { default as Email } from './Email';
 export { default as DoubleCheckIcon } from './DoubleCheckIcon';
+
+export { default as Notification } from './Notification';
+export { default as GraphicTravel } from './GraphicTravel';
