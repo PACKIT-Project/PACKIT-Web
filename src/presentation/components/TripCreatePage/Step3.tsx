@@ -5,14 +5,17 @@ import Spacing from '../common/Spacing';
 import BottomButton from '../common/BottomButton';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { initializeCreateTripInfo } from '../../../application/reducer/slices/createTrip/createTripSlice';
+import { changeCreateTripState } from '../../../application/reducer/slices/createTrip/createTripSlice';
 import Icon from '@components/common/Icon';
 import COLOR from '@styles/colors';
+import useModal from '@hooks/useModal';
+import BottomSheet from '@components/common/BottomSheet';
+import MemberNumModal from './components/MemberNumModal';
 
 const Step3 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { isShowModal, openModal, closeModal } = useModal();
   const [team, setTeam] = useState(''); // 여러명이서 떠나면 인원 체크 바텀시트를 띄우기 위해
 
   const teamInfo = [
@@ -20,9 +23,18 @@ const Step3 = () => {
     { key: 'Team', value: '여러명이서 떠나요!' },
   ];
 
-  const handleClickSkipBtn = () => {
-    dispatch(initializeCreateTripInfo());
-    navigate('/');
+  const handleClickNextBtn = () => {
+    if (team === 'User') {
+      dispatch(
+        changeCreateTripState({
+          type: 'memberNum',
+          value: 1,
+        })
+      );
+      navigate('/trip-create/4');
+    } else {
+      openModal();
+    }
   };
 
   return (
@@ -48,8 +60,13 @@ const Step3 = () => {
       <BottomButton
         disabled={team === ''}
         text="다음"
-        onClick={handleClickSkipBtn}
+        onClick={handleClickNextBtn}
       />
+      {isShowModal && (
+        <BottomSheet isVisible={isShowModal} closeModal={closeModal}>
+          <MemberNumModal closeModal={closeModal} />
+        </BottomSheet>
+      )}
     </StepWrapper>
   );
 };
