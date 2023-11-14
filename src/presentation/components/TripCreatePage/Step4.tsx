@@ -4,8 +4,10 @@ import { RootState } from '@store';
 import { getTripDate } from '@utils/getDate';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Step4 = () => {
+  const navigate = useNavigate();
   const { tripName, tripRange, memberNum } = useSelector(
     (state: RootState) => state.createTrip
   );
@@ -17,7 +19,10 @@ const Step4 = () => {
       <strong>{range}</strong> 까지 <br />
       <strong>{dates}</strong> 여행을 <br />
       <strong>{memberNum}명</strong> 의 인원으로 떠나시나요?
-      <BottomButton text="여행 생성 완료하기" />
+      <BottomButton
+        text="여행 생성 완료하기"
+        onClick={() => navigate('/trip-create/complate')}
+      />
     </StepWrapper>
   );
 };
