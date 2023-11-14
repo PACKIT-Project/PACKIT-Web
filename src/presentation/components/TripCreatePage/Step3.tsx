@@ -50,7 +50,7 @@ const Step3 = () => {
           <Button
             key={isTeam.key}
             onClick={() => setTeam(isTeam.key)}
-            clicked={isTeam.key === team}
+            clicked={String(isTeam.key === team)}
           >
             <Icon icon={isTeam.key} />
             {isTeam.value}
@@ -77,7 +77,7 @@ const ButtonWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-const Button = styled.button<{ clicked: boolean }>`
+const Button = styled.button<{ clicked: string }>`
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -88,7 +88,8 @@ const Button = styled.button<{ clicked: boolean }>`
   padding: 16px 0;
 
   border-radius: 8px;
-  border: 2px solid ${({ clicked }) => (clicked ? COLOR.MAIN_BLUE : COLOR.GRAY_100)};
+  border: 2px solid
+    ${({ clicked }) => (clicked === 'true' ? COLOR.MAIN_BLUE : COLOR.GRAY_100)};
   background: #f7f9fc;
 
   color: ${COLOR.GRAY_800};
