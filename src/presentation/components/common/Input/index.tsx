@@ -104,7 +104,7 @@ const CustomInput = styled.input<{
   line-height: 140%;
 
   &::placeholder {
-    color: ${COLOR.UI_GRAY_3};
+    color: ${COLOR.UI_GRAY_4};
     font-size: 18px;
     font-weight: 500;
     line-height: 18px;

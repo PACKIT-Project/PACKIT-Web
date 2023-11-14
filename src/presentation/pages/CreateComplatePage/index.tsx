@@ -1,70 +1,70 @@
-import React from "react";
-import BottomButton from "@components/common/BottomButton";
-import Icon from "@components/common/Icon";
-import COLOR from "@styles/colors";
-import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
-import Text from "@components/common/Text";
+import React from 'react';
+import COLOR from '@styles/colors';
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+import BackHeader from '@components/common/BackHeader';
+import Spacing from '@components/common/Spacing';
 
 const CreateComplatePage = () => {
   const navigate = useNavigate();
   const handleClickStart = () => {
-    navigate("/");
+    navigate('/');
   };
   return (
     <CreateComplateWrapper>
-      <MainWrapper>
-        <Icon icon="Complate" />
-        <TextWrapper>
-          <Text
-            color={COLOR.MAIN_GREEN}
-            fontSize={30}
-            fontWeight={600}
-            lineHeight="140%"
-            text="여행이 생성되었어요!"
-          />
-          <div className="sub-text">
-            패-킷과 체크리스트로
-            <br />
-            여행 준비를 시작하세요
-          </div>
-        </TextWrapper>
-      </MainWrapper>
-      <BottomButton text="패킷 시작하기" onClick={handleClickStart} />
+      <BackHeader />
+      <TextWrapper>
+        <div>일행을 초대해주세요!</div>
+        <div className="sub-text">
+          총 <strong>8명</strong>까지 초대가 가능합니다
+          <br />
+          동행자에게 초대코드를 공유해주세요
+        </div>
+      </TextWrapper>
+      <Spacing size={30} />
+      <Button onClick={handleClickStart}>참여코드 공유하기</Button>
     </CreateComplateWrapper>
   );
 };
 
 const CreateComplateWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  height: 100%;
-  overflow-y: hidden;
+  padding: 0 20px;
 `;
 
-const MainWrapper = styled.div`
-  position: absolute;
-  top: 30%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-`;
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 5px;
 
-  text-align: center;
+  color: #232527;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 132%;
+  letter-spacing: -0.5px;
 
   .sub-text {
-    color: ${COLOR.GRAY_700};
-    font-size: 20px;
+    color: #71757e;
+    font-size: 18px;
     font-weight: 600;
-    line-height: 132%;
+    line-height: 137%;
+    strong {
+      color: ${COLOR.MAIN_BLUE};
+    }
   }
+`;
+
+const Button = styled.button`
+  width: 100%;
+  height: 54px;
+
+  border: none;
+  border-radius: 8px;
+  background-color: ${COLOR.MAIN_BLUE};
+  outline: none;
+
+  color: ${COLOR.WHITE};
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
 `;
 export default CreateComplatePage;

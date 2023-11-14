@@ -6,7 +6,7 @@ export { default as LoginComplete } from './auth/LoginComplete';
 
 export { default as Feed } from './bottomNav/Feed';
 export { default as Home } from './bottomNav/Home';
-export { default as User } from './bottomNav/User';
+export { default as My } from './bottomNav/My';
 
 export { default as Time } from './onBoarding/Time';
 export { default as Vacation } from './onBoarding/Vacation';
@@ -29,6 +29,7 @@ export { default as InputChecked } from './InputChecked';
 export { default as InputError } from './InputError';
 export { default as Checked } from './Checked';
 export { default as Plus } from './Plus';
+export { default as Minus } from './Minus';
 
 export { default as Calendar } from './Calendar';
 export { default as MoreOutlined } from './MoreOutlined';
@@ -43,6 +44,9 @@ export { default as LinkOutlined } from './LinkOutlined';
 export { default as Logo } from './Logo';
 export { default as Folder } from './Folder';
 
+export { default as User } from './User';
+export { default as Team } from './Team';
+
 export { default as NotExistCheckList } from './NotExistCheckList';
 export { default as TripCreateButton } from './TripCreateButton';
 export { default as MenuXButton } from './MenuXButton';
@@ -50,7 +54,6 @@ export { default as Clip } from './Clip';
 export { default as PlusCircle } from './PlusCircle';
 
 export { default as Chevron } from './Chevron';
-export { default as Complate } from './Complate';
 
 export { default as Beach } from './Beach';
 export { default as Family } from './Family';

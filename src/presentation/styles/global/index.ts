@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   @media (min-width: 1024px) {
     html,
     body,

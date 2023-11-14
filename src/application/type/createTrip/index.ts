@@ -5,6 +5,7 @@ export interface CreateTripType {
   checkCount?: string;
   state?: string;
   tripId?: number;
+  memberNum?: number;
   [key: string]: number | string | TripRangeType | undefined;
 }
 

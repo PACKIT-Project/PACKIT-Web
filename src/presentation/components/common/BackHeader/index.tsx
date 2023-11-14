@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
-import Icon from "../Icon";
-import COLOR from "@styles/colors";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+import Icon from '../Icon';
+import COLOR from '@styles/colors';
 
 type BackHeaderType = {
   text?: string;
@@ -14,8 +14,8 @@ const BackHeader = ({ text, color, type }: BackHeaderType) => {
   const navigate = useNavigate();
 
   const handleClickBack = () => {
-    if (type === "tripDetail") {
-      navigate("/", { replace: true });
+    if (type === 'tripDetail') {
+      navigate('/', { replace: true });
     } else {
       navigate(-1);
     }
@@ -43,6 +43,7 @@ const BackHeaderWrapper = styled.div<{ color?: string }>`
   font-weight: 700;
   line-height: 140%;
 
+  cursor: pointer;
   .text {
     flex-grow: 1;
     text-align: center;
