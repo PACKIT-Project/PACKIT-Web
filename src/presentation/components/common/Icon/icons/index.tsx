@@ -54,7 +54,6 @@ export { default as Clip } from './Clip';
 export { default as PlusCircle } from './PlusCircle';
 
 export { default as Chevron } from './Chevron';
-export { default as Complate } from './Complate';
 
 export { default as Beach } from './Beach';
 export { default as Family } from './Family';
