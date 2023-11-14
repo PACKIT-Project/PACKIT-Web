@@ -67,7 +67,9 @@ const CustomCalendar = ({
   };
 
   return (
-    <CalendarWrapper isEditMode={defaultStartDay && defaultEndDay ? true : false}>
+    <CalendarWrapper
+      iseditmode={defaultStartDay && defaultEndDay ? 'true' : 'false'}
+    >
       {defaultStartDay && defaultEndDay ? (
         <Calendar
           calendarType="hebrew"
@@ -100,8 +102,9 @@ const CustomCalendar = ({
   );
 };
 
-const CalendarWrapper = styled.div<{ isEditMode: boolean }>`
-  border-bottom: ${({ isEditMode }) => (isEditMode ? '' : '1px solid #dbdbdb')};
+const CalendarWrapper = styled.div<{ iseditmode: string }>`
+  border-bottom: ${({ iseditmode }) =>
+    iseditmode === 'true' ? '' : '1px solid #dbdbdb'};
 `;
 
 export default CustomCalendar;

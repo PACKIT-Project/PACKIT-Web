@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Modal from "../Modal";
-import { keyframes, styled } from "styled-components";
-import COLOR from "@styles/colors";
+import React, { useEffect, useState } from 'react';
+import Modal from '../Modal';
+import { keyframes, styled } from 'styled-components';
+import COLOR from '@styles/colors';
 
 type BottomSheetType = {
   isVisible: boolean;
@@ -54,7 +54,7 @@ const BottomSheet = ({ isVisible, closeModal, children }: BottomSheetType) => {
     <>
       {isVisible || isanimating ? (
         <Modal isVisible={isVisible} closeModal={handleClose}>
-          <BottomSheetWrapper isanimating={isanimating}>
+          <BottomSheetWrapper isanimating={String(isanimating)}>
             {children}
           </BottomSheetWrapper>
         </Modal>
@@ -63,7 +63,7 @@ const BottomSheet = ({ isVisible, closeModal, children }: BottomSheetType) => {
   );
 };
 
-const BottomSheetWrapper = styled.div<{ isanimating: boolean }>`
+const BottomSheetWrapper = styled.div<{ isanimating: string }>`
   position: fixed;
   bottom: 0;
 
@@ -75,7 +75,8 @@ const BottomSheetWrapper = styled.div<{ isanimating: boolean }>`
   box-shadow: 0px -8px 16px 0px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 
-  animation: ${(props) => (props.isanimating ? slideDown : slideUp)} 0.3s forwards;
+  animation: ${(props) => (props.isanimating === 'true' ? slideDown : slideUp)} 0.3s
+    forwards;
 
   @media (min-width: 480px) {
     width: 480px;

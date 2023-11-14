@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import * as icons from "../Icon/icons";
+import React from 'react';
+import styled from 'styled-components';
+import * as icons from '../Icon/icons';
 
 interface IconProps {
   icon: string;
@@ -12,9 +12,19 @@ interface IconProps {
   color?: string;
 
   onClick?: any;
+  cursor?: boolean;
 }
 
-const Icon = ({ icon, width, height, rotate, fill, color, onClick }: IconProps) => {
+const Icon = ({
+  icon,
+  width,
+  height,
+  rotate,
+  fill,
+  color,
+  onClick,
+  cursor,
+}: IconProps) => {
   const IconComponent = icons[icon as keyof typeof icons];
   return (
     <IconWrapper
@@ -24,6 +34,7 @@ const Icon = ({ icon, width, height, rotate, fill, color, onClick }: IconProps) 
       fill={fill}
       color={color}
       onClick={onClick}
+      cursor={String(cursor)}
     >
       <IconComponent />
     </IconWrapper>
@@ -36,6 +47,7 @@ const IconWrapper = styled.div<{
   rotate?: number;
   fill?: string;
   color?: string;
+  cursor?: string;
 }>`
   display: flex;
   align-items: center;
@@ -43,6 +55,7 @@ const IconWrapper = styled.div<{
 
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  cursor: ${({ cursor }) => (cursor === 'true' ? 'pointer' : 'initial')};
 
   ${({ rotate }) =>
     rotate && {

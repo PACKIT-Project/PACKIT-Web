@@ -37,9 +37,19 @@ const MemberNumModal = ({ closeModal }: { closeModal: () => void }) => {
       </TextWrapper>
       <Spacing size={30} />
       <NumberWrapper>
-        <Icon icon="Minus" onClick={handleClickMinus} />
+        <Icon
+          icon="Minus"
+          onClick={handleClickMinus}
+          cursor={memberNum > 1 ? true : false}
+          fill={memberNum > 1 ? '#494949' : COLOR.UI_GRAY_3}
+        />
         <div className="number">{memberNum}</div>
-        <Icon icon="Plus" onClick={handleClickPlus} />
+        <Icon
+          icon="Plus"
+          onClick={handleClickPlus}
+          cursor={memberNum < 8 ? true : false}
+          fill={memberNum < 8 ? '#494949' : COLOR.UI_GRAY_3}
+        />
       </NumberWrapper>
       <Spacing size={30} />
       <BottomButton text="선택" onClick={handleSelectMemberNum} />
