@@ -29,6 +29,7 @@ export { default as InputChecked } from './InputChecked';
 export { default as InputError } from './InputError';
 export { default as Checked } from './Checked';
 export { default as Plus } from './Plus';
+export { default as Minus } from './Minus';
 
 export { default as Calendar } from './Calendar';
 export { default as MoreOutlined } from './MoreOutlined';
