@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Header = () => {
   return (
     <HeaderWrapper>
-      <Icon icon="Notification" />
+      <Icon icon="Notification" cursor={true} />
     </HeaderWrapper>
   );
 };

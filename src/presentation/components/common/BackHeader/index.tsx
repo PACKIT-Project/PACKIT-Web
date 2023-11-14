@@ -23,7 +23,7 @@ const BackHeader = ({ text, color, type }: BackHeaderType) => {
 
   return (
     <BackHeaderWrapper color={color}>
-      <Icon icon="Arrow" fill={color} onClick={handleClickBack} />
+      <Icon icon="Arrow" fill={color} onClick={handleClickBack} cursor={true} />
       <div className="text">{text}</div>
       <div className="emptySpace"></div>
     </BackHeaderWrapper>
