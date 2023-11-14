@@ -46,6 +46,7 @@ const Step1 = () => {
     setPlace(e.target.value);
   };
   const handleClickNextBtn = () => {
+    dispatch(changeCreateTripState({ type: 'tripName', value: place }));
     navigate('/trip-create/2');
   };
 
