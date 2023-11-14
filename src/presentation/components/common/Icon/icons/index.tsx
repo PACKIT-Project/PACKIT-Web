@@ -41,13 +41,11 @@ export { default as EllipsisOutlined } from './EllipsisOutlined';
 export { default as KakaoLogo } from './KakaoLogo';
 export { default as LinkOutlined } from './LinkOutlined';
 
-export { default as Logo } from './Logo';
 export { default as Folder } from './Folder';
 
 export { default as User } from './User';
 export { default as Team } from './Team';
 
-export { default as NotExistCheckList } from './NotExistCheckList';
 export { default as TripCreateButton } from './TripCreateButton';
 export { default as MenuXButton } from './MenuXButton';
 export { default as Clip } from './Clip';
