@@ -13,6 +13,7 @@ import EmailAuthModal from '@components/MainPage/components/EmailAuthModal';
 import DoubleCheckCompleteModal from '@components/domain/DoubleCheckComplete';
 import BottomNav from '@components/common/BottomNav';
 import useGetMyTravel from '@hooks/queries/travel/useGetMyTravel';
+import Header from '@components/MainPage/components/Header';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const MainPage = () => {
     <>
       {travelData && (
         <MainPageWrapper>
+          <Header />
           {travelData.length > 0 ? <ListExist /> : <ListNotExist />}
           {locationState && locationState.state === 'delete_done' && (
             <Toast close={handlePopupClose}>리스트 삭제 완료</Toast>
@@ -81,7 +83,7 @@ const MainPage = () => {
 
 const MainPageWrapper = styled.div`
   min-height: 100vh;
-  background-color: ${COLOR.GRAY_50};
+  background-color: ${COLOR.WHITE};
 `;
 
 export default MainPage;
