@@ -73,3 +73,6 @@ export { default as DoubleCheckIcon } from './DoubleCheckIcon';
 
 export { default as Notification } from './Notification';
 export { default as GraphicTravel } from './GraphicTravel';
+
+export { default as CreateTrip } from './CreateTrip';
+export { default as Key } from './Key';
