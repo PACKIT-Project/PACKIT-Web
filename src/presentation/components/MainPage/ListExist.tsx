@@ -1,20 +1,20 @@
-import Spacing from "@components/common/Spacing";
-import { styled } from "styled-components";
-import Icon from "@components/common/Icon";
-import TripList from "./components/TripList";
-import useModal from "../../../application/hooks/useModal";
-import Modal from "@components/common/Modal";
-import COLOR from "@styles/colors";
-import { useNavigate } from "react-router-dom";
-import TemplateModal from "./components/TemplateModal";
-import { useDispatch } from "react-redux";
+import Spacing from '@components/common/Spacing';
+import { styled } from 'styled-components';
+import Icon from '@components/common/Icon';
+import TripList from './components/TripList';
+import useModal from '../../../application/hooks/useModal';
+import Modal from '@components/common/Modal';
+import COLOR from '@styles/colors';
+import { useNavigate } from 'react-router-dom';
+import TemplateModal from './components/TemplateModal';
+import { useDispatch } from 'react-redux';
 import {
   changeCreateTripState,
   initializeCreateTripInfo,
-} from "../../../application/reducer/slices/createTrip/createTripSlice";
-import BottomSheet from "@components/common/BottomSheet";
-import { useEffect, useState } from "react";
-import CalendarModal from "./components/CalendarModal";
+} from '../../../application/reducer/slices/createTrip/createTripSlice';
+import BottomSheet from '@components/common/BottomSheet';
+import { useEffect, useState } from 'react';
+import CalendarModal from './components/CalendarModal';
 
 const ListExist = () => {
   const dispatch = useDispatch();
@@ -37,11 +37,11 @@ const ListExist = () => {
   };
 
   const handleClickCreateBtn = () => {
-    navigate("/trip-create/1");
+    navigate('/trip-create/1');
     dispatch(
       changeCreateTripState({
-        type: "state",
-        value: "main",
+        type: 'state',
+        value: 'main',
       })
     );
   };
@@ -49,8 +49,8 @@ const ListExist = () => {
   const handleClickLoadBtn = () => {
     dispatch(
       changeCreateTripState({
-        type: "state",
-        value: "main",
+        type: 'state',
+        value: 'main',
       })
     );
     closeModal();
@@ -74,14 +74,12 @@ const ListExist = () => {
                   새로 만들기
                 </div>
               </div>
-              <div className="menu-box" style={{ justifyContent: "flex-end" }}>
+              <div className="menu-box" style={{ justifyContent: 'flex-end' }}>
                 <Icon icon="MenuXButton" onClick={handleClickMenu} />
               </div>
             </MainMenu>
           </Modal>
-        ) : (
-          <Icon icon="TripCreateButton" onClick={handleClickMenu} />
-        )}
+        ) : null}
       </IconWrapper>
 
       <BottomSheet isVisible={isShowTemplate} closeModal={closeTemplate}>
