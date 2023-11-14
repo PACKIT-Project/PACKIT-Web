@@ -16,19 +16,24 @@ const BottomNav = () => {
 
   return (
     <BottomNavWrapper>
-      {routerObj.map((route) => (
-        <IconWrapper key={route.key} onClick={() => navigate(route.path)}>
-          <Icon icon={route.key} fill={route.clicked ? '#191F28' : '#C4CAD0'} />
-          <div className={route.clicked ? 'current path' : 'path'}>
-            {route.value}
-          </div>
-        </IconWrapper>
-      ))}
-      <PlusButtonWrapper>
-        <PlusButton onClick={() => navigate('/trip-create/1')}>
-          <Icon icon="Plus" width={36} height={36} fill="#FFF" />
-        </PlusButton>
-      </PlusButtonWrapper>
+      <div className="container">
+        <>
+          {routerObj.map((route) => (
+            <IconWrapper key={route.key} onClick={() => navigate(route.path)}>
+              <Icon icon={route.key} fill={route.clicked ? '#191F28' : '#C4CAD0'} />
+              <div className={route.clicked ? 'current path' : 'path'}>
+                {route.value}
+              </div>
+            </IconWrapper>
+          ))}
+        </>
+
+        <PlusButtonWrapper>
+          <PlusButton onClick={() => navigate('/trip-create/1')}>
+            <Icon icon="Plus" width={36} height={36} fill="#FFF" />
+          </PlusButton>
+        </PlusButtonWrapper>
+      </div>
     </BottomNavWrapper>
   );
 };
@@ -38,20 +43,32 @@ export default BottomNav;
 const BottomNavWrapper = styled.div`
   position: fixed;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 
   width: 100%;
   height: 84px;
-  padding: 9px 120px 9px 48px;
-  box-sizing: border-box;
+  background-color: #fff;
 
-  background-color: ${COLOR.WHITE};
+  .container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-  @media (min-width: 1024px) {
-    width: 390px;
+    width: 100%;
+    height: 100%;
+    padding: 9px 120px 9px 48px;
+    margin: auto;
+    box-sizing: border-box;
+
+    background-color: ${COLOR.WHITE};
+    @media (min-width: 1024px) {
+      width: 390px;
+    }
   }
 `;
 
