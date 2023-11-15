@@ -55,6 +55,7 @@ const BottomSheet = ({ isVisible, closeModal, children }: BottomSheetType) => {
       {isVisible || isanimating ? (
         <Modal isVisible={isVisible} closeModal={handleClose}>
           <BottomSheetWrapper isanimating={String(isanimating)}>
+            <div className="handle" />
             {children}
           </BottomSheetWrapper>
         </Modal>
@@ -67,8 +68,13 @@ const BottomSheetWrapper = styled.div<{ isanimating: string }>`
   position: fixed;
   bottom: 0;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: ${COLOR.WHITE};
 
   border-radius: 16px 16px 0px 0px;
@@ -80,6 +86,15 @@ const BottomSheetWrapper = styled.div<{ isanimating: string }>`
 
   @media (min-width: 480px) {
     width: 480px;
+  }
+
+  .handle {
+    display: flex;
+    justify-content: center;
+    width: 40px;
+    height: 4px;
+    border-radius: 37px;
+    background: rgba(214, 214, 214, 0.39);
   }
 `;
 export default BottomSheet;

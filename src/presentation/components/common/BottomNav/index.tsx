@@ -3,10 +3,21 @@ import COLOR from '@styles/colors';
 import styled from 'styled-components';
 import Icon from '../Icon';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useModal from '@hooks/useModal';
+import BottomSheet from '../BottomSheet';
+import CreateTripModal from './CreateTripModal';
+import Modal from '../Modal';
+import CodeModal from './CodeModal';
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { isShowModal, openModal, closeModal } = useModal();
+  const {
+    isShowModal: isShowCodeModal,
+    openModal: openCodeModal,
+    closeModal: closeCodeModal,
+  } = useModal();
 
   const routerObj = [
     { key: 'Home', value: '홈', clicked: pathname === '/', path: '/' },
@@ -29,11 +40,21 @@ const BottomNav = () => {
         </>
 
         <PlusButtonWrapper>
-          <PlusButton onClick={() => navigate('/trip-create/1')}>
+          <PlusButton onClick={openModal}>
             <Icon icon="Plus" width={36} height={36} fill="#FFF" cursor={true} />
           </PlusButton>
         </PlusButtonWrapper>
       </div>
+      {isShowModal && (
+        <BottomSheet isVisible={isShowModal} closeModal={closeModal}>
+          <CreateTripModal closeModal={closeModal} openCodeModal={openCodeModal} />
+        </BottomSheet>
+      )}
+      {isShowCodeModal && (
+        <Modal isVisible={isShowCodeModal} closeModal={closeCodeModal}>
+          <CodeModal closeCodeModal={closeCodeModal} />
+        </Modal>
+      )}
     </BottomNavWrapper>
   );
 };
