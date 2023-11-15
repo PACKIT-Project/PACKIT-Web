@@ -6,11 +6,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useModal from '@hooks/useModal';
 import BottomSheet from '../BottomSheet';
 import CreateTripModal from './CreateTripModal';
+import Modal from '../Modal';
+import CodeModal from './CodeModal';
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isShowModal, openModal, closeModal } = useModal();
+  const {
+    isShowModal: isShowCodeModal,
+    openModal: openCodeModal,
+    closeModal: closeCodeModal,
+  } = useModal();
 
   const routerObj = [
     { key: 'Home', value: '홈', clicked: pathname === '/', path: '/' },
@@ -40,8 +47,13 @@ const BottomNav = () => {
       </div>
       {isShowModal && (
         <BottomSheet isVisible={isShowModal} closeModal={closeModal}>
-          <CreateTripModal />
+          <CreateTripModal closeModal={closeModal} openCodeModal={openCodeModal} />
         </BottomSheet>
+      )}
+      {isShowCodeModal && (
+        <Modal isVisible={isShowCodeModal} closeModal={closeCodeModal}>
+          <CodeModal closeCodeModal={closeCodeModal} />
+        </Modal>
       )}
     </BottomNavWrapper>
   );

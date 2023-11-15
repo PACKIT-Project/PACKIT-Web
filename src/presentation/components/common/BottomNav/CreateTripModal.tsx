@@ -5,8 +5,19 @@ import Text from '../Text';
 import COLOR from '@styles/colors';
 import { useNavigate } from 'react-router-dom';
 
-const CreateTripModal = () => {
+const CreateTripModal = ({
+  closeModal,
+  openCodeModal,
+}: {
+  closeModal: () => void;
+  openCodeModal: () => void;
+}) => {
   const navigate = useNavigate();
+
+  const handleClickCodeModal = () => {
+    closeModal();
+    openCodeModal();
+  };
 
   return (
     <CreateTripModalWrapper>
@@ -21,7 +32,7 @@ const CreateTripModal = () => {
         />
       </ContentButton>
       <hr />
-      <ContentButton>
+      <ContentButton onClick={handleClickCodeModal}>
         <Icon icon="Key" cursor={true} />
         <div className="text-wrapper">
           <Text
