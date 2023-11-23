@@ -16,6 +16,7 @@ import LoginRedirect from '@pages/LoginPage/LoginRedirect';
 import EmailAuthPage from '@pages/EmailAuthPage';
 import OnBoardingPage from '@pages/OnBoardingPage';
 import SignUpPage from '@pages/SignUpPage';
+import TermsPage from '@pages/OnBoardingPage/terms';
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/onboarding" element={<OnBoardingPage />} />
+        <Route path="/onboarding/terms" element={<TermsPage />} />
         <Route path="/onboarding/profile" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/auth" element={<LoginRedirect />} />
