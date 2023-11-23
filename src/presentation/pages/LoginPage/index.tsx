@@ -5,47 +5,48 @@ import COLOR from '@styles/colors';
 import { Link } from 'react-router-dom';
 import Text from '@components/common/Text';
 import Spacing from '@components/common/Spacing';
+import AppLayout from '@components/common/AppLayout';
 
 const LoginPage = () => {
   const kakaoUrl = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/kakao?redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
   const naverUrl = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/naver?redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 
   return (
-    <LoginPageWrapper>
-      <MainWrapper>
-        <Icon icon="AuthLogo" />
-        <Spacing size={17} />
-        <Text
-          text="빈틈없는 여행 준비의 시작"
-          color={COLOR.MAIN_BLACK}
-          fontSize={21}
-          fontWeight={600}
-          lineHeight="139%"
-        />
-      </MainWrapper>
-      <ButtonWrapper>
-        <ButtonContainer>
-          <Link to={kakaoUrl}>
-            <Icon icon="AuthKakao" />
-          </Link>
-          <Link to={naverUrl}>
-            <Icon icon="AuthNaver" />
-          </Link>
-          <Link to={naverUrl}>
-            <Icon icon="AuthApple" />
-          </Link>
-        </ButtonContainer>
-      </ButtonWrapper>
-    </LoginPageWrapper>
+    <AppLayout>
+      <LoginPageWrapper>
+        <MainWrapper>
+          <Icon icon="AuthLogo" />
+          <Spacing size={17} />
+          <Text
+            text="빈틈없는 여행 준비의 시작"
+            color={COLOR.MAIN_BLACK}
+            fontSize={21}
+            fontWeight={600}
+            lineHeight="139%"
+          />
+        </MainWrapper>
+        <ButtonWrapper>
+          <ButtonContainer>
+            <Link to={kakaoUrl}>
+              <Icon icon="AuthKakao" />
+            </Link>
+            <Link to={naverUrl}>
+              <Icon icon="AuthNaver" />
+            </Link>
+            <Link to={naverUrl}>
+              <Icon icon="AuthApple" />
+            </Link>
+          </ButtonContainer>
+        </ButtonWrapper>
+      </LoginPageWrapper>
+    </AppLayout>
   );
 };
 
 const LoginPageWrapper = styled.div`
   position: relative;
-  width: 100%;
   height: 100%;
   overflow-y: hidden;
-  background-color: ${COLOR.WHITE};
 `;
 
 const MainWrapper = styled.div`
