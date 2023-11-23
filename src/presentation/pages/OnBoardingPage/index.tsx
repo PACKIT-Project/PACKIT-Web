@@ -61,6 +61,6 @@ const CustomSlider = styled(Slider)`
     opacity: 1;
   }
   .slick-arrow {
-    display: none;
+    visibility: hidden;
   }
 `;

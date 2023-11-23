@@ -53,12 +53,8 @@ const TermsPage = () => {
         <Spacing size={18} />
         <TermsWrapper>
           {TERMS.map((termInfo) => (
-            <div className="termContainer">
-              <div
-                className="term"
-                key={termInfo.term}
-                onClick={() => handleClickTerm(termInfo)}
-              >
+            <div className="termContainer" key={termInfo.term}>
+              <div className="term" onClick={() => handleClickTerm(termInfo)}>
                 <Icon
                   icon="Checked"
                   fill={
@@ -70,6 +66,12 @@ const TermsPage = () => {
                 />
                 {termInfo.isRequired ? '(필수)' : '(선택)'} {termInfo.term}
               </div>
+              <Icon
+                icon="Chevron"
+                fill={COLOR.UI_GRAY_4}
+                cursor={true}
+                onClick={() => navigate(`/onboarding/terms/${termInfo.term}`)}
+              />
             </div>
           ))}
         </TermsWrapper>
@@ -89,7 +91,7 @@ const TermsPageWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 0 15px;
+  padding: 0 16px;
 
   background-color: ${COLOR.WHITE};
   line-height: 18px;
