@@ -15,7 +15,7 @@ import DoubleCheckPage from '@pages/DoubleCheckPage';
 import LoginRedirect from '@pages/LoginPage/LoginRedirect';
 import EmailAuthPage from '@pages/EmailAuthPage';
 import OnBoardingPage from '@pages/OnBoardingPage';
-import SignUpPage from '@pages/SignUpPage';
+import OnBoardingProfilePage from '@pages/OnBoardingPage/profile';
 import TermsPage from '@pages/OnBoardingPage/terms';
 import TermsDetailPage from '@pages/OnBoardingPage/detail';
 
@@ -27,7 +27,7 @@ const Router = () => {
         <Route path="/onboarding" element={<OnBoardingPage />} />
         <Route path="/onboarding/terms" element={<TermsPage />} />
         <Route path="/onboarding/terms/:detail" element={<TermsDetailPage />} />
-        <Route path="/onboarding/profile" element={<SignUpPage />} />
+        <Route path="/onboarding/profile" element={<OnBoardingProfilePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/auth" element={<LoginRedirect />} />
         <Route path="/login/complate" element={<LoginCompletePage />} />

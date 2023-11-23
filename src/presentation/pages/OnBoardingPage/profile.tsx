@@ -7,8 +7,9 @@ import Input from '@components/common/Input';
 import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
 import { useDropzone } from 'react-dropzone';
+import AppLayout from '@components/common/AppLayout';
 
-const SignUpPage = () => {
+const OnBoardingProfilePage = () => {
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
 
@@ -30,69 +31,68 @@ const SignUpPage = () => {
   });
 
   return (
-    <SignUpPageWrapper>
-      <BackHeader />
-      <TextBox>사용하실 닉네임을</TextBox>
-      <TextBox>입력해주세요</TextBox>
+    <AppLayout>
+      <OnBoardingProfilePageWrapper>
+        <BackHeader />
+        <TextBox>사용하실 닉네임을</TextBox>
+        <TextBox>입력해주세요</TextBox>
 
-      <MainWrapper>
-        <ProfileWrapper>
-          <div className="profile">
-            <Icon icon="Profile" />
-            <div {...getRootProps()}>
-              <input {...getInputProps()} />
-              <div className="camera">
-                <Icon icon="Camera" />
+        <MainWrapper>
+          <ProfileWrapper>
+            <div className="profile">
+              <Icon icon="Profile" />
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div className="camera">
+                  <Icon icon="Camera" />
+                </div>
               </div>
             </div>
-          </div>
-        </ProfileWrapper>
-        <Spacing size={36} />
-        <InputWrapper>
-          <Input
-            placeholder="닉네임을 입력해주세요"
-            onChange={handleChangeNickname}
-            type="text"
-            value={nickname}
-            maxLength={13}
-            success={isValid.toString()}
-            error={(nickname.length >= 2 && !isValid).toString()}
-          />
-          <div className="explain text">
-            2~13자의 한글, 영문, 숫자, -, _ 조합 사용 가능
-          </div>
-          <div
-            className={
-              isValid
-                ? 'success text'
+          </ProfileWrapper>
+          <Spacing size={36} />
+          <InputWrapper>
+            <Input
+              placeholder="닉네임을 입력해주세요"
+              onChange={handleChangeNickname}
+              type="text"
+              value={nickname}
+              maxLength={13}
+              success={isValid.toString()}
+              error={(nickname.length >= 2 && !isValid).toString()}
+            />
+            <div className="explain text">
+              2~13자의 한글, 영문, 숫자, -, _ 조합 사용 가능
+            </div>
+            <div
+              className={
+                isValid
+                  ? 'success text'
+                  : nickname.length >= 2 && !isValid
+                  ? 'error text'
+                  : 'none'
+              }
+            >
+              {isValid
+                ? '사용할 수 있는 닉네임입니다'
                 : nickname.length >= 2 && !isValid
-                ? 'error text'
-                : 'none'
-            }
-          >
-            {isValid
-              ? '사용할 수 있는 닉네임입니다'
-              : nickname.length >= 2 && !isValid
-              ? '닉네임을 확인해주세요'
-              : ''}
-          </div>
-        </InputWrapper>
-      </MainWrapper>
+                ? '닉네임을 확인해주세요'
+                : ''}
+            </div>
+          </InputWrapper>
+        </MainWrapper>
 
-      <BottomButton text="확인" disabled={!isValid} />
-    </SignUpPageWrapper>
+        <BottomButton text="확인" disabled={!isValid} />
+      </OnBoardingProfilePageWrapper>
+    </AppLayout>
   );
 };
 
-export default SignUpPage;
+export default OnBoardingProfilePage;
 
-const SignUpPageWrapper = styled.div`
+const OnBoardingProfilePageWrapper = styled.div`
   position: relative;
   height: 100%;
-  width: 100%;
-  padding: 0 20px;
-
-  box-sizing: border-box;
+  padding: 0 8px;
 `;
 
 const TextBox = styled.div`
@@ -135,7 +135,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 20px;
+  padding: 0 6px;
 
   .text {
     font-size: 13px;
