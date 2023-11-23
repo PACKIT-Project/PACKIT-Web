@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
   html,
   body,
   #root {
-    background-color: ${COLOR.WHITE};
+    background-color: #F2F2F2;
     width:100%;
     height: 100%;
     margin: 0 auto;
