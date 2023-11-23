@@ -1,20 +1,17 @@
-import React from "react";
+import React from 'react';
 
 const Checked = () => {
   return (
     <svg
-      width="9"
-      height="7"
-      viewBox="0 0 9 7"
+      width="21"
+      height="21"
+      viewBox="0 0 21 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M1.21289 2.903L3.85923 5.54948L8.21289 1.23828"
-        stroke="#00B488"
-        strokeWidth="1.36589"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M8.37479 15.138L4.2373 11.0005L5.83457 9.40326L8.37479 11.9435L14.915 5.40326L16.5123 7.00053L8.37479 15.138Z"
+        fill="#0EA8FF"
       />
     </svg>
   );

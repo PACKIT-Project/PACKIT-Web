@@ -112,7 +112,7 @@ const CustomInput = styled.input<{
   }
 
   &:focus {
-    outline: 1px solid ${COLOR.COOL_GRAY_300};
+    outline: 1.5px solid ${COLOR.COOL_GRAY_300};
   }
 
   ${({ $error }) =>

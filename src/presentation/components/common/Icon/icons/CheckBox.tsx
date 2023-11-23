@@ -1,23 +1,18 @@
-import React from "react";
+import React from 'react';
 
 const UnCheckedBox = () => {
   return (
     <svg
-      width="19"
-      height="19"
-      viewBox="0 0 19 19"
+      width="21"
+      height="21"
+      viewBox="0 0 21 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        x="1.52637"
-        y="1.26758"
-        width="16.5"
-        height="16.5"
-        rx="3.75"
+      <rect x="0.374878" y="0.642944" width="20" height="20" rx="4" fill="#D0D9E3" />
+      <path
+        d="M8.70817 14.6991L5.26025 11.2512L6.59132 9.92013L8.70817 12.037L14.1584 6.58679L15.4894 7.91785L8.70817 14.6991Z"
         fill="white"
-        stroke="#D1D5DC"
-        strokeWidth="1.5"
       />
     </svg>
   );
@@ -26,26 +21,16 @@ const UnCheckedBox = () => {
 const CheckedBox = () => {
   return (
     <svg
-      width="19"
-      height="19"
-      viewBox="0 0 19 19"
+      width="21"
+      height="21"
+      viewBox="0 0 21 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        x="0.776367"
-        y="0.736328"
-        width="18"
-        height="18"
-        rx="4.5"
-        fill="#00B488"
-      />
+      <rect x="0.598999" y="0.642944" width="20" height="20" rx="4" fill="#0EA8FF" />
       <path
-        d="M5.27637 9.12206L8.67881 13.2656L14.2764 6.51562"
-        stroke="white"
-        strokeWidth="2.25"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M8.93229 14.6991L5.48438 11.2512L6.81544 9.92013L8.93229 12.037L14.3825 6.58679L15.7135 7.91785L8.93229 14.6991Z"
+        fill="white"
       />
     </svg>
   );

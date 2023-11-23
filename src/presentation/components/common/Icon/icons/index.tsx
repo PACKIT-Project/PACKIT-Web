@@ -13,13 +13,14 @@ export { default as Vacation } from './onBoarding/Vacation';
 export { default as HandShake } from './onBoarding/HandShake';
 export { default as Memo } from './onBoarding/Memo';
 export { default as Sign } from './onBoarding/Sign';
-export { default as Search } from './onBoarding/Search';
+export { default as OnBoardingSearch } from './onBoarding/Search';
 export { default as Idea } from './onBoarding/Idea';
 export { default as Notice } from './onBoarding/Notice';
 
 export { default as Linear1 } from './loginComplate/Linear1';
 export { default as Linear2 } from './loginComplate/Linear2';
 
+export { default as Search } from './Search';
 export { default as Arrow } from './Arrow';
 export { default as Bus } from './Bus';
 export { default as Plane } from './Plane';

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const Arrow = () => {
+const Check = () => {
   return (
     <svg
       width="25"
@@ -23,4 +23,4 @@ const Arrow = () => {
   );
 };
 
-export default Arrow;
+export default Check;
