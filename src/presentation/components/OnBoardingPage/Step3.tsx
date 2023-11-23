@@ -7,7 +7,7 @@ const Step3 = () => {
     <StepWrapper>
       <Text>
         실시간
-        <Icon icon="Search" />
+        <Icon icon="OnBoardingSearch" />
       </Text>
       <Text>
         <Icon icon="Idea" />
