@@ -45,6 +45,7 @@ const LoginPageWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: hidden;
+  background-color: ${COLOR.WHITE};
 `;
 
 const MainWrapper = styled.div`
