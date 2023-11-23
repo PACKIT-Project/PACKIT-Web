@@ -49,10 +49,14 @@ const LoginPageWrapper = styled.div`
 `;
 
 const MainWrapper = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 45%;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
 `;
 
 const ButtonWrapper = styled.div`
