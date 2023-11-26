@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
-import Text from '../Text';
 import COLOR from '@styles/colors';
 import { useNavigate } from 'react-router-dom';
 import { TYPOGRAPHY } from '@styles/fonts';

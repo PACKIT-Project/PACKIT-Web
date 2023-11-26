@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Icon from '@components/common/Icon';
-import Text from '@components/common/Text';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 
