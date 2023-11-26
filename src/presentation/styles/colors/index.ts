@@ -34,6 +34,7 @@ const COLOR = {
   // ver2
   MAIN_BLUE: '#0EA8FF',
   MAIN_INACTIVE: '#BFEBFF',
+  MAIN_WHITE: '#FFFFFF',
 
   BW_BLACK: '#000',
   BLACK: '#071A49',

@@ -8,6 +8,7 @@ import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
 import { useDropzone } from 'react-dropzone';
 import AppLayout from '@components/common/AppLayout';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 const OnBoardingProfilePage = () => {
   const [nickname, setNickname] = useState('');
@@ -96,11 +97,8 @@ const OnBoardingProfilePageWrapper = styled.div`
 `;
 
 const TextBox = styled.div`
-  color: ${COLOR.COOL_GRAY_300};
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 132%;
-  letter-spacing: -0.5px;
+  color: ${COLOR.COOL_GRAY_400};
+  ${TYPOGRAPHY.TITLE.DISPLAY1_BOLD};
 `;
 
 const MainWrapper = styled.div`
@@ -138,9 +136,7 @@ const InputWrapper = styled.div`
   padding: 0 6px;
 
   .text {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 13px;
+    ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
   }
   .explain {
     color: ${COLOR.COOL_GRAY_100};

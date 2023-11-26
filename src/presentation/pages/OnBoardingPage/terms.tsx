@@ -7,6 +7,7 @@ import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
 import COLOR from '@styles/colors';
 import { TERMS } from '@constants';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 const TermsPage = () => {
   const navigate = useNavigate();
@@ -94,10 +95,12 @@ const TermsPageWrapper = styled.div`
   padding: 0 16px;
 
   background-color: ${COLOR.WHITE};
-  line-height: 18px;
-  letter-spacing: -0.5px;
 
   box-sizing: border-box;
+`;
+
+const Inner = styled.div`
+  padding: 0 10px;
 
   .allCheck {
     display: flex;
@@ -107,8 +110,7 @@ const TermsPageWrapper = styled.div`
     padding-bottom: 20px;
 
     color: ${COLOR.COOL_GRAY_500};
-    font-size: 20px;
-    font-weight: 600;
+    ${TYPOGRAPHY.TITLE.DISPLAY2_SEMIBOLD}
 
     cursor: pointer;
   }
@@ -125,29 +127,9 @@ const TermsPageWrapper = styled.div`
   }
 `;
 
-const Inner = styled.div`
-  padding: 0 10px;
-
-  .allCheck {
-    display: flex;
-    flex-direction: row;
-    gap: 11px;
-    align-items: center;
-    padding-bottom: 20px;
-
-    color: ${COLOR.COOL_GRAY_500};
-    font-size: 20px;
-    font-weight: 600;
-
-    cursor: pointer;
-  }
-`;
-
 const TextBox = styled.div`
   color: ${COLOR.COOL_GRAY_400};
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 132%;
+  ${TYPOGRAPHY.TITLE.DISPLAY1_BOLD};
 `;
 
 const TermsWrapper = styled.div`
@@ -165,10 +147,8 @@ const TermsWrapper = styled.div`
       flex-direction: row;
       gap: 9px;
 
-      color: #0f1116;
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 18px;
+      color: ${COLOR.COOL_GRAY_500};
+      ${TYPOGRAPHY.TITLE.SUBHEADING1_SEMIBOLD}
 
       cursor: pointer;
     }
