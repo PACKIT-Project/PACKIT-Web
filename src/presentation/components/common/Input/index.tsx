@@ -2,6 +2,7 @@ import React from 'react';
 import { css, styled } from 'styled-components';
 import Icon from '../Icon';
 import COLOR from '@styles/colors';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 type InputType = {
   placeholder: string;
@@ -98,17 +99,11 @@ const CustomInput = styled.input<{
   background-color: ${COLOR.UI_GRAY_1};
 
   color: ${COLOR.COOL_GRAY_500};
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
+  ${TYPOGRAPHY.TEXT.BODY1_MEDIUM};
 
   &::placeholder {
     color: ${COLOR.UI_GRAY_4};
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: -0.5px;
+    ${TYPOGRAPHY.TEXT.BODY1_MEDIUM};
   }
 
   &:focus {

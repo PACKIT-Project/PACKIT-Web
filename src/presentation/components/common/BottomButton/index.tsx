@@ -2,6 +2,7 @@ import React from 'react';
 import COLOR from '@styles/colors';
 import { styled } from 'styled-components';
 import TextButton from '../TextButton';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 type BottomButtonType = {
   text: string;
@@ -64,10 +65,7 @@ const Button = styled.button`
     disabled ? COLOR.MAIN_INACTIVE : COLOR.MAIN_BLUE};
   outline: none;
 
-  color: ${COLOR.WHITE};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  color: ${COLOR.MAIN_WHITE};
+  ${TYPOGRAPHY.BUTTON.LABEL1_BOLD};
 `;
 export default BottomButton;

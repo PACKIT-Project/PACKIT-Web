@@ -12,6 +12,7 @@ import {
 import BottomButton from '../common/BottomButton';
 import { useNavigate } from 'react-router-dom';
 import Icon from '@components/common/Icon';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 const Step1 = () => {
   const dispatch = useDispatch();
@@ -122,12 +123,10 @@ const InputContainer = styled.div`
     outline: none;
     border-bottom: 1px solid #000;
 
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 140%;
-
+    color: ${COLOR.COOL_GRAY_300};
+    ${TYPOGRAPHY.TITLE.SUBHEADING4_MEDIUM};
     &::placeholder {
-      color: #b9bfc7;
+      color: ${COLOR.UI_GRAY_3};
     }
   }
   .icon {
@@ -141,10 +140,8 @@ const RecentKeyword = styled.div`
   flex-direction: column;
   gap: 11px;
 
-  color: ${COLOR.MAIN_BLACK};
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  color: ${COLOR.COOL_GRAY_400};
+  ${TYPOGRAPHY.TEXT.BODY2_BOLD};
 
   .keywords {
     display: flex;
@@ -152,8 +149,8 @@ const RecentKeyword = styled.div`
     gap: 7px;
     overflow: auto;
     height: 100%;
-    font-weight: 500;
-    line-height: 9.8px;
+    color: ${COLOR.COOL_GRAY_200};
+    ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
 
     .keyword {
       padding: 10px;
