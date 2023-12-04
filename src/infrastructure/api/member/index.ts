@@ -20,6 +20,19 @@ export const getMemberProfile = async () =>
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 회원 프로필 정보 수정
+export const putMemberProfile = async ({
+  nickname,
+  profileImageUrl,
+}: {
+  nickname: string;
+  profileImageUrl: string;
+}) =>
+  await client
+    .put('/members/profiles', { nickname, profileImageUrl })
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 // 회원 탈퇴
 export const deleteMember = async () =>
   await client

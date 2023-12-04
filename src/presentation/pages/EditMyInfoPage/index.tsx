@@ -1,152 +1,119 @@
-import React, { useState } from "react";
-import COLOR from "@styles/colors";
-import { styled } from "styled-components";
-import BackHeader from "@components/common/BackHeader";
-import Spacing from "@components/common/Spacing";
-import { useNavigate } from "react-router-dom";
-
-import useGetMyInfo from "@hooks/queries/user/useGetMyInfo";
-import Text from "@components/common/Text";
-import { profileData } from "../../../application/data/profileData";
-import Icon from "@components/common/Icon";
-import Button from "@components/common/Button";
-import useEditUser from "@hooks/queries/user/useEditUser";
+import React, { useState } from 'react';
+import COLOR from '@styles/colors';
+import { styled } from 'styled-components';
+import BackHeader from '@components/common/BackHeader';
+import Spacing from '@components/common/Spacing';
+import Icon from '@components/common/Icon';
+import useGetMemberProfile from '../../../infrastructure/queries/members/useGetMemberProfile';
+import BottomButton from '@components/common/BottomButton';
+import Input from '@components/common/Input';
+import { postImage } from '@api/image';
+import { useDropzone } from 'react-dropzone';
+import useMutateMemberProfile from '../../../infrastructure/queries/members/useMutateMemberProfile';
 
 const EditMyInfoPage = () => {
-  const mutate = useEditUser();
-  const navigate = useNavigate();
-  const { data: userData } = useGetMyInfo();
-  const [nickName, setNickName] = useState(userData.nickname);
-  const [isError, setIsError] = useState(false);
+  const mutate = useMutateMemberProfile();
+  const { data: userData } = useGetMemberProfile();
+  const [nickname, setNickname] = useState(userData?.nickname);
+  const [profileImageUrl, setProfileImageUrl] = useState(userData?.profileImageUrl);
 
-  const [currProfileIdx, setCurrProfileIdx] = useState(
-    profileData.indexOf(userData.profileImageUrl)
-  );
+  const onDrop = async (acceptedFiles: any) => {
+    const formdata = new FormData();
+    formdata.append('uploadImage', acceptedFiles[0]);
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-
-    if (value.length > 5) {
-      value = value.substring(0, 5);
+    const imageRes = await postImage(formdata);
+    if (imageRes.message === '성공적으로 이미지가 업로드 되었습니다.') {
+      setProfileImageUrl(imageRes.data.savedImageUrl);
     }
-
-    const pattern = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
-    if (value === "") {
-      setIsError(false);
-    } else if (pattern.test(value)) {
-      setIsError(false);
-    } else {
-      setIsError(true);
-    }
-
-    setNickName(value);
   };
 
-  const handleClickImage = (index: number) => {
-    setCurrProfileIdx(index);
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      'image/png': ['.png'],
+      'image/jpeg': ['.jpeg'],
+      'image/jpg': ['.jpg'],
+    },
+  });
+
+  const handleEditProfile = async () => {
+    mutate({ nickname, profileImageUrl });
   };
 
-  const handleEditProfile = () => {
-    mutate({ nickname: nickName, image: profileData[currProfileIdx] });
-    navigate(-1);
-  };
   return (
-    <EditMyInfoPageWrapper>
-      <BackHeader text="프로필 편집" color="#191F28" />
-      <Spacing size={46} />
-      <div className="profile-wrapper">
-        <img src={userData.profileImageUrl} alt="프로필 이미지" />
-      </div>
-      <Spacing size={34} />
-      <NameWrapper>
-        <div className="name">
-          <input type="text" value={nickName} onChange={handleChangeName} />
-        </div>
-        <Text
-          text={`${nickName.length}/5`}
-          color={COLOR.GRAY_500}
-          fontSize={16}
-          fontWeight={500}
-          lineHeight="140%"
-        />
-      </NameWrapper>
-      <Spacing size={34} />
-      <ProfileImageWrapper>
-        {profileData.map((url, index) => (
-          <div className="profile-img" key={url}>
-            <img src={url} alt="프로필 이미지" />
-            <div>
-              {currProfileIdx === index ? (
-                <Icon icon="Check" />
-              ) : (
-                <div
-                  style={{
-                    width: "18px",
-                    height: "18px",
-                    border: `1.5px solid ${COLOR.GRAY_300}`,
-                    borderRadius: "100%",
-                    margin: "0 auto",
-                  }}
-                  onClick={() => handleClickImage(index)}
-                />
-              )}
+    <>
+      {userData && (
+        <EditMyInfoPageWrapper>
+          <BackHeader text="프로필 편집" color="#191F28" />
+          <Spacing size={39} />
+          <ProfileWrapper>
+            <div className="profile">
+              <Icon icon="Profile" />
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div className="camera">
+                  {profileImageUrl ? (
+                    <div className="profileImage">
+                      <img
+                        src={profileImageUrl}
+                        alt="프로필 이미지"
+                        width={101}
+                        height={101}
+                      />
+                    </div>
+                  ) : (
+                    <Icon icon="Camera" cursor={true} />
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </ProfileImageWrapper>
-      <Spacing size={40} />
-      <ButtonWrapper>
-        <Button
-          border="none"
-          background="#F2F4F6"
-          radius={10}
-          onClick={() => navigate(-1)}
-          padding="15px 0"
-        >
-          <Text
-            text="취소"
-            color="#505967"
-            fontSize={17}
-            fontWeight={600}
-            lineHeight="normal"
+          </ProfileWrapper>
+          <Spacing size={34} />
+          <Input
+            value={nickname || ''}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setNickname(e.target.value)
+            }
           />
-        </Button>
-        <Button
-          border="none"
-          background={COLOR.MAIN_GREEN}
-          radius={10}
-          onClick={handleEditProfile}
-          padding="15px 0"
-        >
-          <Text
-            text="변경하기"
-            color={COLOR.WHITE}
-            fontSize={17}
-            fontWeight={600}
-            lineHeight="normal"
-          />
-        </Button>
-      </ButtonWrapper>
-    </EditMyInfoPageWrapper>
+          <BottomButton text="확인" onClick={handleEditProfile} />
+        </EditMyInfoPageWrapper>
+      )}
+    </>
   );
 };
 const EditMyInfoPageWrapper = styled.div`
   background-color: ${COLOR.WHITE};
   height: 100%;
-  padding: 0 20px;
+  padding: 0 25px;
+`;
 
-  .profile-wrapper {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-    border-radius: 100%;
+const ProfileWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    img {
-      width: 120px;
-      height: 120px;
+  .profile {
+    position: relative;
+    width: fit-content;
+
+    .camera {
+      position: absolute;
+      bottom: 3px;
+      right: 0;
+
+      cursor: pointer;
+    }
+
+    .profileImage {
+      width: 100px;
+      height: 100px;
       border-radius: 100%;
-      display: flex;
-      justify-content: center;
+
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+      }
     }
   }
 `;
@@ -170,25 +137,5 @@ const NameWrapper = styled.div`
     }
   }
 `;
-const ProfileImageWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 
-  .profile-img {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 100%;
-    }
-  }
-`;
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`;
 export default EditMyInfoPage;
