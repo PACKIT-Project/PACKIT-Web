@@ -64,6 +64,11 @@ export const TYPOGRAPHY: any = {
       fontWeight: 600,
       lineHeight: '18px',
     },
+    BODY6_MEDIUM: {
+      fontSize: 15,
+      fontWeight: 500,
+      lineHeight: 'normal',
+    },
   },
   DES: {
     CAPTION1_SEMIBOLD: {
