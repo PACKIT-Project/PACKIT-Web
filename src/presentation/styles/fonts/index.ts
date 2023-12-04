@@ -1,5 +1,10 @@
 export const TYPOGRAPHY: any = {
   TITLE: {
+    HERO1_BOLD: {
+      fontSize: 34,
+      fontWeight: 700,
+      lineHeight: '132%',
+    },
     DISPLAY1_BOLD: {
       fontSize: 24,
       fontWeight: 700,
@@ -22,6 +27,11 @@ export const TYPOGRAPHY: any = {
       fontSize: 18,
       fontWeight: 700,
       lineHeight: '18px',
+    },
+    SUBHEADING3_SEMIBOLD: {
+      fontSize: 22,
+      fontWeight: 600,
+      lineHeight: '132%',
     },
     SUBHEADING4_MEDIUM: {
       fontSize: 20,
@@ -53,6 +63,11 @@ export const TYPOGRAPHY: any = {
       fontSize: 17,
       fontWeight: 600,
       lineHeight: '18px',
+    },
+    BODY6_MEDIUM: {
+      fontSize: 15,
+      fontWeight: 500,
+      lineHeight: 'normal',
     },
   },
   DES: {

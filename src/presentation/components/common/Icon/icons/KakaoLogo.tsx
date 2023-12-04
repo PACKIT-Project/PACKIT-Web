@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const KakaoLogo = () => {
   return (
@@ -19,7 +19,7 @@ const KakaoLogo = () => {
         stroke="#E5CF0A"
         strokeWidth="0.941176"
       />
-      <g clip-path="url(#clip0_1100_21842)">
+      <g clipPath="url(#clip0_1100_21842)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"

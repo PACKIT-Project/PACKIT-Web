@@ -9,10 +9,15 @@ import Spacing from '@components/common/Spacing';
 import { useDropzone } from 'react-dropzone';
 import AppLayout from '@components/common/AppLayout';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { postImage } from '@api/image';
+import { postMember } from '@api/member';
+import { useNavigate } from 'react-router-dom';
 
 const OnBoardingProfilePage = () => {
+  const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -24,11 +29,29 @@ const OnBoardingProfilePage = () => {
     setIsValid(isValid);
   };
 
-  const onDrop = async (acceptedFiles: any) => {};
+  const handleClickSignUp = async () => {
+    const signUpRes = await postMember({ nickname, profileImageUrl });
+    if (signUpRes.message === '성공적으로 회원가입되었습니다.') {
+      navigate('/login/complete', { state: nickname });
+    }
+  };
+  const onDrop = async (acceptedFiles: any) => {
+    const formdata = new FormData();
+    formdata.append('uploadImage', acceptedFiles[0]);
+
+    const imageRes = await postImage(formdata);
+    if (imageRes.message === '성공적으로 이미지가 업로드 되었습니다.') {
+      setProfileImageUrl(imageRes.data.savedImageUrl);
+    }
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: { 'image/*': ['.heic', '.heif'] },
+    accept: {
+      'image/png': ['.png'],
+      'image/jpeg': ['.jpeg'],
+      'image/jpg': ['.jpg'],
+    },
   });
 
   return (
@@ -45,7 +68,18 @@ const OnBoardingProfilePage = () => {
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className="camera">
-                  <Icon icon="Camera" />
+                  {profileImageUrl ? (
+                    <ProfileImage>
+                      <img
+                        src={profileImageUrl}
+                        alt="프로필 이미지"
+                        width={101}
+                        height={101}
+                      />
+                    </ProfileImage>
+                  ) : (
+                    <Icon icon="Camera" cursor={true} />
+                  )}
                 </div>
               </div>
             </div>
@@ -82,7 +116,7 @@ const OnBoardingProfilePage = () => {
           </InputWrapper>
         </MainWrapper>
 
-        <BottomButton text="확인" disabled={!isValid} />
+        <BottomButton text="확인" disabled={!isValid} onClick={handleClickSignUp} />
       </OnBoardingProfilePageWrapper>
     </AppLayout>
   );
@@ -129,6 +163,16 @@ const ProfileWrapper = styled.div`
   }
 `;
 
+const ProfileImage = styled.div`
+  width: 101px;
+  height: 101px;
+  border-radius: 50%;
+
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+`;
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;

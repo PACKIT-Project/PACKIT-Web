@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Remind = () => {
   return (
@@ -9,7 +9,7 @@ const Remind = () => {
       viewBox="0 0 391 249"
       fill="none"
     >
-      <g clip-path="url(#clip0_1386_9067)">
+      <g clipPath="url(#clip0_1386_9067)">
         <path
           d="M307.884 207.464C286.909 245.337 239.205 259.036 201.332 238.062C163.459 217.088 149.76 169.383 170.734 131.51C191.708 93.6374 239.413 79.9384 277.286 100.912C315.159 121.886 328.858 169.591 307.884 207.464Z"
           fill="#E6EFFE"
@@ -116,7 +116,7 @@ const Remind = () => {
         />
         <mask
           id="mask0_1386_9067"
-          style={{ maskType: "alpha" }}
+          style={{ maskType: 'alpha' }}
           maskUnits="userSpaceOnUse"
           x="76"
           y="130"
@@ -150,7 +150,7 @@ const Remind = () => {
         />
         <mask
           id="mask1_1386_9067"
-          style={{ maskType: "alpha" }}
+          style={{ maskType: 'alpha' }}
           maskUnits="userSpaceOnUse"
           x="193"
           y="73"

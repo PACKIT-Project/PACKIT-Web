@@ -32,7 +32,10 @@ const OnBoardingPage = () => {
           <Step2 />
           <Step3 />
         </CustomSlider>
-        <BottomButton text="시작하기" onClick={() => navigate('/')} />
+        <BottomButton
+          text="시작하기"
+          onClick={() => navigate('/onboarding/terms')}
+        />
       </OnBoardingWrapper>
     </AppLayout>
   );

@@ -1,0 +1,18 @@
+import React from 'react';
+import { styled } from 'styled-components';
+import Icon from '../Icon';
+
+const SettingHeader = () => {
+  return (
+    <SettingHeaderWrapper>
+      <Icon icon="Setting" cursor={true} />
+    </SettingHeaderWrapper>
+  );
+};
+
+const SettingHeaderWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 16px;
+`;
+export default SettingHeader;

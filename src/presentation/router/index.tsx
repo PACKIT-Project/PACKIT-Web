@@ -2,7 +2,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import TripCreatePage from '../pages/TripCreatePage';
 import TripDetailPage from '../pages/TripDetailPage';
-import LoginCompletePage from '../pages/LoginComplatePage';
+import LoginCompletePage from '../pages/LoginCompletePage';
 import CheckListPage from '../pages/CheckListPage';
 import MainPage from '../pages/MainPage';
 import CreateComplatePage from '../pages/CreateComplatePage';
@@ -30,7 +30,7 @@ const Router = () => {
         <Route path="/onboarding/profile" element={<OnBoardingProfilePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/auth" element={<LoginRedirect />} />
-        <Route path="/login/complate" element={<LoginCompletePage />} />
+        <Route path="/login/complete" element={<LoginCompletePage />} />
         <Route path="/email-auth" element={<EmailAuthPage />} />
         <Route path="/trip-create/:step" element={<TripCreatePage />} />
         <Route path="/trip-create/complate" element={<CreateComplatePage />} />
