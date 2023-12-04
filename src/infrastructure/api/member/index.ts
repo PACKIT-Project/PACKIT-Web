@@ -13,6 +13,13 @@ export const postMember = async ({
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 회원 프로필 조회
+export const getMemberProfile = async () =>
+  await client
+    .get('/members/profiles')
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 // 회원 탈퇴
 export const deleteMember = async () =>
   await client
