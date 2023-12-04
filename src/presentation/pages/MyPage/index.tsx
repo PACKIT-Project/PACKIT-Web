@@ -59,13 +59,13 @@ const MembersWrapper = styled.div`
   padding: 0 2rem;
 
   .profileWrapper {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
 
     img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 100%;
       object-fit: cover;
     }

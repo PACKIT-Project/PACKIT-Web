@@ -5,7 +5,7 @@ import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 
 type InputType = {
-  placeholder: string;
+  placeholder?: string;
   onChange: any;
   type?: string;
   value: string;
