@@ -1,5 +1,4 @@
 import React from 'react';
-import BackHeader from '@components/common/BackHeader';
 import COLOR from '@styles/colors';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +8,7 @@ import Spacing from '@components/common/Spacing';
 import Text from '@components/common/Text';
 import BottomNav from '@components/common/BottomNav';
 import { TYPOGRAPHY } from '@styles/fonts';
+import MainContent from '@components/MyPage/MainContent';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -39,6 +39,8 @@ const MyPage = () => {
               <button onClick={handleClickEditInfo}>프로필 편집</button>
             </div>
           </MembersWrapper>
+          <Spacing size={38} />
+          <MainContent />
           <BottomNav />
         </MyPageWrapper>
       )}
@@ -47,15 +49,14 @@ const MyPage = () => {
 };
 
 const MyPageWrapper = styled.div`
+  height: calc(100% - 84px);
   background-color: ${COLOR.WHITE};
-  overflow-y: hidden;
 `;
 
 const MembersWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  height: 100%;
   padding: 0 2rem;
 
   .profileWrapper {
