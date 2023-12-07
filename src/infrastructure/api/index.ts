@@ -25,7 +25,9 @@ client.interceptors.response.use(
     const refreshToken = getCookie('refreshToken');
     if (
       response.data.errorCode === 'AT-C-0002' ||
-      response.data.errorCode === 'AT-C-0001'
+      response.data.errorCode === 'AT-C-0001' ||
+      response.data.errorCode === 'AT-C-0004' ||
+      response.data.errorCode === 'AT-C-0006'
     ) {
       const originalRequest = config;
 
@@ -46,7 +48,7 @@ client.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
         })
         .catch((err: any) => {
-          console.log('/auth/token err', err);
+          window.location.href = '/login';
           return Promise.reject(err);
         });
 

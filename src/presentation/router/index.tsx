@@ -18,6 +18,7 @@ import OnBoardingPage from '@pages/OnBoardingPage';
 import OnBoardingProfilePage from '@pages/OnBoardingPage/profile';
 import TermsPage from '@pages/OnBoardingPage/terms';
 import TermsDetailPage from '@pages/OnBoardingPage/detail';
+import SettingPage from '@pages/SettingPage';
 
 const Router = () => {
   return (
@@ -36,6 +37,7 @@ const Router = () => {
         <Route path="/trip-create/complate" element={<CreateComplatePage />} />
         <Route path="/trip-update/:tripId" element={<EditTripInfoPage />} />
         <Route path="/my" element={<MyPage />} />
+        <Route path="/setting" element={<SettingPage />} />
         <Route path="/trip/:tripId" element={<TripDetailPage />} />
         <Route path="/my/edit" element={<EditMyInfoPage />} />
         <Route path="/my-template" element={<MyTemplatePage />} />

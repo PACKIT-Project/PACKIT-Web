@@ -25,12 +25,12 @@ const BottomButton = ({
 }: BottomButtonType) => {
   return (
     <BottomButtonWrapper>
-      {textButton && (
-        <TextButton onClick={textButtonOnClick} text={textButtonChild} />
-      )}
       <Button onClick={onClick} disabled={disabled}>
         {text}
       </Button>
+      {textButton && (
+        <TextButton onClick={textButtonOnClick} text={textButtonChild} />
+      )}
     </BottomButtonWrapper>
   );
 };
@@ -43,7 +43,7 @@ const BottomButtonWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
   justify-content: center;
 
