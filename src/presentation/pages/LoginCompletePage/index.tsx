@@ -13,7 +13,6 @@ const LoginCompletePage = () => {
     const timer = setTimeout(() => {
       navigate('/');
     }, 2000);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -34,6 +33,7 @@ const LoginCompletePage = () => {
 const LoginCompleteWrapper = styled.div`
   position: relative;
   height: 100%;
+  background-color: ${COLOR.WHITE};
   .alertText {
     ${TYPOGRAPHY.TITLE.SUBHEADING3_SEMIBOLD};
     color: ${COLOR.MAIN_BLUE};

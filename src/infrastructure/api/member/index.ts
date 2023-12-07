@@ -4,12 +4,19 @@ import client from '..';
 export const postMember = async ({
   nickname,
   profileImageUrl,
+  enableNotification,
 }: {
   nickname: string;
   profileImageUrl: string;
+  enableNotification: boolean;
 }) =>
   await client
-    .post('/members', { nickname, profileImageUrl })
+    .post('/members', {
+      nickname,
+      profileImageUrl,
+      enableNotification,
+      checkTerms: true,
+    })
     .then(({ data }) => data)
     .catch((err) => err.response);
 
@@ -18,6 +25,13 @@ export const getMemberProfile = async () =>
   await client
     .get('/members/profiles')
     .then(({ data }) => data)
+    .catch((err) => err.response);
+
+// 회원 닉네임 중복 검증
+export const duplicateNickname = async (nickname: string) =>
+  await client
+    .get('/members/nicknames/is-duplicate', { params: { nickname } })
+    .then(({ data }) => data.data.isDuplicated)
     .catch((err) => err.response);
 
 // 회원 프로필 정보 수정

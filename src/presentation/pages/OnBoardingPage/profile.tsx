@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import BackHeader from '@components/common/BackHeader';
 import styled from 'styled-components';
 import COLOR from '@styles/colors';
@@ -10,16 +11,22 @@ import { useDropzone } from 'react-dropzone';
 import AppLayout from '@components/common/AppLayout';
 import { TYPOGRAPHY } from '@styles/fonts';
 import { postImage } from '@api/image';
-import { postMember } from '@api/member';
+import { duplicateNickname, postMember } from '@api/member';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store';
 
 const OnBoardingProfilePage = () => {
   const navigate = useNavigate();
+  const { enableNotification } = useSelector((state: RootState) => state.termsInfo);
+
+  const [error, setError] = useState(false);
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [duplicateNicknameValue, setDuplicateNicknameValue] = useState(false);
 
-  const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeNickname = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
     const regex = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z\d\s_-]{2,13}$/;
@@ -30,11 +37,16 @@ const OnBoardingProfilePage = () => {
   };
 
   const handleClickSignUp = async () => {
-    const signUpRes = await postMember({ nickname, profileImageUrl });
+    const signUpRes = await postMember({
+      nickname,
+      profileImageUrl,
+      enableNotification,
+    });
     if (signUpRes.message === '성공적으로 회원가입되었습니다.') {
       navigate('/login/complete', { state: nickname });
     }
   };
+
   const onDrop = async (acceptedFiles: any) => {
     const formdata = new FormData();
     formdata.append('uploadImage', acceptedFiles[0]);
@@ -53,6 +65,24 @@ const OnBoardingProfilePage = () => {
       'image/jpg': ['.jpg'],
     },
   });
+
+  const getDuplicateValue = async () => {
+    const res = await duplicateNickname(nickname);
+    if (res) {
+      setDuplicateNicknameValue(true);
+    } else {
+      setDuplicateNicknameValue(false);
+    }
+    if ((nickname.length >= 2 && !isValid) || res) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
+
+  useEffect(() => {
+    getDuplicateValue();
+  }, [nickname]);
 
   return (
     <AppLayout>
@@ -92,24 +122,24 @@ const OnBoardingProfilePage = () => {
               type="text"
               value={nickname}
               maxLength={13}
-              success={isValid.toString()}
-              error={(nickname.length >= 2 && !isValid).toString()}
+              success={(isValid && !duplicateNicknameValue).toString()}
+              error={error.toString()}
             />
             <div className="explain text">
               2~13자의 한글, 영문, 숫자, -, _ 조합 사용 가능
             </div>
             <div
               className={
-                isValid
+                isValid && !duplicateNicknameValue
                   ? 'success text'
-                  : nickname.length >= 2 && !isValid
+                  : error
                   ? 'error text'
                   : 'none'
               }
             >
-              {isValid
+              {isValid && !duplicateNicknameValue
                 ? '사용할 수 있는 닉네임입니다'
-                : nickname.length >= 2 && !isValid
+                : error
                 ? '닉네임을 확인해주세요'
                 : ''}
             </div>
