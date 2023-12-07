@@ -30,8 +30,8 @@ export const getMemberProfile = async () =>
 // 회원 닉네임 중복 검증
 export const duplicateNickname = async (nickname: string) =>
   await client
-    .get('/members/nicknames/is-duplicate', { data: { nickname } })
-    .then(({ data }) => data)
+    .get('/members/nicknames/is-duplicate', { params: { nickname } })
+    .then(({ data }) => data.data.isDuplicated)
     .catch((err) => err.response);
 
 // 회원 프로필 정보 수정
