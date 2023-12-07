@@ -9,6 +9,7 @@ import Text from '@components/common/Text';
 import BottomNav from '@components/common/BottomNav';
 import { TYPOGRAPHY } from '@styles/fonts';
 import MainContent from '@components/MyPage/MainContent';
+import { motion } from 'framer-motion';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,11 @@ const MyPage = () => {
   return (
     <>
       {data && (
-        <MyPageWrapper>
+        <MyPageWrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <SettingHeader />
           <Spacing size={26} />
           <MembersWrapper>
@@ -48,7 +53,7 @@ const MyPage = () => {
   );
 };
 
-const MyPageWrapper = styled.div`
+const MyPageWrapper = styled(motion.div)`
   height: calc(100% - 84px);
   background-color: ${COLOR.WHITE};
 `;
