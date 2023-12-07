@@ -8,8 +8,11 @@ import Spacing from '@components/common/Spacing';
 import COLOR from '@styles/colors';
 import { TERMS } from '@constants';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { useDispatch } from 'react-redux';
+import { setTermsInfo } from '@reducer/slices/user/termsInfoSlice';
 
 const TermsPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [agreeList, setAgreeList] = useState<
     { term: string; isRequired: boolean }[]
@@ -33,6 +36,9 @@ const TermsPage = () => {
   };
 
   const handleClickStart = () => {
+    if (agreeList.map((agree) => agree.term).includes('푸시 알림 동의')) {
+      dispatch(setTermsInfo(true));
+    }
     navigate('/onboarding/profile');
   };
 

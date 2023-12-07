@@ -12,14 +12,18 @@ import { TYPOGRAPHY } from '@styles/fonts';
 import { postImage } from '@api/image';
 import { postMember } from '@api/member';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store';
 
 const OnBoardingProfilePage = () => {
   const navigate = useNavigate();
+  const { enableNotification } = useSelector((state: RootState) => state.termsInfo);
+
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState('');
 
-  const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeNickname = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
     const regex = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z\d\s_-]{2,13}$/;
@@ -30,11 +34,16 @@ const OnBoardingProfilePage = () => {
   };
 
   const handleClickSignUp = async () => {
-    const signUpRes = await postMember({ nickname, profileImageUrl });
+    const signUpRes = await postMember({
+      nickname,
+      profileImageUrl,
+      enableNotification,
+    });
     if (signUpRes.message === '성공적으로 회원가입되었습니다.') {
       navigate('/login/complete', { state: nickname });
     }
   };
+
   const onDrop = async (acceptedFiles: any) => {
     const formdata = new FormData();
     formdata.append('uploadImage', acceptedFiles[0]);
