@@ -26,7 +26,8 @@ client.interceptors.response.use(
     if (
       response.data.errorCode === 'AT-C-0002' ||
       response.data.errorCode === 'AT-C-0001' ||
-      response.data.errorCode === 'AT-C-0004'
+      response.data.errorCode === 'AT-C-0004' ||
+      response.data.errorCode === 'AT-C-0006'
     ) {
       const originalRequest = config;
 
