@@ -5,21 +5,23 @@ import { motion } from 'framer-motion';
 import BackHeader from '@components/common/Header/BackHeader';
 import { TYPOGRAPHY } from '@styles/fonts';
 import TextButton from '@components/common/TextButton';
-import { logout } from '@api/auth';
-import { useNavigate } from 'react-router-dom';
-import { deleteCookie } from '@utils/cookie';
 import Spacing from '@components/common/Spacing';
 import Icon from '@components/common/Icon';
+import useModal from '@hooks/useModal';
+import Modal from '@components/common/Modal';
+import LogoutModal from '@components/MyPage/components/LogoutModal';
 
 const SettingPage = () => {
-  const navigate = useNavigate();
-  const handleClickLogout = async () => {
-    const res = await logout();
-    if (res.message === '성공적으로 로그아웃 되었습니다.') {
-      deleteCookie('accessToken');
-      navigate('/login');
-    }
+  const {
+    isShowModal: isShowLogoutModal,
+    openModal: openLogoutModal,
+    closeModal: closeLogoutModal,
+  } = useModal();
+
+  const handleClickLogout = () => {
+    openLogoutModal();
   };
+
   return (
     <SettingPageWrappr
       initial={{ opacity: 0 }}
@@ -51,6 +53,11 @@ const SettingPage = () => {
         <Button onClick={handleClickLogout}>로그아웃</Button>
         <TextButton text="회원탈퇴" />
       </BottomButtonWrapper>
+      {isShowLogoutModal && (
+        <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
+          <LogoutModal closeModal={closeLogoutModal} />
+        </Modal>
+      )}
     </SettingPageWrappr>
   );
 };
