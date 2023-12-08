@@ -10,6 +10,8 @@ import Icon from '@components/common/Icon';
 import useModal from '@hooks/useModal';
 import Modal from '@components/common/Modal';
 import LogoutModal from '@components/MyPage/components/LogoutModal';
+import BottomSheet from '@components/common/BottomSheet';
+import LeaveBottomSheet from '@components/MyPage/components/LeaveBottomSheet';
 
 const SettingPage = () => {
   const {
@@ -18,9 +20,11 @@ const SettingPage = () => {
     closeModal: closeLogoutModal,
   } = useModal();
 
-  const handleClickLogout = () => {
-    openLogoutModal();
-  };
+  const {
+    isShowModal: isShowLeaveBottomSheet,
+    openModal: openLeaveBottomSheet,
+    closeModal: closeLeaveBottomSheet,
+  } = useModal();
 
   return (
     <SettingPageWrappr
@@ -50,13 +54,21 @@ const SettingPage = () => {
         </div>
       </Section>
       <BottomButtonWrapper>
-        <Button onClick={handleClickLogout}>로그아웃</Button>
-        <TextButton text="회원탈퇴" />
+        <Button onClick={openLogoutModal}>로그아웃</Button>
+        <TextButton text="회원탈퇴" onClick={openLeaveBottomSheet} />
       </BottomButtonWrapper>
       {isShowLogoutModal && (
         <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
           <LogoutModal closeModal={closeLogoutModal} />
         </Modal>
+      )}
+      {isShowLeaveBottomSheet && (
+        <BottomSheet
+          isVisible={isShowLeaveBottomSheet}
+          closeModal={closeLeaveBottomSheet}
+        >
+          <LeaveBottomSheet closeModal={closeLeaveBottomSheet} />
+        </BottomSheet>
       )}
     </SettingPageWrappr>
   );
