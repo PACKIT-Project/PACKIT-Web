@@ -59,6 +59,12 @@ export const TYPOGRAPHY: any = {
       lineHeight: '20.5px',
       letterSpacing: '-0.5px',
     },
+    BODY4_SEMIBOLD: {
+      fontSize: 14,
+      fontWeight: 600,
+      lineHeight: '16px',
+      letterSpacing: '-0.14px',
+    },
     BODY5_SEMIBOLD: {
       fontSize: 17,
       fontWeight: 600,

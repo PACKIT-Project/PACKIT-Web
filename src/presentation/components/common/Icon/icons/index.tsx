@@ -75,3 +75,5 @@ export { default as GraphicTravel } from './GraphicTravel';
 export { default as CreateTrip } from './CreateTrip';
 export { default as Key } from './Key';
 export { default as Setting } from './Setting';
+export { default as ETC } from './ETC';
+export { default as LocationPin } from './LocationPin';
