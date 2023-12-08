@@ -7,6 +7,7 @@ type TextType = {
   fontSize: number;
   lineHeight: string;
   fontWeight: number;
+  letterSpacing?: string;
   cursor?: boolean;
   onClick?: () => void;
 };
@@ -16,6 +17,7 @@ const Text = ({
   fontSize,
   lineHeight,
   fontWeight,
+  letterSpacing,
   cursor,
   onClick,
 }: TextType) => {
@@ -26,6 +28,7 @@ const Text = ({
         fontSize,
         lineHeight,
         fontWeight,
+        letterSpacing,
       }}
       cursor={String(cursor)}
       onClick={onClick}
