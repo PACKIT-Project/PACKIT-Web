@@ -7,11 +7,14 @@ import { TYPOGRAPHY } from '@styles/fonts';
 import { getTripDate } from '@utils/getDate';
 import useModal from '@hooks/useModal';
 import Modal from '@components/common/Modal';
-import { DeleteModal } from '@components/domain/TripDetail';
 import Toast from '@components/common/Toast';
 import InviteModal from './InviteModal';
+import ConfirmModal from '@components/common/Modal/ConfirmModal';
+import useDeleteTravel from '@hooks/queries/travel/useDeleteTravel';
 
 const TripList = ({ travel }: { travel: any }) => {
+  const { mutate } = useDeleteTravel();
+
   const {
     isShowModal: isShowDeleteModal,
     toggleModal: openDeleteModal,
@@ -30,6 +33,11 @@ const TripList = ({ travel }: { travel: any }) => {
 
   const { dates } = getTripDate({ start: travel.startDate, end: travel.endDate });
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
+
+  const handleClickDelete = async () => {
+    localStorage.setItem('state', 'delete_done');
+    mutate({ travelId: travel.travelId });
+  };
 
   useEffect(() => {
     const deleteStatus = localStorage.getItem('state');
@@ -82,7 +90,13 @@ const TripList = ({ travel }: { travel: any }) => {
       </div>
       {isShowDeleteModal && (
         <Modal isVisible={isShowDeleteModal} closeModal={closeDeleteModal}>
-          <DeleteModal closeModal={closeDeleteModal} travelId={travel.travelId} />
+          <ConfirmModal
+            title="여행을 삭제하시겠어요?"
+            explainText="삭제하신 항목은 복구가 불가능합니다."
+            yesText="삭제"
+            closeModal={closeDeleteModal}
+            onClick={handleClickDelete}
+          />
         </Modal>
       )}
       {isShowInviteModal && (
