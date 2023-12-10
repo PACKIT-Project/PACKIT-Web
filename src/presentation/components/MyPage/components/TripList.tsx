@@ -1,12 +1,43 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Icon from '@components/common/Icon';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 import { getTripDate } from '@utils/getDate';
+import useModal from '@hooks/useModal';
+import Modal from '@components/common/Modal';
+import { DeleteModal } from '@components/domain/TripDetail';
+import Toast from '@components/common/Toast';
 
 const TripList = ({ travel }: { travel: any }) => {
+  const {
+    isShowModal: isShowDeleteModal,
+    toggleModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+  } = useModal();
+  const {
+    isShowModal: isShowToast,
+    openModal: openToast,
+    closeModal: closeToast,
+  } = useModal();
+
   const { dates } = getTripDate({ start: travel.startDate, end: travel.endDate });
+  const [dropdownVisibility, setDropdownVisibility] = useState(false);
+
+  useEffect(() => {
+    const deleteStatus = localStorage.getItem('state');
+
+    if (deleteStatus === 'delete_done') {
+      openToast();
+      const timer = setTimeout(() => {
+        localStorage.removeItem('state');
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [localStorage.getItem('state')]);
+
   return (
     <TripWrapper>
       <TopWrapper>
@@ -17,13 +48,38 @@ const TripList = ({ travel }: { travel: any }) => {
             2/8
           </div>
         </div>
-        <Icon icon="ETC" cursor={true} />
+        <div className="ETCWrapper">
+          <Icon
+            icon="ETC"
+            cursor={true}
+            onClick={() => setDropdownVisibility((prev) => !prev)}
+          />
+          {dropdownVisibility && (
+            <div className="dropdown">
+              <button onClick={openDeleteModal}>
+                <Icon icon="Delete" />
+                여행 삭제
+              </button>
+              <hr />
+              <button>
+                <Icon icon="KeyWhite" />
+                여행 초대
+              </button>
+            </div>
+          )}
+        </div>
       </TopWrapper>
       <div className="travelName">{travel.title}</div>
       <div className="travelInfo">
         <Icon icon="LocationPin" />
         {travel.title}·{dates}
       </div>
+      {isShowDeleteModal && (
+        <Modal isVisible={isShowDeleteModal} closeModal={closeDeleteModal}>
+          <DeleteModal closeModal={closeDeleteModal} travelId={travel.travelId} />
+        </Modal>
+      )}
+      {isShowToast && <Toast close={closeToast}>삭제가 완료되었습니다.</Toast>}
     </TripWrapper>
   );
 };
@@ -36,6 +92,7 @@ const TripWrapper = styled.div`
   gap: 4px;
   padding: 12px 16px 12px 22px;
 
+  border-bottom: 1px solid ${COLOR.UI_GRAY_2};
   .travelName {
     ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
     color: ${COLOR.COOL_GRAY_400};
@@ -83,6 +140,55 @@ const TopWrapper = styled.div`
       font-weight: 600;
       line-height: 16px;
       letter-spacing: -0.11px;
+    }
+  }
+
+  .ETCWrapper {
+    position: relative;
+
+    .dropdown {
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      background: ${COLOR.MAIN_WHITE};
+      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+      padding: 12px 12px 12px 6px;
+      z-index: 10;
+
+      button {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        align-items: center;
+
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 16.67px;
+        color: ${COLOR.COOL_GRAY_200};
+
+        outline: none;
+        border: none;
+        background-color: inherit;
+        white-space: nowrap;
+
+        &:first-child {
+          margin-bottom: 10px;
+        }
+        &:last-child {
+          margin-top: 10px;
+        }
+      }
+
+      hr {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-40%);
+        left: 0;
+        border: 0.5px solid ${COLOR.UI_GRAY_2};
+        width: 100%;
+      }
     }
   }
 `;
