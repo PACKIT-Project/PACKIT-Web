@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import COLOR from '@styles/colors';
 import React, { useEffect } from 'react';
 import { keyframes, styled } from 'styled-components';
@@ -67,6 +68,10 @@ const ToastWrapper = styled.div`
 
   animation: ${fadeInDown} 2s forwards;
   z-index: 1000;
+
+  @media (min-width: 1024px) {
+    width: 320px;
+  }
 `;
 
 export default Toast;
