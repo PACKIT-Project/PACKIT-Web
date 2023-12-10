@@ -9,6 +9,7 @@ import useModal from '@hooks/useModal';
 import Modal from '@components/common/Modal';
 import { DeleteModal } from '@components/domain/TripDetail';
 import Toast from '@components/common/Toast';
+import InviteModal from './InviteModal';
 
 const TripList = ({ travel }: { travel: any }) => {
   const {
@@ -20,6 +21,11 @@ const TripList = ({ travel }: { travel: any }) => {
     isShowModal: isShowToast,
     openModal: openToast,
     closeModal: closeToast,
+  } = useModal();
+  const {
+    isShowModal: isShowInviteModal,
+    openModal: openInviteModal,
+    closeModal: closeInviteModal,
   } = useModal();
 
   const { dates } = getTripDate({ start: travel.startDate, end: travel.endDate });
@@ -61,7 +67,7 @@ const TripList = ({ travel }: { travel: any }) => {
                 여행 삭제
               </button>
               <hr />
-              <button>
+              <button onClick={openInviteModal}>
                 <Icon icon="KeyWhite" />
                 여행 초대
               </button>
@@ -77,6 +83,11 @@ const TripList = ({ travel }: { travel: any }) => {
       {isShowDeleteModal && (
         <Modal isVisible={isShowDeleteModal} closeModal={closeDeleteModal}>
           <DeleteModal closeModal={closeDeleteModal} travelId={travel.travelId} />
+        </Modal>
+      )}
+      {isShowInviteModal && (
+        <Modal isVisible={isShowInviteModal} closeModal={closeInviteModal}>
+          <InviteModal closeModal={closeInviteModal} travel={travel} />
         </Modal>
       )}
       {isShowToast && <Toast close={closeToast}>삭제가 완료되었습니다.</Toast>}
