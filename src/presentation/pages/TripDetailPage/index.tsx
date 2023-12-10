@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import BackHeader from "@components/common/BackHeader";
-import Spacing from "@components/common/Spacing";
-import Modal from "@components/common/Modal";
-import Icon from "@components/common/Icon";
-import Tag from "@components/common/Tag";
-import Text from "@components/common/Text";
-import COLOR from "@styles/colors";
-import { getTripDetailRange } from "@utils/getDate";
-import useModal from "../../../application/hooks/useModal";
-import { ShareModal, DeleteModal } from "@components/domain/TripDetail";
-import useGetTravelDetail from "@hooks/queries/travel/useGetTravelDetail";
-import usePostNewChecklist from "@hooks/queries/checklist/usePostNewChecklist";
-import useDeleteChecklist from "@hooks/queries/checklist/useDeleteChecklist";
-import useDeleteTravel from "@hooks/queries/travel/useDeleteTravel";
-import usePostNewItem from "@hooks/queries/item/usePostNewItem";
-import useItemCheck from "@hooks/queries/item/useItemCheck";
-import useDeleteItem from "@hooks/queries/item/useDeleteItem";
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import BackHeader from '@components/common/BackHeader';
+import Spacing from '@components/common/Spacing';
+import Modal from '@components/common/Modal';
+import Icon from '@components/common/Icon';
+import Tag from '@components/common/Tag';
+import Text from '@components/common/Text';
+import COLOR from '@styles/colors';
+import { getTripDetailRange } from '@utils/getDate';
+import useModal from '../../../application/hooks/useModal';
+import { ShareModal, DeleteModal } from '@components/domain/TripDetail';
+import useGetTravelDetail from '@hooks/queries/travel/useGetTravelDetail';
+import usePostNewChecklist from '@hooks/queries/checklist/usePostNewChecklist';
+import useDeleteChecklist from '@hooks/queries/checklist/useDeleteChecklist';
+import useDeleteTravel from '@hooks/queries/travel/useDeleteTravel';
+import usePostNewItem from '@hooks/queries/item/usePostNewItem';
+import useItemCheck from '@hooks/queries/item/useItemCheck';
+import useDeleteItem from '@hooks/queries/item/useDeleteItem';
 
-import { AddCheckList } from "@components/domain/CheckList";
-import { checkList } from "@type/checkList";
-import { DESTINATION } from "@constants";
+import { AddCheckList } from '@components/domain/CheckList';
+import { checkList } from '@type/checkList';
+import { DESTINATION } from '@constants';
 import {
   TagWrapper,
   ContentWrapper,
@@ -38,12 +38,12 @@ import {
   CheckListWrapper,
   AddTodoButton,
   PopupInner,
-} from "./style";
-import { produce } from "immer";
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-import Toast from "@components/common/Toast";
-import HeartButton from "@components/common/HeartButton";
+} from './style';
+import { produce } from 'immer';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store';
+import Toast from '@components/common/Toast';
+import HeartButton from '@components/common/HeartButton';
 
 interface State {
   checkListState: checkList[];
@@ -58,8 +58,8 @@ const TripDetailPage = () => {
     usePostNewChecklist();
   const { mutate: deleteChecklistMutate /*data , isLoading, error*/ } =
     useDeleteChecklist();
-  const { mutate: deleteTravelMutate /*data , isLoading, error*/ } =
-    useDeleteTravel();
+  // const { mutate: deleteTravelMutate /*data , isLoading, error*/ } =
+  //   useDeleteTravel();
   const { mutate: postNewItemMutate /*data , isLoading, error*/ } = usePostNewItem();
   const { mutate: itemCheckMutate /*data , isLoading, error*/ } = useItemCheck();
   const { mutate: deleteItemMutate /*data , isLoading, error*/ } = useDeleteItem();
@@ -96,7 +96,7 @@ const TripDetailPage = () => {
 
   const onClickDeleteButton = () => {
     toggleDeleteModal();
-    deleteTravelMutate({ travelId: Number(tripId) }); // travelId 수정 필요
+    // deleteTravelMutate({ travelId: Number(tripId) }); // travelId 수정 필요
   };
 
   //여행 수정 페이지로 이동
@@ -105,7 +105,7 @@ const TripDetailPage = () => {
   };
   //checklist 추가
   const onClickAdd = () => {
-    postNewChecklistMutate({ travelId: Number(tripId), title: "" }); // travelId 수정 필요
+    postNewChecklistMutate({ travelId: Number(tripId), title: '' }); // travelId 수정 필요
     /*
     setCheckList((prev) =>
       produce(prev, (draft) => {
@@ -141,7 +141,7 @@ const TripDetailPage = () => {
     postNewItemMutate({
       travelId: Number(tripId),
       checkListId: checkListId,
-      title: "",
+      title: '',
     }); // travelId 수정 필요
 
     setCheckList((prev) =>
@@ -150,7 +150,7 @@ const TripDetailPage = () => {
           if (checklist.checkListId === checkListId) {
             checklist.itemDtoList.push({
               itemId: id,
-              title: "",
+              title: '',
               order: id,
               isChecked: false,
             });
@@ -237,17 +237,17 @@ const TripDetailPage = () => {
             <Tag
               text={data?.dDay}
               backgroundColor={
-                data?.dDay.includes("-") ? COLOR.GREEN_100 : COLOR.GRAY_200
+                data?.dDay.includes('-') ? COLOR.GREEN_100 : COLOR.GRAY_200
               }
-              color={data?.dDay.includes("-") ? COLOR.MAIN_GREEN : "#5C5F64"}
+              color={data?.dDay.includes('-') ? COLOR.MAIN_GREEN : '#5C5F64'}
             />
             <Tag
               text={DESTINATION[data?.destinationType]}
               backgroundColor={
-                DESTINATION[data?.destinationType] === "해외" ? "#D1DEFF" : "#FFE2D1"
+                DESTINATION[data?.destinationType] === '해외' ? '#D1DEFF' : '#FFE2D1'
               }
               color={
-                DESTINATION[data?.destinationType] === "해외" ? "#5F8BFB" : "#FE984E"
+                DESTINATION[data?.destinationType] === '해외' ? '#5F8BFB' : '#FE984E'
               }
             />
           </TagWrapper>
@@ -328,9 +328,9 @@ const TripDetailPage = () => {
           <ShareModal closeModal={closeShareModal} travelId={String(tripId)} />
         </Modal>
         <Modal isVisible={isShowDeleteModal} closeModal={closeDeleteModal}>
-          <DeleteModal closeModal={closeDeleteModal} />
+          {/* <DeleteModal closeModal={closeDeleteModal} /> */}
         </Modal>
-        {state === "main" && (
+        {state === 'main' && (
           <Toast close={popupCloseModal}>
             <PopupInner>
               <Icon icon="Check" />

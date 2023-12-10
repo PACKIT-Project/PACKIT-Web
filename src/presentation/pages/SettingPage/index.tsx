@@ -5,21 +5,28 @@ import { motion } from 'framer-motion';
 import BackHeader from '@components/common/Header/BackHeader';
 import { TYPOGRAPHY } from '@styles/fonts';
 import TextButton from '@components/common/TextButton';
-import { logout } from '@api/auth';
-import { useNavigate } from 'react-router-dom';
-import { deleteCookie } from '@utils/cookie';
 import Spacing from '@components/common/Spacing';
 import Icon from '@components/common/Icon';
+import useModal from '@hooks/useModal';
+import Modal from '@components/common/Modal';
+import LogoutModal from '@components/MyPage/components/LogoutModal';
+import BottomSheet from '@components/common/BottomSheet';
+import LeaveBottomSheet from '@components/MyPage/components/LeaveBottomSheet';
+import Hr from '@components/common/Hr';
 
 const SettingPage = () => {
-  const navigate = useNavigate();
-  const handleClickLogout = async () => {
-    const res = await logout();
-    if (res.message === '성공적으로 로그아웃 되었습니다.') {
-      deleteCookie('accessToken');
-      navigate('/login');
-    }
-  };
+  const {
+    isShowModal: isShowLogoutModal,
+    openModal: openLogoutModal,
+    closeModal: closeLogoutModal,
+  } = useModal();
+
+  const {
+    isShowModal: isShowLeaveBottomSheet,
+    openModal: openLeaveBottomSheet,
+    closeModal: closeLeaveBottomSheet,
+  } = useModal();
+
   return (
     <SettingPageWrappr
       initial={{ opacity: 0 }}
@@ -34,23 +41,51 @@ const SettingPage = () => {
           <div className="content">
             알림 설정 <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
           </div>
+          <Hr height={9.5} color={COLOR.UI_GRAY_1} />
         </div>
         <div className="section">
-          <div className="title">정보</div>
-          <div className="content border">
+          <div className="title gap">정보</div>
+          <div className="content">
             약관 및 정책
             <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
           </div>
+          <Hr height={1} color={COLOR.UI_GRAY_1} />
           <div className="content">
             개인정보 처리방침
             <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
           </div>
+          <Hr height={9.5} color={COLOR.UI_GRAY_1} />
+        </div>
+        <div className="section">
+          <div className="title gap">기타</div>
+          <div className="content">
+            고객센터
+            <div className="contentText">PPACKITT@gmail.com</div>
+          </div>
+          <Hr height={1} color={COLOR.UI_GRAY_1} />
+          <div className="content">
+            버전 정보
+            <div className="contentText">최신 버전</div>
+          </div>
         </div>
       </Section>
       <BottomButtonWrapper>
-        <Button onClick={handleClickLogout}>로그아웃</Button>
-        <TextButton text="회원탈퇴" />
+        <Button onClick={openLogoutModal}>로그아웃</Button>
+        <TextButton text="회원탈퇴" onClick={openLeaveBottomSheet} />
       </BottomButtonWrapper>
+      {isShowLogoutModal && (
+        <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
+          <LogoutModal closeModal={closeLogoutModal} />
+        </Modal>
+      )}
+      {isShowLeaveBottomSheet && (
+        <BottomSheet
+          isVisible={isShowLeaveBottomSheet}
+          closeModal={closeLeaveBottomSheet}
+        >
+          <LeaveBottomSheet closeModal={closeLeaveBottomSheet} />
+        </BottomSheet>
+      )}
     </SettingPageWrappr>
   );
 };
@@ -58,7 +93,6 @@ const SettingPage = () => {
 export default SettingPage;
 
 const SettingPageWrappr = styled(motion.div)`
-  position: relative;
   height: 100%;
   padding: 0 25px;
   background-color: ${COLOR.WHITE};
@@ -68,9 +102,15 @@ const Section = styled.div`
   padding: 0 5px;
   .section {
     .title {
-      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      height: 31px;
+      box-sizing: border-box;
       ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
       color: ${COLOR.UI_GRAY_4};
+    }
+    .gap {
+      margin-top: 9.5px;
     }
     .content {
       display: flex;
@@ -79,6 +119,14 @@ const Section = styled.div`
       padding: 19px 0;
       ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
       color: ${COLOR.COOL_GRAY_500};
+
+      .contentText {
+        ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
+        color: ${COLOR.COOL_GRAY_100};
+      }
+    }
+    .border {
+      border-bottom: 1px solid ${COLOR.UI_GRAY_1};
     }
   }
 `;

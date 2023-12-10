@@ -1,6 +1,7 @@
-import COLOR from "@styles/colors";
-import React, { useEffect } from "react";
-import { keyframes, styled } from "styled-components";
+import COLOR from '@styles/colors';
+import React, { useEffect } from 'react';
+import { keyframes, styled } from 'styled-components';
+import Icon from '../Icon';
 
 const fadeInDown = keyframes`
    0% {
@@ -31,7 +32,12 @@ const Toast = ({
     }, 2000);
   }, []);
 
-  return <ToastWrapper>{children}</ToastWrapper>;
+  return (
+    <ToastWrapper>
+      <Icon icon="CircleCheckFill" />
+      {children}
+    </ToastWrapper>
+  );
 };
 
 const ToastWrapper = styled.div`
@@ -41,18 +47,20 @@ const ToastWrapper = styled.div`
 
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 16px;
 
-  width: fit-content;
+  width: 80%;
+  box-sizing: border-box;
 
-  border-radius: 16px;
-  background-color: ${COLOR.GRAY_900};
-  padding: 18px 50px;
+  border-radius: 8px;
+  background-color: ${COLOR.COOL_GRAY_400};
+  padding: 18px 24px;
 
   color: ${COLOR.WHITE};
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.22);
 
   align-items: center;
   white-space: nowrap;

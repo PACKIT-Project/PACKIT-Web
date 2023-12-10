@@ -49,6 +49,7 @@ const COLOR = {
   UI_GRAY_2: '#E9ECF0',
   UI_GRAY_3: '#D0D9E3',
   UI_GRAY_4: '#9FA8B3',
+  UI_GRAY_5: '#8E99A6',
 
   ALERT_WARNING: '#FF3049',
 };

@@ -30,6 +30,8 @@ export default MainContent;
 
 const MainContentWrapper = styled.div`
   height: calc(100% - 209px);
+  overflow-y: auto;
+
   .navWrapper {
     ${TYPOGRAPHY.TEXT.BODY5_SEMIBOLD};
     display: flex;

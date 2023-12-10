@@ -1,27 +1,20 @@
-import React from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { deleteTravel } from "@api/travel";
-
-interface MutationProps {
-  travelId: number;
-}
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteTravel } from '@api/travel';
 
 const useDeleteTravel = () => {
-
   const queryClient = useQueryClient();
 
-  const { mutate, data : responseData, isLoading, error } = useMutation(
-    async ({ travelId } : MutationProps) => await deleteTravel(travelId),
+  const { mutate, isSuccess } = useMutation(
+    async ({ travelId }: { travelId: number }) => await deleteTravel(travelId),
     {
-      onSuccess : (data) => {
-        //queryClient.invalidateQueries(["getTravelDetail"]); 
-      },
-      onError : (error) => {
+      onSuccess: () => {
+        queryClient.invalidateQueries('mytravels');
       },
     }
   );
-  const data = responseData?.data;
-  return { mutate, data, isLoading, error };
+
+  return { mutate, isSuccess };
 };
 
 export default useDeleteTravel;
