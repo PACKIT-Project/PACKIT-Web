@@ -9,12 +9,17 @@ import Spacing from '@components/common/Spacing';
 import Icon from '@components/common/Icon';
 import useModal from '@hooks/useModal';
 import Modal from '@components/common/Modal';
-import LogoutModal from '@components/MyPage/components/LogoutModal';
 import BottomSheet from '@components/common/BottomSheet';
 import LeaveBottomSheet from '@components/MyPage/components/LeaveBottomSheet';
 import Hr from '@components/common/Hr';
+import ConfirmModal from '@components/common/Modal/ConfirmModal';
+import { logout } from '@api/auth';
+import { useNavigate } from 'react-router-dom';
+import { deleteCookie } from '@utils/cookie';
 
 const SettingPage = () => {
+  const navigate = useNavigate();
+
   const {
     isShowModal: isShowLogoutModal,
     openModal: openLogoutModal,
@@ -26,6 +31,15 @@ const SettingPage = () => {
     openModal: openLeaveBottomSheet,
     closeModal: closeLeaveBottomSheet,
   } = useModal();
+
+  const handleClickLogout = async () => {
+    const result = await logout();
+    if (result.message === '성공적으로 로그아웃되었습니다.') {
+      deleteCookie('accessToken');
+      closeLogoutModal();
+      navigate('/login');
+    }
+  };
 
   return (
     <SettingPageWrappr
@@ -75,7 +89,12 @@ const SettingPage = () => {
       </BottomButtonWrapper>
       {isShowLogoutModal && (
         <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
-          <LogoutModal closeModal={closeLogoutModal} />
+          <ConfirmModal
+            title="로그아웃 하시겠습니까?"
+            yesText="확인"
+            closeModal={closeLogoutModal}
+            onClick={handleClickLogout}
+          />
         </Modal>
       )}
       {isShowLeaveBottomSheet && (
