@@ -12,6 +12,7 @@ import Modal from '@components/common/Modal';
 import LogoutModal from '@components/MyPage/components/LogoutModal';
 import BottomSheet from '@components/common/BottomSheet';
 import LeaveBottomSheet from '@components/MyPage/components/LeaveBottomSheet';
+import Hr from '@components/common/Hr';
 
 const SettingPage = () => {
   const {
@@ -40,16 +41,31 @@ const SettingPage = () => {
           <div className="content">
             알림 설정 <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
           </div>
+          <Hr height={9.5} color={COLOR.UI_GRAY_1} />
         </div>
         <div className="section">
-          <div className="title">정보</div>
-          <div className="content border">
+          <div className="title gap">정보</div>
+          <div className="content">
             약관 및 정책
             <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
           </div>
+          <Hr height={1} color={COLOR.UI_GRAY_1} />
           <div className="content">
             개인정보 처리방침
             <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
+          </div>
+          <Hr height={9.5} color={COLOR.UI_GRAY_1} />
+        </div>
+        <div className="section">
+          <div className="title gap">기타</div>
+          <div className="content">
+            고객센터
+            <div className="contentText">PPACKITT@gmail.com</div>
+          </div>
+          <Hr height={1} color={COLOR.UI_GRAY_1} />
+          <div className="content">
+            버전 정보
+            <div className="contentText">최신 버전</div>
           </div>
         </div>
       </Section>
@@ -77,7 +93,6 @@ const SettingPage = () => {
 export default SettingPage;
 
 const SettingPageWrappr = styled(motion.div)`
-  position: relative;
   height: 100%;
   padding: 0 25px;
   background-color: ${COLOR.WHITE};
@@ -87,9 +102,15 @@ const Section = styled.div`
   padding: 0 5px;
   .section {
     .title {
-      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      height: 31px;
+      box-sizing: border-box;
       ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
       color: ${COLOR.UI_GRAY_4};
+    }
+    .gap {
+      margin-top: 9.5px;
     }
     .content {
       display: flex;
@@ -98,6 +119,14 @@ const Section = styled.div`
       padding: 19px 0;
       ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
       color: ${COLOR.COOL_GRAY_500};
+
+      .contentText {
+        ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
+        color: ${COLOR.COOL_GRAY_100};
+      }
+    }
+    .border {
+      border-bottom: 1px solid ${COLOR.UI_GRAY_1};
     }
   }
 `;
