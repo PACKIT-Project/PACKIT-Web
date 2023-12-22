@@ -13,13 +13,19 @@ import BottomButton from '../common/BottomButton';
 import { useNavigate } from 'react-router-dom';
 import Icon from '@components/common/Icon';
 import { TYPOGRAPHY } from '@styles/fonts';
+import useGetDestination from '../../../infrastructure/queries/destination/useGetDestination';
+import DestinationList from './components/DestinationList';
 
 const Step1 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { state } = useSelector((state: RootState) => state.createTrip);
+  const { state, destinationId } = useSelector(
+    (state: RootState) => state.createTrip
+  );
   const [place, setPlace] = useState('');
+  const { data: destinations } = useGetDestination(place);
+
   const recent = [
     '도쿄',
     '베를린',
@@ -74,6 +80,9 @@ const Step1 = () => {
           <Icon icon="Search" fill={place !== '' ? '#000' : '#B9BFC7'} />
         </div>
       </InputContainer>
+      {destinations && !destinationId && (
+        <DestinationList destinations={destinations} />
+      )}
       {recent && (
         <>
           <Spacing size={40} />
