@@ -1,9 +1,9 @@
 export interface CreateTripType {
   tripType?: string;
-  tripName?: string;
-  destinationId?: number;
-  destination?: string;
-  tripRange?: TripRangeType;
+  tripName: string;
+  destinationId: number;
+  destination: string;
+  tripRange: TripRangeType;
   checkCount?: string;
   state?: string;
   tripId?: number;
@@ -19,9 +19,8 @@ export interface TripRangeType {
 
 // api 호출 시 사용할 매개변수 타입
 export interface CreateTripProps {
-  memberId: number;
   title: string;
-  destinationType: string;
+  destinationId: number;
   startDate: string;
   endDate: string;
 }

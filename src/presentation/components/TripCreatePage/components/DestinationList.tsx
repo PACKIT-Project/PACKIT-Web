@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { changeCreateTripState } from '@reducer/slices/createTrip/createTripSlice';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { useNavigate } from 'react-router-dom';
 
 interface DestinationType {
   id: number;
@@ -12,6 +13,7 @@ interface DestinationType {
 }
 const DestinationList = ({ destinations }: { destinations: DestinationType[] }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClickDestination = (destination: DestinationType) => {
     dispatch(
@@ -20,6 +22,7 @@ const DestinationList = ({ destinations }: { destinations: DestinationType[] }) 
     dispatch(
       changeCreateTripState({ type: 'destination', value: destination.city })
     );
+    navigate('/trip-create/2');
   };
 
   return (

@@ -1,9 +1,9 @@
-import client from "@api/index";
-import { CreateTripProps } from "@type/createTrip";
+import client from '@api/index';
+import { CreateTripProps } from '@type/createTrip';
 
 export const createTravel = async (travelInfo: CreateTripProps) =>
   await client
-    .post("/travels", travelInfo)
+    .post('/travels/new', travelInfo)
     .then(({ data }) => data)
     .catch((err) => err.response);
 
@@ -25,13 +25,13 @@ export const deleteTravel = async (travelId: number) =>
 
 export const getUpcomingTravles = async () =>
   await client
-    .get("/travels/upcoming")
+    .get('/travels/upcoming')
     .then(({ data }) => data)
     .catch((err) => err.response);
 
 export const getPastTravles = async () =>
   await client
-    .get("/travels/past")
+    .get('/travels/past')
     .then(({ data }) => data)
     .catch((err) => err.response);
 

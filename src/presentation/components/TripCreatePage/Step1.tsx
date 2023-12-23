@@ -9,8 +9,6 @@ import {
   changeCreateTripState,
   initializeCreateTripInfo,
 } from '../../../application/reducer/slices/createTrip/createTripSlice';
-import BottomButton from '../common/BottomButton';
-import { useNavigate } from 'react-router-dom';
 import Icon from '@components/common/Icon';
 import { TYPOGRAPHY } from '@styles/fonts';
 import useGetDestination from '../../../infrastructure/queries/destination/useGetDestination';
@@ -18,7 +16,6 @@ import DestinationList from './components/DestinationList';
 
 const Step1 = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { state, destinationId } = useSelector(
     (state: RootState) => state.createTrip
@@ -51,10 +48,6 @@ const Step1 = () => {
 
   const handleChangeTripPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlace(e.target.value);
-  };
-  const handleClickNextBtn = () => {
-    dispatch(changeCreateTripState({ type: 'tripName', value: place }));
-    navigate('/trip-create/2');
   };
 
   return (
@@ -102,12 +95,6 @@ const Step1 = () => {
           </RecentKeyword>
         </>
       )}
-
-      <BottomButton
-        disabled={place === '' ? true : false}
-        text="다음"
-        onClick={handleClickNextBtn}
-      />
     </StepWrapper>
   );
 };
