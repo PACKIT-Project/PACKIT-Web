@@ -31,12 +31,15 @@ const TripList = ({ travel }: { travel: any }) => {
     closeModal: closeInviteModal,
   } = useModal();
 
-  const { dates } = getTripDate({ start: travel.startDate, end: travel.endDate });
+  const { dates } = getTripDate(
+    { start: travel.startDate, end: travel.endDate },
+    '.'
+  );
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
 
   const handleClickDelete = async () => {
     localStorage.setItem('state', 'delete_done');
-    mutate({ travelId: travel.travelId });
+    mutate({ travelId: travel.id });
   };
 
   useEffect(() => {
@@ -56,10 +59,16 @@ const TripList = ({ travel }: { travel: any }) => {
     <TripWrapper>
       <TopWrapper>
         <div className="info">
-          <div className="dDay">{travel.dDay}</div>
+          <div className="dDay">
+            {travel.dDay === '0'
+              ? 'D-day'
+              : `D${Number(travel.dDay) >= 0 ? '-' : '+'}${
+                  -1 * Number(travel.dDay)
+                }`}
+          </div>
           <div className="person">
             <Icon icon="User" width={14} height={14} color={COLOR.UI_GRAY_5} />
-            2/8
+            {travel.memberNum}/8
           </div>
         </div>
         <div className="ETCWrapper">
@@ -86,7 +95,7 @@ const TripList = ({ travel }: { travel: any }) => {
       <div className="travelName">{travel.title}</div>
       <div className="travelInfo">
         <Icon icon="LocationPin" />
-        {travel.title}·{dates}
+        {travel.destination}·{dates}
       </div>
       {isShowDeleteModal && (
         <Modal isVisible={isShowDeleteModal} closeModal={closeDeleteModal}>
