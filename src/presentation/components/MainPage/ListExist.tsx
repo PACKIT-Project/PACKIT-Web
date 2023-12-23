@@ -4,7 +4,7 @@ import Icon from '@components/common/Icon';
 import useModal from '../../../application/hooks/useModal';
 import Modal from '@components/common/Modal';
 import COLOR from '@styles/colors';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TemplateModal from './components/TemplateModal';
 import { useDispatch } from 'react-redux';
 import {
@@ -14,7 +14,7 @@ import {
 import BottomSheet from '@components/common/BottomSheet';
 import { useEffect, useState } from 'react';
 import CalendarModal from './components/CalendarModal';
-import RecentTrip from './components/RecentTrip';
+import TripMain from './components/TripMain';
 
 const ListExist = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,6 @@ const ListExist = () => {
     toggleModal: toggleTemplate,
     closeModal: closeTemplate,
   } = useModal();
-
   const [clicked, setClicked] = useState(false); // 템플릿 선택 -> 선택하기 클릭 유무를 통해 캘린더 보여주기 위한 임시 값
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const ListExist = () => {
   return (
     <ListExistWrapper>
       <Spacing size={20} />
-      <RecentTrip />
+      <TripMain />
       <IconWrapper>
         {isShowModal ? (
           <Modal isVisible={isShowModal} closeModal={closeModal}>
