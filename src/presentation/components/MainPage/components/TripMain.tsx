@@ -10,8 +10,10 @@ import useModal from '@hooks/useModal';
 import Modal from '@components/common/Modal';
 import InviteModal from '@components/MyPage/components/InviteModal';
 import Toast from '@components/common/Toast';
+import BottomSheet from '@components/common/BottomSheet';
+import TripList from './TripList';
 
-const RecentTrip = () => {
+const RecentMain = () => {
   const {
     isShowModal: isShowInviteModal,
     openModal: openInviteModal,
@@ -21,6 +23,11 @@ const RecentTrip = () => {
     isShowModal: isShowToast,
     openModal: openToast,
     closeModal: closeToast,
+  } = useModal();
+  const {
+    isShowModal: isShowTravelBottomSheet,
+    openModal: openTravelBottomSheet,
+    closeModal: closeTravelBottomSheet,
   } = useModal();
 
   const [travel, setTravel] = useState<any>();
@@ -47,7 +54,7 @@ const RecentTrip = () => {
   }, []);
 
   return (
-    <RecentTripWrapper>
+    <RecentMainWrapper>
       {travel && (
         <TripInfoWrapper>
           <TopWrapper>
@@ -66,8 +73,8 @@ const RecentTrip = () => {
             </div>
           </TopWrapper>
           <MiddleWrapper>
-            <div className="travelName">
-              {travel.title} <Icon icon="TripToggle" />
+            <div className="travelName" onClick={openTravelBottomSheet}>
+              {travel.title} <Icon icon="TripToggle" cursor={true} />
             </div>
             <div className="ETCWrapper">
               <Icon
@@ -121,13 +128,21 @@ const RecentTrip = () => {
         </Modal>
       )}
       {isShowToast && <Toast close={closeToast}>복사가 완료되었습니다.</Toast>}
-    </RecentTripWrapper>
+      {isShowTravelBottomSheet && (
+        <BottomSheet
+          isVisible={isShowTravelBottomSheet}
+          closeModal={closeTravelBottomSheet}
+        >
+          <TripList />
+        </BottomSheet>
+      )}
+    </RecentMainWrapper>
   );
 };
 
-export default RecentTrip;
+export default RecentMain;
 
-const RecentTripWrapper = styled.div``;
+const RecentMainWrapper = styled.div``;
 
 const TripInfoWrapper = styled.div`
   display: flex;
@@ -193,6 +208,8 @@ const MiddleWrapper = styled.div`
     font-weight: 700;
     line-height: 18px;
     color: ${COLOR.COOL_GRAY_400};
+
+    cursor: pointer;
   }
 
   .ETCWrapper {
