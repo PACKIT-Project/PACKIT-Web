@@ -8,6 +8,13 @@ export const createTravel = async (travelInfo: CreateTripProps) =>
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 현재 동행자 수 확인 & 초대코드
+export const getMemberAndCode = async (travelId: number) =>
+  await client
+    .get(`/travels/invitations/${travelId}`)
+    .then(({ data }) => data.data)
+    .catch((err) => err.response);
+
 export const modifyTravel = async ({ travelId, travelInfo }: any) =>
   await client
     .patch(`/travels/${travelId}`, {

@@ -4,16 +4,21 @@ import COLOR from '@styles/colors';
 import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
-import { clipboardShare } from '@utils/clipboardShare';
 import { shareKakao } from '@utils/shareKakaoLink';
+import useGetMembersAndCode from '../../../../infrastructure/queries/travel/useGetMembersAndCode';
+import { shareInviteCode } from '@utils/shareInviteCode';
 
 const InviteModal = ({
   closeModal,
   travel,
+  openToast,
 }: {
   closeModal: () => void;
   travel: any;
+  openToast: () => void;
 }) => {
+  const { data } = useGetMembersAndCode(travel.id);
+
   return (
     <InviteModalWrapper>
       <Header>
@@ -35,8 +40,10 @@ const InviteModal = ({
             ...TYPOGRAPHY.TITLE.SUBHEADING1_SEMIBOLD,
           }}
         >
-          <span style={{ color: COLOR.MAIN_BLUE }}>5명 </span>
-          <span style={{ color: COLOR.COOL_GRAY_300 }}>(3명 남음)</span>
+          <span style={{ color: COLOR.MAIN_BLUE }}>{data.peopleNum}명 </span>
+          <span style={{ color: COLOR.COOL_GRAY_300 }}>{`(${
+            8 - data.peopleNum
+          }명 남음)`}</span>
         </div>
       </div>
       <Spacing size={6} />
@@ -57,7 +64,7 @@ const InviteModal = ({
         <div
           className="code"
           onClick={() => {
-            clipboardShare(travel.travelId);
+            shareInviteCode({ invitationCode: data.invitationCode, openToast });
           }}
         >
           <Icon icon="InviteCode" cursor={true} />

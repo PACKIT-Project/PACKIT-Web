@@ -6,8 +6,23 @@ import { TYPOGRAPHY } from '@styles/fonts';
 import Icon from '@components/common/Icon';
 import { getTripDate } from '@utils/getDate';
 import MemberProfile from './MemberProfile';
+import useModal from '@hooks/useModal';
+import Modal from '@components/common/Modal';
+import InviteModal from '@components/MyPage/components/InviteModal';
+import Toast from '@components/common/Toast';
 
 const RecentTrip = () => {
+  const {
+    isShowModal: isShowInviteModal,
+    openModal: openInviteModal,
+    closeModal: closeInviteModal,
+  } = useModal();
+  const {
+    isShowModal: isShowToast,
+    openModal: openToast,
+    closeModal: closeToast,
+  } = useModal();
+
   const [travel, setTravel] = useState<any>();
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dates, setDates] = useState<string>('');
@@ -86,7 +101,7 @@ const RecentTrip = () => {
         {members.map((member) => (
           <MemberProfile key={member.memberId} member={member} />
         ))}
-        <button>
+        <button onClick={openInviteModal}>
           <Icon
             icon="Plus"
             width={14}
@@ -96,6 +111,16 @@ const RecentTrip = () => {
           />
         </button>
       </MemberWrapper>
+      {isShowInviteModal && (
+        <Modal isVisible={isShowInviteModal} closeModal={closeInviteModal}>
+          <InviteModal
+            closeModal={closeInviteModal}
+            travel={travel}
+            openToast={openToast}
+          />
+        </Modal>
+      )}
+      {isShowToast && <Toast close={closeToast}>복사가 완료되었습니다.</Toast>}
     </RecentTripWrapper>
   );
 };
