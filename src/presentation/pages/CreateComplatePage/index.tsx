@@ -29,6 +29,8 @@ const CreateComplatePage = () => {
 
 const CreateComplateWrapper = styled.div`
   padding: 0 20px;
+  background-color: ${COLOR.MAIN_WHITE};
+  height: 100%;
 `;
 
 const TextWrapper = styled.div`

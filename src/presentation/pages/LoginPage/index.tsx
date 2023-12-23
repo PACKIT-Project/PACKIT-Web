@@ -28,13 +28,13 @@ const LoginPage = () => {
         <ButtonWrapper>
           <ButtonContainer>
             <Link to={kakaoUrl}>
-              <Icon icon="AuthKakao" />
+              <Icon icon="AuthKakao" cursor={true} />
             </Link>
             <Link to={naverUrl}>
-              <Icon icon="AuthNaver" />
+              <Icon icon="AuthNaver" cursor={true} />
             </Link>
             <Link to={naverUrl}>
-              <Icon icon="AuthApple" />
+              <Icon icon="AuthApple" cursor={true} />
             </Link>
           </ButtonContainer>
         </ButtonWrapper>
