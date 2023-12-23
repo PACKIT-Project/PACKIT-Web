@@ -1,7 +1,6 @@
 import Spacing from '@components/common/Spacing';
 import { styled } from 'styled-components';
 import Icon from '@components/common/Icon';
-import TripList from './components/TripList';
 import useModal from '../../../application/hooks/useModal';
 import Modal from '@components/common/Modal';
 import COLOR from '@styles/colors';
@@ -15,6 +14,7 @@ import {
 import BottomSheet from '@components/common/BottomSheet';
 import { useEffect, useState } from 'react';
 import CalendarModal from './components/CalendarModal';
+import RecentTrip from './components/RecentTrip';
 
 const ListExist = () => {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ const ListExist = () => {
   return (
     <ListExistWrapper>
       <Spacing size={20} />
-      <TripList />
+      <RecentTrip />
       <IconWrapper>
         {isShowModal ? (
           <Modal isVisible={isShowModal} closeModal={closeModal}>
@@ -93,9 +93,7 @@ const ListExist = () => {
   );
 };
 
-const ListExistWrapper = styled.div`
-  padding: 0 20px;
-`;
+const ListExistWrapper = styled.div``;
 const IconWrapper = styled.div`
   position: fixed;
   bottom: 10px;
