@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { getUpcomingTravles } from '@api/travel';
+import { getTravelMembers, getUpcomingTravles } from '@api/travel';
 import styled from 'styled-components';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 import Icon from '@components/common/Icon';
 import { getTripDate } from '@utils/getDate';
+import MemberProfile from './MemberProfile';
 
 const RecentTrip = () => {
   const [travel, setTravel] = useState<any>();
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dates, setDates] = useState<string>('');
+  const [members, setMembers] = useState<any[]>([]);
 
   useEffect(() => {
     const getRecentTravel = async () => {
@@ -20,6 +22,11 @@ const RecentTrip = () => {
         '.'
       ).dates;
       setDates(tripDates);
+
+      const memberRes = await getTravelMembers(recent.data[0].id);
+      if (memberRes.message === '동행자 목록 조회에 성공했습니다.') {
+        setMembers(memberRes.data);
+      }
     };
     getRecentTravel();
   }, []);
@@ -27,7 +34,7 @@ const RecentTrip = () => {
   return (
     <RecentTripWrapper>
       {travel && (
-        <TripWrapper>
+        <TripInfoWrapper>
           <TopWrapper>
             <div className="info">
               <div className="dDay">
@@ -68,13 +75,27 @@ const RecentTrip = () => {
               )}
             </div>
           </MiddleWrapper>
-
           <div className="travelInfo">
             <Icon icon="LocationPin" />
             {travel.destination}·{dates}
           </div>
-        </TripWrapper>
+        </TripInfoWrapper>
       )}
+
+      <MemberWrapper>
+        {members.map((member) => (
+          <MemberProfile key={member.memberId} member={member} />
+        ))}
+        <button>
+          <Icon
+            icon="Plus"
+            width={14}
+            height={14}
+            color={COLOR.COOL_GRAY_100}
+            cursor={true}
+          />
+        </button>
+      </MemberWrapper>
     </RecentTripWrapper>
   );
 };
@@ -83,14 +104,13 @@ export default RecentTrip;
 
 const RecentTripWrapper = styled.div``;
 
-const TripWrapper = styled.div`
+const TripInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 12px 16px 12px 22px;
 
   border-bottom: 1px solid ${COLOR.UI_GRAY_2};
-
   .travelInfo {
     display: flex;
     flex-direction: row;
@@ -197,5 +217,27 @@ const MiddleWrapper = styled.div`
         width: 100%;
       }
     }
+  }
+`;
+
+const MemberWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 20px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 100%;
+    border: none;
+    outline: none;
+
+    background-color: ${COLOR.UI_GRAY_1};
   }
 `;
