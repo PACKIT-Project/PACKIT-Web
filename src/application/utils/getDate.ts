@@ -66,9 +66,10 @@ export const getMonthandDateList = (date: any) => {
 };
 
 // 여행 생성 시 여행 기간으로 날짜와 일 수 반환하는 함수
-export const getTripDate = (date: any) => {
-  const start = date.start.split('-');
-  const end = date.end.split('-');
+export const getTripDate = (date: any, type: string) => {
+  const start = date.start.split(type);
+  const end = date.end.split(type);
+
   const range = `${start[0].slice(2)}.${start[1]}.${start[2].slice(
     0,
     2
