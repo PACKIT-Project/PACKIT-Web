@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
+import Icon from '@components/common/Icon';
 
 const MemberProfile = ({ member }: any) => {
   const denominator = member.checkedNum + member.unCheckedNum;
@@ -11,7 +12,11 @@ const MemberProfile = ({ member }: any) => {
   return (
     <MemberProfileWrapper>
       <ImgWrapper percentage={checkPercentage}>
-        <img src={member.profileImg} alt="프로필 이미지" />
+        {member.profileImg ? (
+          <img src={member.profileImg} alt="프로필 이미지" />
+        ) : (
+          <Icon icon="Profile" width={48.6} height={48.6} />
+        )}
       </ImgWrapper>
       {member.nickName}
     </MemberProfileWrapper>
