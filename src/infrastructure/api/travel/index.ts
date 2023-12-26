@@ -15,6 +15,13 @@ export const getMemberAndCode = async (travelId: number) =>
     .then(({ data }) => data.data)
     .catch((err) => err.response);
 
+// 동행자 추가 (초대코드 입력)
+export const postInvitationCode = async (invitationCode: string) =>
+  await client
+    .post(`/travels/invitations?invitationCode=${invitationCode}`)
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 export const modifyTravel = async ({ travelId, travelInfo }: any) =>
   await client
     .patch(`/travels/${travelId}`, {

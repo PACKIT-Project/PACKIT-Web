@@ -3,9 +3,9 @@ import COLOR from '@styles/colors';
 import styled from 'styled-components';
 import Spacing from '../Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { postInvitationCode } from '@api/travel';
 
 const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
-  const ans = '8212348390';
   const [code, setCode] = useState('');
   const [authenticationState, setAuthenticationState] = useState('');
 
@@ -14,8 +14,9 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
     setCode(e.target.value);
   };
 
-  const handleClickAuthentication = () => {
-    if (code === ans) {
+  const handleClickAuthentication = async () => {
+    const res = await postInvitationCode(code);
+    if (res.message === '여행 참여에 성공했습니다.') {
       setAuthenticationState('success');
     } else {
       setAuthenticationState('fail');
