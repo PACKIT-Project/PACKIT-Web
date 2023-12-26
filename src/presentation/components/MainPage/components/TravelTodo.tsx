@@ -9,6 +9,7 @@ import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
 import { postCategory } from '@api/category';
+import { checkItem, postItem, unCheckItem } from '@api/item';
 
 const TravelTodo = ({
   travelId,
@@ -26,6 +27,17 @@ const TravelTodo = ({
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
   const [category, setCategory] = useState('');
+  const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>(
+    {}
+  );
+  const [item, setItem] = useState('');
+
+  const handleToggleCategory = (categoryId: number) => {
+    setOpenCategories((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [categoryId]: !prevOpenCategories[categoryId],
+    }));
+  };
 
   const handleSubmitCategory = async (e: any) => {
     e.preventDefault();
@@ -33,6 +45,41 @@ const TravelTodo = ({
     if (res.message === '새로운 할 일 생성에 성공했습니다.') {
       refetch();
       setCategory('');
+    }
+  };
+
+  const handleSubmitItem = async ({
+    e,
+    categoryId,
+  }: {
+    e: any;
+    categoryId: number;
+  }) => {
+    e.preventDefault();
+    const res = await postItem({ categoryId, title: item });
+    if (res.message === '새로운 할 일 아이템 생성에 성공했습니다.') {
+      refetch();
+      setItem('');
+    }
+  };
+
+  const handleCheckItem = async ({
+    state,
+    itemId,
+  }: {
+    state: boolean;
+    itemId: number;
+  }) => {
+    if (state) {
+      const res = await unCheckItem(itemId);
+      if (res === '아이템 체크 취소에 성공했습니다.') {
+        refetch();
+      }
+      return;
+    }
+    const res = await checkItem(itemId);
+    if (res === '아이템 체크에 성공했습니다.') {
+      refetch();
     }
   };
 
@@ -92,15 +139,55 @@ const TravelTodo = ({
                       <span className="title">{category.title}</span>
                       <span className="checkCnt">{`${category.checkedItemNum}/${category.allItemNum}`}</span>
                     </div>
-                    <button>편집</button>
+                    <button>
+                      {openCategories[category.categoryId] && <span>편집</span>}
+                      <Icon
+                        icon="Chevron"
+                        width={15}
+                        height={15}
+                        fill={COLOR.COOL_GRAY_200}
+                        rotate={openCategories[category.categoryId] ? 270 : 90}
+                        cursor={true}
+                        onClick={() => handleToggleCategory(category.categoryId)}
+                      />
+                    </button>
                   </CategoryTitle>
-                  <TodoList>
-                    {category.travelItemList.map((item: any) => (
-                      <div className="todo" key={item.itemId}>
-                        {item.title}
+                  {openCategories[category.categoryId] && (
+                    <>
+                      <TodoList>
+                        {category.travelItemList.map((item: any) => (
+                          <div className="todo" key={item.itemId}>
+                            <Icon
+                              icon={item.isChecked ? 'CheckSmall' : 'UnCheckSmall'}
+                              cursor={true}
+                              onClick={() =>
+                                handleCheckItem({
+                                  state: item.isChecked,
+                                  itemId: item.itemId,
+                                })
+                              }
+                            />
+                            {item.title}
+                          </div>
+                        ))}
+                      </TodoList>
+                      <div className="itemInput">
+                        <Icon icon="Plus" width={20} height={20} />
+                        <form
+                          onSubmit={(e) =>
+                            handleSubmitItem({ e, categoryId: category.categoryId })
+                          }
+                        >
+                          <input
+                            type="text"
+                            placeholder="항목 추가하기"
+                            value={item}
+                            onChange={(e) => setItem(e.target.value)}
+                          />
+                        </form>
                       </div>
-                    ))}
-                  </TodoList>
+                    </>
+                  )}
                 </div>
               ))}
             <div className="itemInput">
@@ -249,10 +336,17 @@ const CategoryTitle = styled.div`
     }
   }
   button {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
     outline: none;
     border: none;
     background-color: transparent;
-    ${TYPOGRAPHY.TEXT.BODY4_SEMIBOLD};
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: -0.14px;
+    text-decoration-line: underline;
     color: ${COLOR.COOL_GRAY_200};
   }
 `;
@@ -261,4 +355,24 @@ const TodoList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  .todo {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+
+    height: 40px;
+    padding: 10.5px 12.5px;
+    border: 1.5px solid ${COLOR.UI_GRAY_2};
+    border-radius: 6px;
+    background-color: ${COLOR.MAIN_WHITE};
+    box-sizing: border-box;
+
+    color: #2c2c2c;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 15px;
+    letter-spacing: -0.18px;
+  }
 `;
