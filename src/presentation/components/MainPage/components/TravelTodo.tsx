@@ -5,6 +5,9 @@ import COLOR from '@styles/colors';
 import Icon from '@components/common/Icon';
 import { TYPOGRAPHY } from '@styles/fonts';
 import Spacing from '@components/common/Spacing';
+import useModal from '@hooks/useModal';
+import BottomSheet from '@components/common/BottomSheet';
+import ClusterInput from './ClusterInput';
 
 const TravelTodo = ({
   travelId,
@@ -13,12 +16,18 @@ const TravelTodo = ({
   travelId: number;
   memberId?: number;
 }) => {
-  const { data, isLoading } = useGetTravelTodoList(travelId, memberId);
+  const {
+    isShowModal: isShowClusterInputBottomSheet,
+    openModal: openClusterInputBottomSheet,
+    closeModal: closeClusterInputBottomSheet,
+  } = useModal();
+
+  const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
 
   useEffect(() => {
-    if (data && data.travelClusterList) {
-      setCurrClusterId(data.travelClusterList[0].clusterId);
+    if (data && data.data.travelClusterList) {
+      setCurrClusterId(data.data.travelClusterList[0].clusterId);
     }
   }, [data, memberId]);
 
@@ -32,7 +41,7 @@ const TravelTodo = ({
         <>
           <ClusterList>
             <div className="clusterContainer">
-              {data.travelClusterList?.map((cluster: any) => (
+              {data.data.travelClusterList?.map((cluster: any) => (
                 <div
                   className={`cluster ${
                     currClusterId === cluster.clusterId && 'clicked'
@@ -51,7 +60,7 @@ const TravelTodo = ({
                 </div>
               ))}
             </div>
-            <button>
+            <button onClick={openClusterInputBottomSheet}>
               <Icon
                 icon="Plus"
                 cursor={true}
@@ -63,7 +72,7 @@ const TravelTodo = ({
           </ClusterList>
           <Spacing size={15} />
           <TodoListWrapper>
-            {data.travelClusterList
+            {data.data.travelClusterList
               ?.filter((cluster: any) => cluster.clusterId === currClusterId)[0]
               .travelCategoryList.map((category: any) => (
                 <div key={category.categoryId}>
@@ -85,6 +94,18 @@ const TravelTodo = ({
               ))}
           </TodoListWrapper>
         </>
+      )}
+      {isShowClusterInputBottomSheet && (
+        <BottomSheet
+          isVisible={isShowClusterInputBottomSheet}
+          closeModal={closeClusterInputBottomSheet}
+        >
+          <ClusterInput
+            travelId={travelId}
+            closeModal={closeClusterInputBottomSheet}
+            refetch={refetch}
+          />
+        </BottomSheet>
       )}
     </TravelTodoWrapper>
   );

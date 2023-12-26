@@ -2,7 +2,7 @@ import { getTravelMyList, getTravelMemberTodoList } from '@api/travel';
 import { useQuery } from 'react-query';
 
 const useGetTravelTodoList = (travelId: number, memberId?: number) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     ['todoList', travelId, memberId],
     async () => {
       if (memberId) {
@@ -17,7 +17,7 @@ const useGetTravelTodoList = (travelId: number, memberId?: number) => {
     }
   );
 
-  return { data, isLoading };
+  return { data, isLoading, refetch };
 };
 
 export default useGetTravelTodoList;
