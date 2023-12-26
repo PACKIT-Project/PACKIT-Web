@@ -39,7 +39,7 @@ const Trip = () => {
             </div>
           ) : (
             travels.map((travel: any) => (
-              <TripList key={travel.travelId} travel={travel} />
+              <TripList key={travel.id} travel={travel} />
             ))
           )}
         </>

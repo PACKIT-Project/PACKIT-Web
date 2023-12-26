@@ -110,7 +110,11 @@ const TripList = ({ travel }: { travel: any }) => {
       )}
       {isShowInviteModal && (
         <Modal isVisible={isShowInviteModal} closeModal={closeInviteModal}>
-          <InviteModal closeModal={closeInviteModal} travel={travel} />
+          <InviteModal
+            closeModal={closeInviteModal}
+            travel={travel}
+            openToast={openToast}
+          />
         </Modal>
       )}
       {isShowToast && <Toast close={closeToast}>삭제가 완료되었습니다.</Toast>}

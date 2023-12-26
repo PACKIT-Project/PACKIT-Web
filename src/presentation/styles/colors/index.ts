@@ -33,6 +33,7 @@ const COLOR = {
 
   // ver2
   MAIN_BLUE: '#0EA8FF',
+  MAUN_BLUE2: '#E7F8FF',
   MAIN_INACTIVE: '#BFEBFF',
   MAIN_WHITE: '#FFFFFF',
 

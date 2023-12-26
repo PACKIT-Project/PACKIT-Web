@@ -4,66 +4,82 @@ import COLOR from '@styles/colors';
 import Icon from '@components/common/Icon';
 import Spacing from '@components/common/Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
-import { clipboardShare } from '@utils/clipboardShare';
 import { shareKakao } from '@utils/shareKakaoLink';
+import useGetMembersAndCode from '../../../../infrastructure/queries/travel/useGetMembersAndCode';
+import { shareInviteCode } from '@utils/shareInviteCode';
 
 const InviteModal = ({
   closeModal,
   travel,
+  openToast,
 }: {
   closeModal: () => void;
   travel: any;
+  openToast: () => void;
 }) => {
+  const { data } = useGetMembersAndCode(travel.id);
+
   return (
     <InviteModalWrapper>
-      <Header>
-        <Icon icon="Arrow" cursor={true} onClick={closeModal} />
-      </Header>
-      <div className="title">{travel.title}</div>
-      <Spacing size={6} />
-      <div className="subTitle">
-        <span
-          style={{
-            ...TYPOGRAPHY.TITLE.SUBHEADING2_BOLD,
-            color: COLOR.COOL_GRAY_300,
-          }}
-        >
-          여행 친구
-        </span>
-        <div
-          style={{
-            ...TYPOGRAPHY.TITLE.SUBHEADING1_SEMIBOLD,
-          }}
-        >
-          <span style={{ color: COLOR.MAIN_BLUE }}>5명 </span>
-          <span style={{ color: COLOR.COOL_GRAY_300 }}>(3명 남음)</span>
-        </div>
-      </div>
-      <Spacing size={6} />
-      <div style={{ ...TYPOGRAPHY.DES.CAPTION2_MEDIUM, color: COLOR.COOL_GRAY_300 }}>
-        여행 친구는 최대 8명까지 초대가 가능합니다.
-      </div>
-      <Spacing size={21} />
-      <BottomWrapper>
-        <div
-          className="kakao"
-          onClick={() =>
-            shareKakao(`${process.env.REACT_APP_SHARE_CLIPBOARD_LINK}`, 'PACK IT')
-          }
-        >
-          <Icon icon="InviteKakao" cursor={true} />
-          카카오톡 초대
-        </div>
-        <div
-          className="code"
-          onClick={() => {
-            clipboardShare(travel.travelId);
-          }}
-        >
-          <Icon icon="InviteCode" cursor={true} />
-          초대코드 복사
-        </div>
-      </BottomWrapper>
+      {data && (
+        <>
+          <Header>
+            <Icon icon="Arrow" cursor={true} onClick={closeModal} />
+          </Header>
+          <div className="title">{travel.title}</div>
+          <Spacing size={6} />
+          <div className="subTitle">
+            <span
+              style={{
+                ...TYPOGRAPHY.TITLE.SUBHEADING2_BOLD,
+                color: COLOR.COOL_GRAY_300,
+              }}
+            >
+              여행 친구
+            </span>
+            <div
+              style={{
+                ...TYPOGRAPHY.TITLE.SUBHEADING1_SEMIBOLD,
+              }}
+            >
+              <span style={{ color: COLOR.MAIN_BLUE }}>{data.peopleNum}명 </span>
+              <span style={{ color: COLOR.COOL_GRAY_300 }}>{`(${
+                8 - data.peopleNum
+              }명 남음)`}</span>
+            </div>
+          </div>
+          <Spacing size={6} />
+          <div
+            style={{ ...TYPOGRAPHY.DES.CAPTION2_MEDIUM, color: COLOR.COOL_GRAY_300 }}
+          >
+            여행 친구는 최대 8명까지 초대가 가능합니다.
+          </div>
+          <Spacing size={21} />
+          <BottomWrapper>
+            <div
+              className="kakao"
+              onClick={() =>
+                shareKakao(
+                  `${process.env.REACT_APP_SHARE_CLIPBOARD_LINK}`,
+                  'PACK IT'
+                )
+              }
+            >
+              <Icon icon="InviteKakao" cursor={true} />
+              카카오톡 초대
+            </div>
+            <div
+              className="code"
+              onClick={() => {
+                shareInviteCode({ invitationCode: data.invitationCode, openToast });
+              }}
+            >
+              <Icon icon="InviteCode" cursor={true} />
+              초대코드 복사
+            </div>
+          </BottomWrapper>
+        </>
+      )}
     </InviteModalWrapper>
   );
 };

@@ -88,6 +88,11 @@ export const TYPOGRAPHY: any = {
       lineHeight: '16px',
       letterSpacing: '-0.12px',
     },
+    CAPTION3_SEMIBOLD: {
+      fontSize: 11,
+      fontWeight: 600,
+      lineHeight: '11px',
+    },
   },
   BUTTON: {
     LABEL1_BOLD: {
