@@ -56,7 +56,7 @@ export const getTravelMyList = async (travelId: number) =>
 export const getTravelDetail = async (travelId: string) =>
   await client
     .get(`/travels/${travelId}`)
-    .then(({ data }) => data)
+    .then(({ data }) => data.data)
     .catch((err) => err.response);
 
 export const postStorageTravel = async (travelId: any, travelInfo: any) =>

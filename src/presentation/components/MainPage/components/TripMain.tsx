@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTravelMembers, getUpcomingTravles } from '@api/travel';
+import { getTravelDetail, getTravelMembers, getUpcomingTravles } from '@api/travel';
 import styled from 'styled-components';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
@@ -13,8 +13,10 @@ import Toast from '@components/common/Toast';
 import BottomSheet from '@components/common/BottomSheet';
 import TripList from './TripList';
 import TravelTodo from './TravelTodo';
+import { useLocation } from 'react-router-dom';
 
 const TripMain = () => {
+  const { state } = useLocation();
   const {
     isShowModal: isShowInviteModal,
     openModal: openInviteModal,
@@ -36,23 +38,41 @@ const TripMain = () => {
   const [dates, setDates] = useState<string>('');
   const [members, setMembers] = useState<any[]>([]);
 
-  useEffect(() => {
-    const getRecentTravel = async () => {
-      const recent = await getUpcomingTravles();
-      setTravel(recent.data[0]);
-      const tripDates = getTripDate(
-        { start: recent.data[0].startDate, end: recent.data[0].endDate },
-        '.'
-      ).dates;
-      setDates(tripDates);
+  const getRecentTravel = async () => {
+    const recent = await getUpcomingTravles();
+    setTravel(recent.data[0]);
+    const tripDates = getTripDate(
+      { start: recent.data[0].startDate, end: recent.data[0].endDate },
+      '.'
+    ).dates;
+    setDates(tripDates);
 
-      const memberRes = await getTravelMembers(recent.data[0].id);
-      if (memberRes.message === '동행자 목록 조회에 성공했습니다.') {
-        setMembers(memberRes.data);
-      }
-    };
-    getRecentTravel();
-  }, []);
+    const memberRes = await getTravelMembers(recent.data[0].id);
+    if (memberRes.message === '동행자 목록 조회에 성공했습니다.') {
+      setMembers(memberRes.data);
+    }
+  };
+
+  const getTravelInfo = async () => {
+    const res = await getTravelDetail(state);
+    setTravel(res);
+    const tripDates = getTripDate(
+      { start: res.startDate, end: res.endDate },
+      '.'
+    ).dates;
+    setDates(tripDates);
+    const memberRes = await getTravelMembers(res.id);
+    if (memberRes.message === '동행자 목록 조회에 성공했습니다.') {
+      setMembers(memberRes.data);
+    }
+  };
+
+  useEffect(() => {
+    if (state) {
+      getTravelInfo();
+    } else getRecentTravel();
+    closeTravelBottomSheet();
+  }, [state]);
 
   return (
     <TripMainWrapper>

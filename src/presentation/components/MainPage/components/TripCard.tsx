@@ -9,7 +9,7 @@ const TripCard = ({ travel }: any) => {
   const navigate = useNavigate();
 
   const handleClickTravelDetail = () => {
-    navigate(`/trip/${travel.id}`);
+    navigate('/', { state: travel.id });
   };
 
   return (
