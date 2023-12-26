@@ -10,6 +10,7 @@ import BottomNav from '@components/common/BottomNav';
 import { TYPOGRAPHY } from '@styles/fonts';
 import MainContent from '@components/MyPage/MainContent';
 import { motion } from 'framer-motion';
+import Icon from '@components/common/Icon';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,11 @@ const MyPage = () => {
           <Spacing size={26} />
           <MembersWrapper>
             <div className="profileWrapper">
-              <img src={data.profileImageUrl} alt="프로필 이미지" />
+              {data.profileImageUrl ? (
+                <img src={data.profileImageUrl} alt="프로필 이미지" />
+              ) : (
+                <Icon icon="Profile" width={80} height={80} />
+              )}
             </div>
             <div className="infoWrapper">
               <Text
