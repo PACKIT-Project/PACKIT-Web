@@ -15,6 +15,13 @@ export const getMemberAndCode = async (travelId: number) =>
     .then(({ data }) => data.data)
     .catch((err) => err.response);
 
+// 동행자 추가 (초대코드 입력)
+export const postInvitationCode = async (invitationCode: string) =>
+  await client
+    .post(`/travels/invitations?invitationCode=${invitationCode}`)
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 export const modifyTravel = async ({ travelId, travelInfo }: any) =>
   await client
     .patch(`/travels/${travelId}`, {
@@ -50,6 +57,19 @@ export const getPastTravles = async () =>
 export const getTravelMyList = async (travelId: number) =>
   await client
     .get(`/travels/myList/${travelId}`)
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
+// 여행 동행자 리스트 상세 조회
+export const getTravelMemberTodoList = async ({
+  travelId,
+  memberId,
+}: {
+  travelId: number;
+  memberId: number;
+}) =>
+  await client
+    .get(`/travels/list/${travelId}/${memberId}`)
     .then(({ data }) => data)
     .catch((err) => err.response);
 

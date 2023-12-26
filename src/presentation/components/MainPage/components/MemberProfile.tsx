@@ -4,18 +4,18 @@ import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 import Icon from '@components/common/Icon';
 
-const MemberProfile = ({ member }: any) => {
+const MemberProfile = ({ member, onClick }: any) => {
   const denominator = member.checkedNum + member.unCheckedNum;
   const checkPercentage =
     denominator !== 0 ? (member.checkedNum / denominator) * 100 : 0;
 
   return (
     <MemberProfileWrapper>
-      <ImgWrapper percentage={checkPercentage}>
+      <ImgWrapper percentage={checkPercentage} onClick={onClick}>
         {member.profileImg ? (
           <img src={member.profileImg} alt="프로필 이미지" />
         ) : (
-          <Icon icon="Profile" width={48.6} height={48.6} />
+          <Icon icon="Profile" width={48.6} height={48.6} cursor={true} />
         )}
       </ImgWrapper>
       {member.nickName}
@@ -38,6 +38,7 @@ const MemberProfileWrapper = styled.div`
     width: 48.6px;
     height: 48.6px;
     border-radius: 100%;
+    cursor: pointer;
   }
 `;
 

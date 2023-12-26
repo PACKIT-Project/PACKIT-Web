@@ -37,6 +37,7 @@ const TripMain = () => {
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dates, setDates] = useState<string>('');
   const [members, setMembers] = useState<any[]>([]);
+  const [currMemberId, setCurrMemberId] = useState(0);
 
   const getRecentTravel = async () => {
     const recent = await getUpcomingTravles();
@@ -127,7 +128,11 @@ const TripMain = () => {
 
           <MemberWrapper>
             {members.map((member) => (
-              <MemberProfile key={member.memberId} member={member} />
+              <MemberProfile
+                key={member.memberId}
+                member={member}
+                onClick={() => setCurrMemberId(member.memberId)}
+              />
             ))}
             <button onClick={openInviteModal}>
               <Icon
@@ -140,7 +145,7 @@ const TripMain = () => {
             </button>
           </MemberWrapper>
 
-          <TravelTodo travelId={travel && travel.id} />
+          <TravelTodo travelId={travel && travel.id} memberId={currMemberId} />
         </>
       )}
       {isShowInviteModal && (

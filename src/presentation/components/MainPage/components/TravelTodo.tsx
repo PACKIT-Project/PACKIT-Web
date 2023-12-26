@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useGetTravelMyList from '../../../../infrastructure/queries/travel/useGetTravelMyList';
+import useGetTravelTodoList from '../../../../infrastructure/queries/travel/useGetTravelTodoList';
 import styled from 'styled-components';
 import COLOR from '@styles/colors';
 import Icon from '@components/common/Icon';
@@ -13,14 +13,14 @@ const TravelTodo = ({
   travelId: number;
   memberId?: number;
 }) => {
-  const { data, isLoading } = useGetTravelMyList(travelId);
+  const { data, isLoading } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
 
   useEffect(() => {
     if (data && data.travelClusterList) {
       setCurrClusterId(data.travelClusterList[0].clusterId);
     }
-  }, [data]);
+  }, [data, memberId]);
 
   if (isLoading) {
     return <div>로딩중</div>;
