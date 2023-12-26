@@ -8,6 +8,7 @@ import Spacing from '@components/common/Spacing';
 import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
+import { postCategory } from '@api/category';
 
 const TravelTodo = ({
   travelId,
@@ -24,10 +25,20 @@ const TravelTodo = ({
 
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
+  const [category, setCategory] = useState('');
+
+  const handleSubmitCategory = async (e: any) => {
+    e.preventDefault();
+    const res = await postCategory({ clusterId: currClusterId, title: category });
+    if (res.message === '새로운 할 일 생성에 성공했습니다.') {
+      refetch();
+      setCategory('');
+    }
+  };
 
   useEffect(() => {
-    if (data && data.data.travelClusterList) {
-      setCurrClusterId(data.data.travelClusterList[0].clusterId);
+    if (data && data.data?.travelClusterList) {
+      setCurrClusterId(data.data?.travelClusterList[0].clusterId);
     }
   }, [data, memberId]);
 
@@ -72,9 +83,9 @@ const TravelTodo = ({
           </ClusterList>
           <Spacing size={15} />
           <TodoListWrapper>
-            {data.data.travelClusterList
+            {data.data?.travelClusterList
               ?.filter((cluster: any) => cluster.clusterId === currClusterId)[0]
-              .travelCategoryList.map((category: any) => (
+              ?.travelCategoryList.map((category: any) => (
                 <div key={category.categoryId}>
                   <CategoryTitle>
                     <div className="categotyInfo">
@@ -92,6 +103,17 @@ const TravelTodo = ({
                   </TodoList>
                 </div>
               ))}
+            <div className="itemInput">
+              <Icon icon="Plus" width={20} height={20} />
+              <form onSubmit={handleSubmitCategory}>
+                <input
+                  type="text"
+                  placeholder="항목 추가하기"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </form>
+            </div>
           </TodoListWrapper>
         </>
       )}
@@ -178,7 +200,29 @@ const TodoListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  .category {
+
+  .itemInput {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+
+    height: 40px;
+    padding: 10.5px 12.5px;
+    border: 1.5px solid ${COLOR.UI_GRAY_2};
+    border-radius: 6px;
+    background-color: ${COLOR.MAIN_WHITE};
+    box-sizing: border-box;
+
+    input {
+      outline: none;
+      border: none;
+      ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
+      color: ${COLOR.COOL_GRAY_400};
+      &::placeholder {
+        color: ${COLOR.UI_GRAY_3};
+      }
+    }
   }
 `;
 
