@@ -85,3 +85,6 @@ export { default as ManageNotice } from './ManageNotice';
 
 export { default as InviteKakao } from './invite/InviteKakao';
 export { default as InviteCode } from './invite/InviteCode';
+
+export { default as UnCheckSmall } from './UnCheckSmall';
+export { default as CheckSmall } from './CheckSmall';
