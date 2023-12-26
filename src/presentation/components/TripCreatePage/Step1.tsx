@@ -73,7 +73,7 @@ const Step1 = () => {
           <Icon icon="Search" fill={place !== '' ? '#000' : '#B9BFC7'} />
         </div>
       </InputContainer>
-      {destinations && !destinationId && (
+      {place && destinations?.length > 0 && !destinationId && (
         <DestinationList destinations={destinations} />
       )}
       {recent && (
