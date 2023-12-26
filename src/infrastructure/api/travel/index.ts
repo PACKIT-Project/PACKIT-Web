@@ -46,6 +46,13 @@ export const getPastTravles = async () =>
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 여행 나의 리스트 상세 조회
+export const getTravelMyList = async (travelId: number) =>
+  await client
+    .get(`/travels/myList/${travelId}`)
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 export const getTravelDetail = async (travelId: string) =>
   await client
     .get(`/travels/${travelId}`)

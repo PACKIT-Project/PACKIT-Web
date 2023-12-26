@@ -12,8 +12,9 @@ import InviteModal from '@components/MyPage/components/InviteModal';
 import Toast from '@components/common/Toast';
 import BottomSheet from '@components/common/BottomSheet';
 import TripList from './TripList';
+import TravelTodo from './TravelTodo';
 
-const RecentMain = () => {
+const TripMain = () => {
   const {
     isShowModal: isShowInviteModal,
     openModal: openInviteModal,
@@ -54,70 +55,74 @@ const RecentMain = () => {
   }, []);
 
   return (
-    <RecentMainWrapper>
+    <TripMainWrapper>
       {travel && (
-        <TripInfoWrapper>
-          <TopWrapper>
-            <div className="info">
-              <div className="dDay">
-                {travel.dDay === '0'
-                  ? 'D-day'
-                  : `D${Number(travel.dDay) >= 0 ? '-' : '+'}${
-                      -1 * Number(travel.dDay)
-                    }`}
-              </div>
-              <div className="person">
-                <Icon icon="User" width={14} height={14} color={COLOR.UI_GRAY_5} />
-                {travel.memberNum}/8
-              </div>
-            </div>
-          </TopWrapper>
-          <MiddleWrapper>
-            <div className="travelName" onClick={openTravelBottomSheet}>
-              {travel.title} <Icon icon="TripToggle" cursor={true} />
-            </div>
-            <div className="ETCWrapper">
-              <Icon
-                icon="ETC"
-                cursor={true}
-                onClick={() => setDropdownVisibility((prev) => !prev)}
-              />
-              {dropdownVisibility && (
-                <div className="dropdown">
-                  <button>
-                    <Icon icon="ManageTodo" />
-                    할일 관리
-                  </button>
-                  <hr />
-                  <button>
-                    <Icon icon="ManageNotice" />
-                    리마인드 알림
-                  </button>
+        <>
+          <TripInfoWrapper>
+            <TopWrapper>
+              <div className="info">
+                <div className="dDay">
+                  {travel.dDay === '0'
+                    ? 'D-day'
+                    : `D${Number(travel.dDay) >= 0 ? '' : '+'}${
+                        -1 * Number(travel.dDay)
+                      }`}
                 </div>
-              )}
+                <div className="person">
+                  <Icon icon="User" width={14} height={14} color={COLOR.UI_GRAY_5} />
+                  {travel.memberNum}/8
+                </div>
+              </div>
+            </TopWrapper>
+            <MiddleWrapper>
+              <div className="travelName" onClick={openTravelBottomSheet}>
+                {travel.title} <Icon icon="TripToggle" cursor={true} />
+              </div>
+              <div className="ETCWrapper">
+                <Icon
+                  icon="ETC"
+                  cursor={true}
+                  onClick={() => setDropdownVisibility((prev) => !prev)}
+                />
+                {dropdownVisibility && (
+                  <div className="dropdown">
+                    <button>
+                      <Icon icon="ManageTodo" />
+                      할일 관리
+                    </button>
+                    <hr />
+                    <button>
+                      <Icon icon="ManageNotice" />
+                      리마인드 알림
+                    </button>
+                  </div>
+                )}
+              </div>
+            </MiddleWrapper>
+            <div className="travelInfo">
+              <Icon icon="LocationPin" />
+              {travel.destination}·{dates}
             </div>
-          </MiddleWrapper>
-          <div className="travelInfo">
-            <Icon icon="LocationPin" />
-            {travel.destination}·{dates}
-          </div>
-        </TripInfoWrapper>
-      )}
+          </TripInfoWrapper>
 
-      <MemberWrapper>
-        {members.map((member) => (
-          <MemberProfile key={member.memberId} member={member} />
-        ))}
-        <button onClick={openInviteModal}>
-          <Icon
-            icon="Plus"
-            width={14}
-            height={14}
-            color={COLOR.COOL_GRAY_100}
-            cursor={true}
-          />
-        </button>
-      </MemberWrapper>
+          <MemberWrapper>
+            {members.map((member) => (
+              <MemberProfile key={member.memberId} member={member} />
+            ))}
+            <button onClick={openInviteModal}>
+              <Icon
+                icon="Plus"
+                width={14}
+                height={14}
+                color={COLOR.COOL_GRAY_100}
+                cursor={true}
+              />
+            </button>
+          </MemberWrapper>
+
+          <TravelTodo travelId={travel && travel.id} />
+        </>
+      )}
       {isShowInviteModal && (
         <Modal isVisible={isShowInviteModal} closeModal={closeInviteModal}>
           <InviteModal
@@ -136,13 +141,13 @@ const RecentMain = () => {
           <TripList />
         </BottomSheet>
       )}
-    </RecentMainWrapper>
+    </TripMainWrapper>
   );
 };
 
-export default RecentMain;
+export default TripMain;
 
-const RecentMainWrapper = styled.div``;
+const TripMainWrapper = styled.div``;
 
 const TripInfoWrapper = styled.div`
   display: flex;
