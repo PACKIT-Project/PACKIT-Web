@@ -60,6 +60,19 @@ export const getTravelMyList = async (travelId: number) =>
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 여행 동행자 리스트 상세 조회
+export const getTravelMemberTodoList = async ({
+  travelId,
+  memberId,
+}: {
+  travelId: number;
+  memberId: number;
+}) =>
+  await client
+    .get(`/travels/list/${travelId}/${memberId}`)
+    .then(({ data }) => data)
+    .catch((err) => err.response);
+
 export const getTravelDetail = async (travelId: string) =>
   await client
     .get(`/travels/${travelId}`)
