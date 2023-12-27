@@ -13,6 +13,7 @@ import ConfirmModal from '@components/common/Modal/ConfirmModal';
 import Modal from '@components/common/Modal';
 import { deleteCluster } from '@api/cluster';
 import Toast from '@components/common/Toast';
+import CategoryInputModal from '@components/ManageTodoPage/components/CategoryInputModal';
 
 const ManageTodoPage = () => {
   const {
@@ -20,17 +21,22 @@ const ManageTodoPage = () => {
     openModal: openDeleteToast,
     closeModal: closeDeleteToast,
   } = useModal();
-  const { pathname } = useLocation();
   const {
     isShowModal: isShowDeleteConfirmModal,
     openModal: openDeleteConfirmModal,
     closeModal: closeDeleteConfirmModal,
   } = useModal();
-
+  const {
+    isShowModal: isShowCategoryInputModal,
+    openModal: openCategoryInputModal,
+    closeModal: closeCategoryInputModal,
+  } = useModal();
+  const { pathname } = useLocation();
   const travelId = Number(pathname.split('edit/')[1]);
 
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId);
   const [currClusterId, setCurrClusterId] = useState(0);
+  const [currCategory, setCurrCategory] = useState({ categoryId: 0, title: '' });
 
   const handleClickDeleteGroup = async () => {
     const res = await deleteCluster(currClusterId);
@@ -65,7 +71,17 @@ const ManageTodoPage = () => {
             <div className="categories">
               {cluster.travelCategoryList?.map(
                 (category: travelCategoryListType) => (
-                  <div className="category" key={category.categoryId}>
+                  <div
+                    className="category"
+                    key={category.categoryId}
+                    onClick={() => {
+                      setCurrCategory({
+                        categoryId: category.categoryId,
+                        title: category.title,
+                      });
+                      openCategoryInputModal();
+                    }}
+                  >
                     {category.title}
                   </div>
                 )
@@ -77,6 +93,18 @@ const ManageTodoPage = () => {
           </CategoryTodo>
         ))}
       </ClusterTodoWrapper>
+      {isShowCategoryInputModal && (
+        <Modal
+          isVisible={isShowCategoryInputModal}
+          closeModal={closeCategoryInputModal}
+        >
+          <CategoryInputModal
+            category={currCategory}
+            refetch={refetch}
+            closeModal={closeCategoryInputModal}
+          />
+        </Modal>
+      )}
       {isShowDeleteConfirmModal && (
         <Modal
           isVisible={isShowDeleteConfirmModal}
@@ -145,6 +173,7 @@ const CategoryTodo = styled.div`
       background-color: ${COLOR.UI_GRAY_1};
       ${TYPOGRAPHY.TEXT.BODY6_MEDIUM};
       color: ${COLOR.COOL_GRAY_300};
+      cursor: pointer;
     }
     button {
       border: 1px dashed ${COLOR.UI_GRAY_3};

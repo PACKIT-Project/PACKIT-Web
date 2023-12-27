@@ -5,6 +5,11 @@ export interface postCategoryReq {
   title: string;
 }
 
+export interface patchCategoryReq {
+  categoryId: number;
+  title: string;
+}
+
 export interface travelCategoryListType {
   categoryId: number;
   title: string;
