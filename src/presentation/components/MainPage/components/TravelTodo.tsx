@@ -84,7 +84,7 @@ const TravelTodo = ({
   };
 
   useEffect(() => {
-    if (data && data.data?.travelClusterList) {
+    if (data && data.data?.travelClusterList.length > 0) {
       setCurrClusterId(data.data?.travelClusterList[0].clusterId);
     }
   }, [data, memberId]);
