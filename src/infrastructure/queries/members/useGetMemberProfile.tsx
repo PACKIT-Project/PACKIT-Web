@@ -7,12 +7,13 @@ const useGetMemberProfile = () => {
     data: responseData,
     isLoading,
     error,
+    refetch,
   } = useQuery(['profile'], async () => await getMemberProfile(), {
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 30,
   });
   const data = responseData?.data;
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export default useGetMemberProfile;
