@@ -3,6 +3,7 @@ import COLOR from '@styles/colors';
 import React, { useEffect } from 'react';
 import { keyframes, styled } from 'styled-components';
 import Icon from '../Icon';
+import { TYPOGRAPHY } from '@styles/fonts';
 
 const fadeInDown = keyframes`
    0% {
@@ -58,9 +59,7 @@ const ToastWrapper = styled.div`
   padding: 18px 24px;
 
   color: ${COLOR.WHITE};
-  font-size: 16px;
-  font-weight: 600;
-  line-height: normal;
+  ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.22);
 
   align-items: center;

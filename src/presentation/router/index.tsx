@@ -19,6 +19,7 @@ import OnBoardingProfilePage from '@pages/OnBoardingPage/profile';
 import TermsPage from '@pages/OnBoardingPage/terms';
 import TermsDetailPage from '@pages/OnBoardingPage/detail';
 import SettingPage from '@pages/SettingPage';
+import ManageTodoPage from '@pages/ManageTodoPage';
 
 const Router = () => {
   return (
@@ -44,6 +45,7 @@ const Router = () => {
         <Route path="/checklist/:id" element={<CheckListPage />} />
         <Route path="/remind/:id" element={<TripRemindPage />} />
         <Route path="/doublecheck/:tripid" element={<DoubleCheckPage />} />
+        <Route path="/edit/:tripid" element={<ManageTodoPage />} />
       </Routes>
     </BrowserRouter>
   );

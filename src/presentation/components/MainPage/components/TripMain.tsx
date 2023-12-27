@@ -13,9 +13,10 @@ import Toast from '@components/common/Toast';
 import BottomSheet from '@components/common/BottomSheet';
 import TripList from './TripList';
 import TravelTodo from './TravelTodo';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const TripMain = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const {
     isShowModal: isShowInviteModal,
@@ -107,7 +108,7 @@ const TripMain = () => {
                 />
                 {dropdownVisibility && (
                   <div className="dropdown">
-                    <button>
+                    <button onClick={() => navigate(`/edit/${travel.id}`)}>
                       <Icon icon="ManageTodo" />
                       할일 관리
                     </button>
