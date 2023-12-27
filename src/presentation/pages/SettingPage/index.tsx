@@ -16,6 +16,7 @@ import ConfirmModal from '@components/common/Modal/ConfirmModal';
 import { logout } from '@api/auth';
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie } from '@utils/cookie';
+import NotificationModal from '@components/SettingPage/NotificationModal';
 
 const SettingPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,12 @@ const SettingPage = () => {
     isShowModal: isShowLeaveBottomSheet,
     openModal: openLeaveBottomSheet,
     closeModal: closeLeaveBottomSheet,
+  } = useModal();
+
+  const {
+    isShowModal: isShowNotificationModal,
+    openModal: openNotificationModal,
+    closeModal: closeNotificationModal,
   } = useModal();
 
   const handleClickLogout = async () => {
@@ -53,7 +60,13 @@ const SettingPage = () => {
         <div className="section">
           <div className="title">설정</div>
           <div className="content">
-            알림 설정 <Icon icon="Chevron" color={COLOR.UI_GRAY_4} cursor={true} />
+            알림 설정{' '}
+            <Icon
+              icon="Chevron"
+              color={COLOR.UI_GRAY_4}
+              cursor={true}
+              onClick={openNotificationModal}
+            />
           </div>
           <Hr height={9.5} color={COLOR.UI_GRAY_1} />
         </div>
@@ -87,6 +100,14 @@ const SettingPage = () => {
         <Button onClick={openLogoutModal}>로그아웃</Button>
         <TextButton text="회원탈퇴" onClick={openLeaveBottomSheet} />
       </BottomButtonWrapper>
+      {isShowNotificationModal && (
+        <Modal
+          isVisible={isShowNotificationModal}
+          closeModal={closeNotificationModal}
+        >
+          <NotificationModal closeModal={closeNotificationModal} />
+        </Modal>
+      )}
       {isShowLogoutModal && (
         <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
           <ConfirmModal

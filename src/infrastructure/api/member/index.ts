@@ -53,3 +53,17 @@ export const deleteMember = async () =>
     .delete('/members')
     .then(({ data }) => data)
     .catch((err) => err.response);
+
+// 푸시 알림 활성화
+export const enableNotification = async () =>
+  await client
+    .put('/members/enable-notification')
+    .then(({ data }) => data.message)
+    .catch((err) => err.response);
+
+// 푸시 알림 비 활성화
+export const disableNotification = async () =>
+  await client
+    .put('/members/disable-notification')
+    .then(({ data }) => data.message)
+    .catch((err) => err.response);
