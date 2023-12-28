@@ -4,25 +4,35 @@ import COLOR from '@styles/colors';
 import ModalHeader from '@components/common/Header/ModalHeader';
 import Spacing from '@components/common/Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
-import { deleteCategory, patchCategory } from '@api/category';
+import { deleteCategory, patchCategory, postCategory } from '@api/category';
 
 interface CategoryInputModalPropsType {
   closeModal: () => void;
   refetch: any;
   category: { categoryId: number; title: string };
+  clusterId: number;
 }
 const CategoryInputModal = ({
   closeModal,
   refetch,
   category,
+  clusterId,
 }: CategoryInputModalPropsType) => {
   const [title, setTitle] = useState(category.title);
 
   const handleEditCategory = async () => {
-    const res = await patchCategory({ categoryId: category.categoryId, title });
-    if (res === '할 일 제목 수정에 성공했습니다.') {
-      closeModal();
-      refetch();
+    if (category.title === '') {
+      const res = await postCategory({ clusterId, title });
+      if (res.message === '새로운 할 일 생성에 성공했습니다.') {
+        closeModal();
+        refetch();
+      }
+    } else {
+      const res = await patchCategory({ categoryId: category.categoryId, title });
+      if (res === '할 일 제목 수정에 성공했습니다.') {
+        closeModal();
+        refetch();
+      }
     }
   };
 

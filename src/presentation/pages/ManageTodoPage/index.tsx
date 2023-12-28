@@ -86,7 +86,12 @@ const ManageTodoPage = () => {
                   </div>
                 )
               )}
-              <button>
+              <button
+                onClick={() => {
+                  setCurrClusterId(cluster.clusterId);
+                  openCategoryInputModal();
+                }}
+              >
                 <Icon icon="PlusCircle" cursor={true} />
               </button>
             </div>
@@ -102,6 +107,7 @@ const ManageTodoPage = () => {
             category={currCategory}
             refetch={refetch}
             closeModal={closeCategoryInputModal}
+            clusterId={currClusterId}
           />
         </Modal>
       )}

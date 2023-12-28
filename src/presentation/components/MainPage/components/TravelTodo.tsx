@@ -8,7 +8,6 @@ import Spacing from '@components/common/Spacing';
 import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
-import { postCategory } from '@api/category';
 import { checkItem, postItem, unCheckItem } from '@api/item';
 
 const TravelTodo = ({
@@ -26,7 +25,6 @@ const TravelTodo = ({
 
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
-  const [category, setCategory] = useState('');
   const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -37,15 +35,6 @@ const TravelTodo = ({
       ...prevOpenCategories,
       [categoryId]: !prevOpenCategories[categoryId],
     }));
-  };
-
-  const handleSubmitCategory = async (e: any) => {
-    e.preventDefault();
-    const res = await postCategory({ clusterId: currClusterId, title: category });
-    if (res.message === '새로운 할 일 생성에 성공했습니다.') {
-      refetch();
-      setCategory('');
-    }
   };
 
   const handleSubmitItem = async ({
@@ -190,17 +179,6 @@ const TravelTodo = ({
                   )}
                 </div>
               ))}
-            <div className="itemInput">
-              <Icon icon="Plus" width={20} height={20} />
-              <form onSubmit={handleSubmitCategory}>
-                <input
-                  type="text"
-                  placeholder="항목 추가하기"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                />
-              </form>
-            </div>
           </TodoListWrapper>
         </>
       )}
@@ -300,6 +278,7 @@ const TodoListWrapper = styled.div`
     border-radius: 6px;
     background-color: ${COLOR.MAIN_WHITE};
     box-sizing: border-box;
+    margin-top: 4px;
 
     input {
       outline: none;
@@ -318,6 +297,7 @@ const CategoryTitle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 
   padding: 9px 14px;
   border-radius: 6px;
