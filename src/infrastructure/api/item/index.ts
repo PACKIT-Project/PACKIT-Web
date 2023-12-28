@@ -14,6 +14,13 @@ export const postItem = async ({ categoryId, title }: postItemReq) =>
     .then(({ data }) => data)
     .catch((err) => err.response);
 
+// 할 일 아이템 삭제
+export const deleteItem = async (itemId: number) =>
+  await client
+    .delete(`/travels/items/${itemId}`)
+    .then(({ data }) => data.message)
+    .catch((err) => err.response);
+
 // 할 일 아이템 체크
 export const checkItem = async (itemId: number) =>
   await client
@@ -51,7 +58,7 @@ export const changeItemOrder = async (
     .catch((err) => err.response);
 
 //아이템 삭제
-export const deleteItem = async (
+export const deleteItems = async (
   travelId: number,
   checkListId: number,
   itemId: number

@@ -34,6 +34,7 @@ export { default as MoreOutlined } from './MoreOutlined';
 export { default as UpOutlined } from './UpOutlined';
 export { default as DownOutlined } from './DownOutlined';
 export { default as Delete } from './Delete';
+export { default as DeleteWhite } from './DeleteWhite';
 export { default as SwapOutlined } from './SwapOutlined';
 export { default as EllipsisOutlined } from './EllipsisOutlined';
 export { default as KakaoLogo } from './KakaoLogo';

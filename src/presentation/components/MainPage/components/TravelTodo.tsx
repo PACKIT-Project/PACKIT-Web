@@ -8,7 +8,7 @@ import Spacing from '@components/common/Spacing';
 import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
-import { checkItem, postItem, unCheckItem } from '@api/item';
+import { checkItem, deleteItem, postItem, unCheckItem } from '@api/item';
 
 const TravelTodo = ({
   travelId,
@@ -28,10 +28,17 @@ const TravelTodo = ({
   const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>(
     {}
   );
+  const [editTodos, setEditTodos] = useState<{ [key: number]: boolean }>({});
   const [item, setItem] = useState('');
 
   const handleToggleCategory = (categoryId: number) => {
     setOpenCategories((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [categoryId]: !prevOpenCategories[categoryId],
+    }));
+  };
+  const handleToggleEditButton = (categoryId: number) => {
+    setEditTodos((prevOpenCategories) => ({
       ...prevOpenCategories,
       [categoryId]: !prevOpenCategories[categoryId],
     }));
@@ -68,6 +75,20 @@ const TravelTodo = ({
     }
     const res = await checkItem(itemId);
     if (res === '아이템 체크에 성공했습니다.') {
+      refetch();
+    }
+  };
+
+  const handleDeleteItem = async ({
+    itemId,
+    categoryId,
+  }: {
+    itemId: number;
+    categoryId: number;
+  }) => {
+    const res = await deleteItem(itemId);
+    if (res === '아이템 삭제에 성공했습니다.') {
+      handleToggleEditButton(categoryId);
       refetch();
     }
   };
@@ -129,7 +150,13 @@ const TravelTodo = ({
                       <span className="checkCnt">{`${category.checkedItemNum}/${category.allItemNum}`}</span>
                     </div>
                     <button>
-                      {openCategories[category.categoryId] && <span>편집</span>}
+                      {openCategories[category.categoryId] && (
+                        <span
+                          onClick={() => handleToggleEditButton(category.categoryId)}
+                        >
+                          {editTodos[category.categoryId] ? '완료' : '편집'}
+                        </span>
+                      )}
                       <Icon
                         icon="Chevron"
                         width={15}
@@ -146,17 +173,31 @@ const TravelTodo = ({
                       <TodoList>
                         {category.travelItemList.map((item: any) => (
                           <div className="todo" key={item.itemId}>
-                            <Icon
-                              icon={item.isChecked ? 'CheckSmall' : 'UnCheckSmall'}
-                              cursor={true}
-                              onClick={() =>
-                                handleCheckItem({
-                                  state: item.isChecked,
-                                  itemId: item.itemId,
-                                })
-                              }
-                            />
-                            {item.title}
+                            <div className="leftSide">
+                              <Icon
+                                icon={item.isChecked ? 'CheckSmall' : 'UnCheckSmall'}
+                                cursor={true}
+                                onClick={() =>
+                                  handleCheckItem({
+                                    state: item.isChecked,
+                                    itemId: item.itemId,
+                                  })
+                                }
+                              />
+                              {item.title}
+                            </div>
+                            {editTodos[category.categoryId] && (
+                              <Icon
+                                icon="DeleteWhite"
+                                cursor={true}
+                                onClick={() =>
+                                  handleDeleteItem({
+                                    itemId: item.itemId,
+                                    categoryId: category.categoryId,
+                                  })
+                                }
+                              />
+                            )}
                           </div>
                         ))}
                       </TodoList>
@@ -339,7 +380,7 @@ const TodoList = styled.div`
   .todo {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    justify-content: space-between;
     align-items: center;
 
     height: 40px;
@@ -354,5 +395,12 @@ const TodoList = styled.div`
     font-weight: 600;
     line-height: 15px;
     letter-spacing: -0.18px;
+
+    .leftSide {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+    }
   }
 `;
