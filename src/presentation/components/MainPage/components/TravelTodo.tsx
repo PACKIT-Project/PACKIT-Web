@@ -8,8 +8,7 @@ import Spacing from '@components/common/Spacing';
 import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
-import { postCategory } from '@api/category';
-import { checkItem, postItem, unCheckItem } from '@api/item';
+import { checkItem, deleteItem, postItem, unCheckItem } from '@api/item';
 
 const TravelTodo = ({
   travelId,
@@ -26,10 +25,10 @@ const TravelTodo = ({
 
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
-  const [category, setCategory] = useState('');
   const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>(
     {}
   );
+  const [editTodos, setEditTodos] = useState<{ [key: number]: boolean }>({});
   const [item, setItem] = useState('');
 
   const handleToggleCategory = (categoryId: number) => {
@@ -38,14 +37,11 @@ const TravelTodo = ({
       [categoryId]: !prevOpenCategories[categoryId],
     }));
   };
-
-  const handleSubmitCategory = async (e: any) => {
-    e.preventDefault();
-    const res = await postCategory({ clusterId: currClusterId, title: category });
-    if (res.message === '새로운 할 일 생성에 성공했습니다.') {
-      refetch();
-      setCategory('');
-    }
+  const handleToggleEditButton = (categoryId: number) => {
+    setEditTodos((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [categoryId]: !prevOpenCategories[categoryId],
+    }));
   };
 
   const handleSubmitItem = async ({
@@ -79,6 +75,20 @@ const TravelTodo = ({
     }
     const res = await checkItem(itemId);
     if (res === '아이템 체크에 성공했습니다.') {
+      refetch();
+    }
+  };
+
+  const handleDeleteItem = async ({
+    itemId,
+    categoryId,
+  }: {
+    itemId: number;
+    categoryId: number;
+  }) => {
+    const res = await deleteItem(itemId);
+    if (res === '아이템 삭제에 성공했습니다.') {
+      handleToggleEditButton(categoryId);
       refetch();
     }
   };
@@ -140,7 +150,13 @@ const TravelTodo = ({
                       <span className="checkCnt">{`${category.checkedItemNum}/${category.allItemNum}`}</span>
                     </div>
                     <button>
-                      {openCategories[category.categoryId] && <span>편집</span>}
+                      {openCategories[category.categoryId] && (
+                        <span
+                          onClick={() => handleToggleEditButton(category.categoryId)}
+                        >
+                          {editTodos[category.categoryId] ? '완료' : '편집'}
+                        </span>
+                      )}
                       <Icon
                         icon="Chevron"
                         width={15}
@@ -157,17 +173,31 @@ const TravelTodo = ({
                       <TodoList>
                         {category.travelItemList.map((item: any) => (
                           <div className="todo" key={item.itemId}>
-                            <Icon
-                              icon={item.isChecked ? 'CheckSmall' : 'UnCheckSmall'}
-                              cursor={true}
-                              onClick={() =>
-                                handleCheckItem({
-                                  state: item.isChecked,
-                                  itemId: item.itemId,
-                                })
-                              }
-                            />
-                            {item.title}
+                            <div className="leftSide">
+                              <Icon
+                                icon={item.isChecked ? 'CheckSmall' : 'UnCheckSmall'}
+                                cursor={true}
+                                onClick={() =>
+                                  handleCheckItem({
+                                    state: item.isChecked,
+                                    itemId: item.itemId,
+                                  })
+                                }
+                              />
+                              {item.title}
+                            </div>
+                            {editTodos[category.categoryId] && (
+                              <Icon
+                                icon="DeleteWhite"
+                                cursor={true}
+                                onClick={() =>
+                                  handleDeleteItem({
+                                    itemId: item.itemId,
+                                    categoryId: category.categoryId,
+                                  })
+                                }
+                              />
+                            )}
                           </div>
                         ))}
                       </TodoList>
@@ -190,17 +220,6 @@ const TravelTodo = ({
                   )}
                 </div>
               ))}
-            <div className="itemInput">
-              <Icon icon="Plus" width={20} height={20} />
-              <form onSubmit={handleSubmitCategory}>
-                <input
-                  type="text"
-                  placeholder="항목 추가하기"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                />
-              </form>
-            </div>
           </TodoListWrapper>
         </>
       )}
@@ -300,6 +319,7 @@ const TodoListWrapper = styled.div`
     border-radius: 6px;
     background-color: ${COLOR.MAIN_WHITE};
     box-sizing: border-box;
+    margin-top: 4px;
 
     input {
       outline: none;
@@ -318,6 +338,7 @@ const CategoryTitle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 
   padding: 9px 14px;
   border-radius: 6px;
@@ -359,7 +380,7 @@ const TodoList = styled.div`
   .todo {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    justify-content: space-between;
     align-items: center;
 
     height: 40px;
@@ -374,5 +395,12 @@ const TodoList = styled.div`
     font-weight: 600;
     line-height: 15px;
     letter-spacing: -0.18px;
+
+    .leftSide {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+    }
   }
 `;
