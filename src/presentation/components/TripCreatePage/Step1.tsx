@@ -23,15 +23,8 @@ const Step1 = () => {
   const [place, setPlace] = useState('');
   const { data: destinations } = useGetDestination(place);
 
-  const recent = [
-    '도쿄',
-    '베를린',
-    '시드니',
-    '상하이',
-    '이스탄불',
-    '유럽',
-    '제주도',
-  ];
+  const recentString = localStorage.getItem('recent');
+  const recent = recentString ? JSON.parse(recentString) : [];
 
   useEffect(() => {
     if (state === 'main') {
@@ -76,13 +69,13 @@ const Step1 = () => {
       {place && destinations?.length > 0 && !destinationId && (
         <DestinationList destinations={destinations} />
       )}
-      {recent && (
+      {recent.length > 0 && (
         <>
           <Spacing size={40} />
           <RecentKeyword>
             <div className="title">최근 검색어</div>
             <div className="keywords">
-              {recent.map((keyword) => (
+              {recent.map((keyword: string) => (
                 <div
                   key={keyword}
                   className="keyword"
