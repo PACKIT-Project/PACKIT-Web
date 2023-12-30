@@ -16,6 +16,11 @@ const DestinationList = ({ destinations }: { destinations: DestinationType[] }) 
   const navigate = useNavigate();
 
   const handleClickDestination = (destination: DestinationType) => {
+    let recent = JSON.parse(localStorage.getItem('recent') as string) || [];
+    recent.push(destination.city);
+    recent = Array.from(new Set(recent));
+    localStorage.setItem('recent', JSON.stringify(recent));
+
     dispatch(
       changeCreateTripState({ type: 'destinationId', value: destination.id })
     );
