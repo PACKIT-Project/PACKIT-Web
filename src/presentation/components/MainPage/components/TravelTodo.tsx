@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import useGetTravelTodoList from '../../../../infrastructure/queries/travel/useGetTravelTodoList';
 import styled from 'styled-components';
@@ -9,13 +10,17 @@ import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
 import { checkItem, deleteItem, postItem, unCheckItem } from '@api/item';
+import useGetTravelMembers from '../../../../infrastructure/queries/travel/useGetTravelMembers';
+import { membersProfileType } from '@type/members';
 
 const TravelTodo = ({
   travelId,
   memberId,
+  setMembers,
 }: {
   travelId: number;
   memberId?: number;
+  setMembers: React.Dispatch<React.SetStateAction<membersProfileType[]>>;
 }) => {
   const {
     isShowModal: isShowClusterInputBottomSheet,
@@ -23,6 +28,8 @@ const TravelTodo = ({
     closeModal: closeClusterInputBottomSheet,
   } = useModal();
 
+  const { data: membersProfile, refetch: membersProfileRefetch } =
+    useGetTravelMembers(travelId);
   const { data, isLoading, refetch } = useGetTravelTodoList(travelId, memberId);
   const [currClusterId, setCurrClusterId] = useState(0);
   const [openCategories, setOpenCategories] = useState<{ [key: number]: boolean }>(
@@ -54,7 +61,8 @@ const TravelTodo = ({
     e.preventDefault();
     const res = await postItem({ categoryId, title: item });
     if (res.message === '새로운 할 일 아이템 생성에 성공했습니다.') {
-      refetch();
+      await refetch();
+      await membersProfileRefetch();
       setItem('');
     }
   };
@@ -67,16 +75,17 @@ const TravelTodo = ({
     itemId: number;
   }) => {
     if (state) {
-      const res = await unCheckItem(itemId);
-      if (res === '아이템 체크 취소에 성공했습니다.') {
-        refetch();
-      }
-      return;
+      await unCheckItem(itemId);
+    } else {
+      await checkItem(itemId);
     }
-    const res = await checkItem(itemId);
-    if (res === '아이템 체크에 성공했습니다.') {
-      refetch();
-    }
+
+    await refetch();
+    await membersProfileRefetch();
+
+    membersProfileRefetch().then(() => {
+      setMembers(membersProfile.data);
+    });
   };
 
   const handleDeleteItem = async ({
@@ -98,6 +107,12 @@ const TravelTodo = ({
       setCurrClusterId(data.data?.travelClusterList[0].clusterId);
     }
   }, [data, memberId]);
+
+  useEffect(() => {
+    if (membersProfile) {
+      setMembers(membersProfile.data);
+    }
+  }, [membersProfile]);
 
   if (isLoading) {
     return <div>로딩중</div>;
