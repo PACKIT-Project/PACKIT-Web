@@ -3,16 +3,16 @@ import Text from '@components/common/Text';
 import COLOR from '@styles/colors';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { deleteUser } from '../../../../infrastructure/api/user';
 import { deleteCookie } from '../../../../application/utils/cookie';
 import Spacing from '@components/common/Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { deleteMember } from '@api/member';
 
 const LeaveBottomSheet = ({ closeModal }: { closeModal: () => void }) => {
   const navigate = useNavigate();
 
   const handleClickLeave = async () => {
-    const result = await deleteUser();
+    const result = await deleteMember();
     if (result.message === '성공적으로 회원 정보가 삭제되었습니다.') {
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
