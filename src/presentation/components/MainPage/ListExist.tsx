@@ -4,8 +4,7 @@ import Icon from '@components/common/Icon';
 import useModal from '../../../application/hooks/useModal';
 import Modal from '@components/common/Modal';
 import COLOR from '@styles/colors';
-import { useLocation, useNavigate } from 'react-router-dom';
-import TemplateModal from './components/TemplateModal';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   changeCreateTripState,
@@ -82,9 +81,7 @@ const ListExist = () => {
       </IconWrapper>
 
       <BottomSheet isVisible={isShowTemplate} closeModal={closeTemplate}>
-        {!clicked ? (
-          <TemplateModal setClicked={setClicked} />
-        ) : (
+        {clicked && (
           <CalendarModal closeModal={closeTemplate} setClicked={setClicked} />
         )}
       </BottomSheet>
