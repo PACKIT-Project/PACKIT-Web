@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { getTravelDetail, getTravelMembers, getUpcomingTravles } from '@api/travel';
 import styled from 'styled-components';
@@ -146,7 +147,11 @@ const TripMain = () => {
             </button>
           </MemberWrapper>
 
-          <TravelTodo travelId={travel && travel.id} memberId={currMemberId} />
+          <TravelTodo
+            travelId={travel && travel.id}
+            memberId={currMemberId}
+            setMembers={setMembers}
+          />
         </>
       )}
       {isShowInviteModal && (
