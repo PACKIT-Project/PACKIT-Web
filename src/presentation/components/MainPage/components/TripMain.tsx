@@ -15,6 +15,7 @@ import BottomSheet from '@components/common/BottomSheet';
 import TripList from './TripList';
 import TravelTodo from './TravelTodo';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { membersProfileType } from '@type/members';
 
 const TripMain = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const TripMain = () => {
   const [travel, setTravel] = useState<any>();
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [dates, setDates] = useState<string>('');
-  const [members, setMembers] = useState<any[]>([]);
+  const [members, setMembers] = useState<membersProfileType[]>([]);
   const [currMemberId, setCurrMemberId] = useState(0);
 
   const getRecentTravel = async () => {

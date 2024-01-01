@@ -11,6 +11,7 @@ import BottomSheet from '@components/common/BottomSheet';
 import ClusterInput from './ClusterInput';
 import { checkItem, deleteItem, postItem, unCheckItem } from '@api/item';
 import useGetTravelMembers from '../../../../infrastructure/queries/travel/useGetTravelMembers';
+import { membersProfileType } from '@type/members';
 
 const TravelTodo = ({
   travelId,
@@ -19,7 +20,7 @@ const TravelTodo = ({
 }: {
   travelId: number;
   memberId?: number;
-  setMembers: any;
+  setMembers: React.Dispatch<React.SetStateAction<membersProfileType[]>>;
 }) => {
   const {
     isShowModal: isShowClusterInputBottomSheet,

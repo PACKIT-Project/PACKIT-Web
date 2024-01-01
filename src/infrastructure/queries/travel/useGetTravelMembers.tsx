@@ -1,4 +1,3 @@
-import React from 'react';
 import { getTravelMembers } from '@api/travel';
 import { useQuery } from 'react-query';
 
