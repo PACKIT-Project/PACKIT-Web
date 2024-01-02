@@ -14,6 +14,7 @@ import TermsPage from '@pages/OnBoardingPage/terms';
 import TermsDetailPage from '@pages/OnBoardingPage/detail';
 import SettingPage from '@pages/SettingPage';
 import ManageTodoPage from '@pages/ManageTodoPage';
+import FeedPage from '@pages/FeedPage';
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path="/my/edit" element={<EditMyInfoPage />} />
         <Route path="/remind/:id" element={<TripRemindPage />} />
         <Route path="/edit/:tripid" element={<ManageTodoPage />} />
+        <Route path="/feed" element={<FeedPage />} />
       </Routes>
     </BrowserRouter>
   );
