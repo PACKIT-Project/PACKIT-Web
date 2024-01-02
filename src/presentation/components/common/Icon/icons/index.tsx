@@ -89,3 +89,5 @@ export { default as InviteCode } from './invite/InviteCode';
 
 export { default as UnCheckSmall } from './UnCheckSmall';
 export { default as CheckSmall } from './CheckSmall';
+
+export { default as FeedMessage } from './FeedMessage';
