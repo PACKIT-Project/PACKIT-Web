@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import COLOR from '@styles/colors';
 import styled from 'styled-components';
-import Text from '../Text';
 import Spacing from '../Spacing';
+import { TYPOGRAPHY } from '@styles/fonts';
+import { postInvitationCode } from '@api/travel';
 
 const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
-  const ans = '8212348390';
   const [code, setCode] = useState('');
   const [authenticationState, setAuthenticationState] = useState('');
 
@@ -14,8 +14,9 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
     setCode(e.target.value);
   };
 
-  const handleClickAuthentication = () => {
-    if (code === ans) {
+  const handleClickAuthentication = async () => {
+    const res = await postInvitationCode(code);
+    if (res.message === '여행 참여에 성공했습니다.') {
       setAuthenticationState('success');
     } else {
       setAuthenticationState('fail');
@@ -24,13 +25,8 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
 
   return (
     <CodeModalWrapper>
-      <Text
-        text="공유 받은 초대 코드 입력"
-        color={COLOR.COOL_GRAY_400}
-        fontSize={18}
-        fontWeight={700}
-        lineHeight="18px"
-      />
+      <div className="title">공유 받은 초대 코드 입력</div>
+
       <Spacing size={25} />
       <InputWrapper>
         <input
@@ -53,9 +49,13 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
             : '유효하지 않은 코드입니다. 다시 확인해주세요.'}
         </div>
       )}
-      <Spacing size={45} />
+      <Spacing size={60} />
       <ConfirmButtonWrapper>
-        <TextButton active="true" onClick={closeCodeModal}>
+        <TextButton
+          active="true"
+          onClick={closeCodeModal}
+          style={{ color: COLOR.COOL_GRAY_500 }}
+        >
           취소
         </TextButton>
         <TextButton
@@ -84,13 +84,14 @@ const CodeModalWrapper = styled.div`
     width: 390px;
   }
 
+  .title {
+    color: ${COLOR.COOL_GRAY_500};
+    ${TYPOGRAPHY.TITLE.SUBHEADING2_BOLD};
+  }
   .stateText {
     margin-top: 8px;
     text-align: left;
-
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 13px;
+    ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD}
   }
   .success {
     color: ${COLOR.MAIN_BLUE};
@@ -134,10 +135,8 @@ const InputWrapper = styled.div`
 const AuthenticationButton = styled.button<{ active: string }>`
   padding: 9px 11px;
 
-  color: ${COLOR.WHITE};
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 15px;
+  color: ${COLOR.MAIN_WHITE};
+  ${TYPOGRAPHY.TITLE.SUBHEADING1_SEMIBOLD};
   background-color: ${({ active }) =>
     active === 'true' ? COLOR.MAIN_BLUE : COLOR.UI_GRAY_3};
 
@@ -155,11 +154,8 @@ const ConfirmButtonWrapper = styled.div`
 `;
 
 const TextButton = styled.button<{ active: string }>`
-  color: ${({ active }) => (active === 'true' ? '#0f1116' : COLOR.UI_GRAY_4)};
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 15px;
-
+  color: ${({ active }) => (active === 'true' ? COLOR.MAIN_BLUE : COLOR.UI_GRAY_4)};
+  ${TYPOGRAPHY.TITLE.SUBHEADING2_BOLD};
   border: none;
   outline: none;
   background-color: transparent;

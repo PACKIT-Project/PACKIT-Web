@@ -1,25 +1,29 @@
-import React, { useState } from "react";
-import Button from "@components/common/Button";
-import Spacing from "@components/common/Spacing";
-import Text from "@components/common/Text";
-import COLOR from "@styles/colors";
-import { styled } from "styled-components";
-import { useNavigate } from "react-router-dom";
-import Icon from "@components/common/Icon";
-import Toast from "@components/common/Toast";
-import { shareKakao }  from "@utils/shareKakaoLink";
-import { clipboardShare }  from "@utils/clipboardShare";
+import React from 'react';
+import Spacing from '@components/common/Spacing';
+import Text from '@components/common/Text';
+import COLOR from '@styles/colors';
+import { styled } from 'styled-components';
+import Icon from '@components/common/Icon';
 
+import { shareKakao } from '@utils/shareKakaoLink';
+import { clipboardShare } from '@utils/clipboardShare';
+import { TYPOGRAPHY } from '@styles/fonts';
+import useDeleteTravel from '@hooks/queries/travel/useDeleteTravel';
 
-const ShareModal = ({ closeModal, travelId }: { closeModal: () => void, travelId: string }) => {
-  const navigate = useNavigate();
+const ShareModal = ({
+  closeModal,
+  travelId,
+}: {
+  closeModal: () => void;
+  travelId: string;
+}) => {
   const onClickKakaoShare = (route: string, title: string) => {
     closeModal();
     shareKakao(route, title);
   };
 
   return (
-    <ShareModalWrapper>
+    <ModalWrapper>
       <Text
         text="공유하기"
         color="#191F28"
@@ -29,8 +33,15 @@ const ShareModal = ({ closeModal, travelId }: { closeModal: () => void, travelId
       />
       <Spacing size={23} />
       <ButtonWrapper>
-        <TextWrapper onClick={()=>onClickKakaoShare(`${process.env.REACT_APP_SHARE_CLIPBOARD_LINK}`, "PACK IT")}>
-          <Icon icon="KakaoLogo"  />
+        <TextWrapper
+          onClick={() =>
+            onClickKakaoShare(
+              `${process.env.REACT_APP_SHARE_CLIPBOARD_LINK}`,
+              'PACK IT'
+            )
+          }
+        >
+          <Icon icon="KakaoLogo" />
           <Text
             text="카카오톡"
             color={COLOR.GRAY_800}
@@ -39,8 +50,12 @@ const ShareModal = ({ closeModal, travelId }: { closeModal: () => void, travelId
             fontWeight={600}
           />
         </TextWrapper>
-        <TextWrapper onClick={()=>{clipboardShare(travelId)}} >
-          <Icon icon="LinkOutlined"/>
+        <TextWrapper
+          onClick={() => {
+            clipboardShare(travelId);
+          }}
+        >
+          <Icon icon="LinkOutlined" />
           <Text
             text="URL복사"
             color={COLOR.GRAY_800}
@@ -50,96 +65,83 @@ const ShareModal = ({ closeModal, travelId }: { closeModal: () => void, travelId
           />
         </TextWrapper>
       </ButtonWrapper>
-    </ShareModalWrapper>
+    </ModalWrapper>
   );
 };
 
-const DeleteModal = ({ closeModal }: { closeModal: () => void }) => {
-  const navigate = useNavigate();
+const DeleteModal = ({
+  closeModal,
+  travelId,
+}: {
+  closeModal: () => void;
+  travelId: number;
+}) => {
+  const { mutate } = useDeleteTravel();
 
-  const handleClickLogout = () => {
-    closeModal();
-    navigate("/", { replace: true, state: { state: "delete_done" } });
+  const handleClickDelete = async () => {
+    localStorage.setItem('state', 'delete_done');
+    mutate({ travelId });
   };
 
   return (
-    <ShareModalWrapper>
-      <Text
-        text="여행을 삭제할까요?"
-        color="#191F28"
-        fontSize={20}
-        lineHeight="28px"
-        fontWeight={700}
-      />
-      <Spacing size={10} />
-      <Text
-        text="리스트 삭제 후 복구가 불가능합니다"
-        color="#6B7684"
-        fontSize={15}
-        lineHeight="22px"
-        fontWeight={500}
-      />
-      <Spacing size={30} />
-      <DeleteButtonWrapper>
-        <Button
-          width=""
-          border="none"
-          background="#F2F4F6"
-          color="#505967"
-          radius={12}
-          padding="17px"
-          onClick={() => closeModal()}
-          clicked="true"
-          customstyle={{ minWidth: "80px" }}
-        >
-          <Text
-            text="취소"
-            color="#505967"
-            fontSize={17}
-            lineHeight="20.4px"
-            fontWeight={600}
-          />
-        </Button>
-        <Button
-          width=""
-          border="none"
-          background={COLOR.MAIN_GREEN}
-          color={COLOR.WHITE}
-          radius={12}
-          padding="17px"
-          onClick={handleClickLogout}
-          clicked="true"
-          customstyle={{ minWidth: "80px" }}
-        >
-          <Text
-            text="삭제하기"
-            color={COLOR.WHITE}
-            fontSize={17}
-            lineHeight="20.4px"
-            fontWeight={600}
-          />
-        </Button>
-      </DeleteButtonWrapper>
-    </ShareModalWrapper>
+    <ModalWrapper>
+      여행을 삭제하시겠어요?
+      <Spacing size={9} />
+      <div className="subText">삭제하신 항목은 복구가 불가능합니다.</div>
+      <Spacing size={47} />
+      <ButtonWrapper>
+        <button className="cancel" onClick={closeModal}>
+          취소
+        </button>
+        <button className="delete" onClick={handleClickDelete}>
+          삭제
+        </button>
+      </ButtonWrapper>
+    </ModalWrapper>
   );
 };
 
-const ShareModalWrapper = styled.div`
-  padding: 22px 47.42px;
-  border-radius: 14px;
-  background-color: ${COLOR.WHITE};
-  box-shadow: 0px 0px 9.899947166442871px 0px rgba(133, 133, 133, 0.38);
+const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 24px 56px;
+  text-align: center;
+
+  border-radius: 8px;
+  background-color: ${COLOR.MAIN_WHITE};
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: normal;
+  color: ${COLOR.COOL_GRAY_300};
+
+  .subText {
+    ${TYPOGRAPHY.TEXT.BODY4_SEMIBOLD};
+    color: ${COLOR.COOL_GRAY_200};
+  }
 `;
+
 const ButtonWrapper = styled.div`
-  all: unset;
-  border: 0px;
   display: flex;
   flex-direction: row;
-  gap: 41px;
+  justify-content: center;
+  gap: 86px;
+
+  button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: normal;
+
+    &.cancel {
+      color: ${COLOR.COOL_GRAY_100};
+    }
+    &.delete {
+      color: ${COLOR.ALERT_WARNING};
+    }
+  }
 `;
 
 const DeleteButtonWrapper = styled.div`
@@ -158,7 +160,7 @@ const TextWrapper = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  z-index:1;
+  z-index: 1;
 `;
 
 export { ShareModal, DeleteModal };

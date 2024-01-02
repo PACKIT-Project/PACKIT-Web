@@ -1,51 +1,20 @@
 import React from 'react';
-import BackHeader from '@components/common/BackHeader';
 import COLOR from '@styles/colors';
 import { styled } from 'styled-components';
-import useGetMyInfo from '../../../application/hooks/queries/user/useGetMyInfo';
 import { useNavigate } from 'react-router-dom';
-import useModal from '../../../application/hooks/useModal';
+import useGetMemberProfile from '../../../infrastructure/queries/members/useGetMemberProfile';
+import SettingHeader from '@components/common/Header/SettingHeader';
 import Spacing from '@components/common/Spacing';
-import Button from '@components/common/Button';
 import Text from '@components/common/Text';
-import Modal from '@components/common/Modal';
-import LogoutModal from '@components/MyPage/components/LogoutModal';
-import LeaveModal from '@components/MyPage/components/LeaveModal';
-import { requestEmailAuth } from '@api/emailAuth';
-import EmailAuthModal from '@components/MainPage/components/EmailAuthModal';
+import BottomNav from '@components/common/BottomNav';
+import { TYPOGRAPHY } from '@styles/fonts';
+import MainContent from '@components/MyPage/MainContent';
+import { motion } from 'framer-motion';
+import Icon from '@components/common/Icon';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { data } = useGetMyInfo();
-  const {
-    isShowModal: isShowLeaveModal,
-    toggleModal: toggleLeaveModal,
-    closeModal: closeLeaveModal,
-  } = useModal();
-  const {
-    isShowModal: isShowLogoutModal,
-    toggleModal: toggleLogoutModal,
-    closeModal: closeLogoutModal,
-  } = useModal();
-  const {
-    isShowModal: isShowEmailAuth,
-    toggleModal: toggleEmailAuth,
-    closeModal: closeEmailAuth,
-  } = useModal();
-
-  const handleClickEmailAuth = async () => {
-    const res = await requestEmailAuth();
-    if (res.message === '성공적으로 인증 메일이 발송되었습니다.') {
-      toggleEmailAuth();
-    }
-  };
-
-  const handleClickLeave = () => {
-    toggleLeaveModal();
-  };
-  const handleClickLogout = () => {
-    toggleLogoutModal();
-  };
+  const { data } = useGetMemberProfile();
 
   const handleClickEditInfo = () => {
     navigate('/my/edit');
@@ -54,212 +23,82 @@ const MyPage = () => {
   return (
     <>
       {data && (
-        <MyPageWrapper>
-          <BackHeader text="내 정보" color="#191F28" />
+        <MyPageWrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <SettingHeader />
+          <Spacing size={26} />
           <MembersWrapper>
-            <Spacing size={10} />
-            <InfoWrapper>
-              <div className="profile-wrapper">
+            <div className="profileWrapper">
+              {data.profileImageUrl ? (
                 <img src={data.profileImageUrl} alt="프로필 이미지" />
-              </div>
-              <div className="info-text">
-                <div>
-                  <span className="name">{data.nickname}</span>님
-                </div>
-                <Spacing size={8} />
-                <span className="email">{data.email}</span>
-                <Spacing size={14} />
-                <Button
-                  width="fit-content"
-                  radius={29}
-                  padding="8px 16px"
-                  background={COLOR.WHITE}
-                  border={`1px solid ${COLOR.GRAY_500}`}
-                  onClick={handleClickEmailAuth}
-                >
-                  <Text
-                    text="이메일 인증하기"
-                    fontSize={13}
-                    fontWeight={600}
-                    lineHeight="16px"
-                    color={COLOR.GRAY_800}
-                  />
-                </Button>
-              </div>
-            </InfoWrapper>
-            <Spacing size={21} />
-            <BottomWrapper>
-              <Button
-                radius={12}
-                padding="24px 30px"
-                background={COLOR.WHITE}
-                border={`1px solid ${COLOR.GREEN_300}`}
-                onClick={() => {}}
-              >
-                <div className="template-button">
-                  <Text
-                    text="생성된 여행 템플릿"
-                    fontSize={20}
-                    fontWeight={500}
-                    lineHeight="20px"
-                    color={COLOR.GRAY_900}
-                  />
-                  |
-                  <Text
-                    text={`${data.travelCount}개`}
-                    fontSize={22}
-                    fontWeight={500}
-                    lineHeight="22px"
-                    color={COLOR.MAIN_GREEN}
-                  />
-                </div>
-              </Button>
-              <ButtonWrapper>
-                <Button
-                  width="100%"
-                  radius={8}
-                  padding="13px"
-                  background={COLOR.WHITE}
-                  border={`1px solid ${COLOR.GRAY_200}`}
-                  onClick={handleClickEditInfo}
-                >
-                  <Text
-                    text="프로필 편집"
-                    fontSize={18}
-                    fontWeight={500}
-                    lineHeight="30px"
-                    color={COLOR.GRAY_600}
-                  />
-                </Button>
-                <Button
-                  width="100%"
-                  radius={8}
-                  padding="13px"
-                  background={COLOR.WHITE}
-                  border={`1px solid ${COLOR.GRAY_200}`}
-                  onClick={handleClickLogout}
-                >
-                  <Text
-                    text="로그아웃"
-                    fontSize={18}
-                    fontWeight={500}
-                    lineHeight="30px"
-                    color={COLOR.GRAY_600}
-                  />
-                </Button>
-                <Button
-                  width="100%"
-                  radius={8}
-                  padding="13px"
-                  background={COLOR.WHITE}
-                  border={`1px solid ${COLOR.GRAY_200}`}
-                  onClick={handleClickLeave}
-                >
-                  <Text
-                    text="탈퇴하기"
-                    fontSize={18}
-                    fontWeight={500}
-                    lineHeight="30px"
-                    color={COLOR.GRAY_600}
-                  />
-                </Button>
-              </ButtonWrapper>
-            </BottomWrapper>
-
-            <Modal isVisible={isShowLogoutModal} closeModal={closeLogoutModal}>
-              <LogoutModal closeModal={closeLogoutModal} />
-            </Modal>
-            <Modal isVisible={isShowLeaveModal} closeModal={closeLeaveModal}>
-              <LeaveModal closeModal={closeLeaveModal} />
-            </Modal>
+              ) : (
+                <Icon icon="Profile" width={80} height={80} />
+              )}
+            </div>
+            <div className="infoWrapper">
+              <Text
+                text={data.nickname}
+                color={COLOR.COOL_GRAY_300}
+                fontSize={21}
+                fontWeight={700}
+                lineHeight="normal"
+              />
+              <button onClick={handleClickEditInfo}>프로필 편집</button>
+            </div>
           </MembersWrapper>
-          <Modal isVisible={isShowEmailAuth} closeModal={closeEmailAuth}>
-            <EmailAuthModal closeModal={closeEmailAuth} />
-          </Modal>
+          <Spacing size={38} />
+          <MainContent />
+          <BottomNav />
         </MyPageWrapper>
       )}
     </>
   );
 };
 
-const MyPageWrapper = styled.div`
-  padding: 0 20px;
-  height: 100vh;
+const MyPageWrapper = styled(motion.div)`
+  height: calc(100% - 84px);
   background-color: ${COLOR.WHITE};
-  overflow-y: hidden;
 `;
+
 const MembersWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  .template-button {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    align-items: center;
-    justify-content: center;
-
-    color: ${COLOR.GRAY_400};
-    font-size: 30px;
-  }
-`;
-
-const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
-  align-items: center;
+  padding: 0 2rem;
 
-  .profile-wrapper {
-    width: 100px;
-    height: 100px;
+  .profileWrapper {
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
+
     img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 100%;
+      object-fit: cover;
     }
   }
-  .info-text {
+  .infoWrapper {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    align-items: center;
+    justify-content: center;
+    gap: 7px;
 
-    color: ${COLOR.GRAY_900};
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 22px;
-
-    .name {
-      font-size: 30px;
-      line-height: 30px;
-      margin-right: 6px;
-    }
-    .email {
-      color: ${COLOR.GRAY_500};
-      font-size: 18px;
-      line-height: 18px;
+    button {
+      height: 29px;
+      ${TYPOGRAPHY.TEXT.BODY6_MEDIUM};
+      padding: 5px 19px;
+      border-radius: 4px;
+      background-color: ${COLOR.UI_GRAY_1};
+      color: ${COLOR.COOL_GRAY_100};
+      border: none;
+      outline: none;
+      box-sizing: border-box;
     }
   }
-`;
-const BottomWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  flex-grow: 1;
-  margin: 0 -20px;
-  padding: 23px 20px 50px 20px;
-  background-color: ${COLOR.GRAY_50};
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 9%;
 `;
 
 export default MyPage;

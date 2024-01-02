@@ -5,24 +5,34 @@ import { getTripDate } from '@utils/getDate';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { createTravel } from '@api/travel';
 
 const Step4 = () => {
   const navigate = useNavigate();
-  const { tripName, tripRange, memberNum } = useSelector(
+  const { destination, tripRange, tripName, destinationId } = useSelector(
     (state: RootState) => state.createTrip
   );
-  const { range, dates } = getTripDate(tripRange);
+
+  const { range, dates } = getTripDate(tripRange, '-');
+
+  const handleCreateTravel = async () => {
+    const res = await createTravel({
+      title: tripName,
+      destinationId,
+      startDate: tripRange.start,
+      endDate: tripRange.end,
+    });
+    if (res.message === '새로운 여행 생성에 성공했습니다.') {
+      navigate('/trip-create/complate');
+    }
+  };
 
   return (
     <StepWrapper>
-      <strong>{tripName}</strong> 로 <br />
+      <strong>{destination}</strong> 로 <br />
       <strong>{range}</strong> 까지 <br />
-      <strong>{dates}</strong> 여행을 <br />
-      <strong>{memberNum}명</strong> 의 인원으로 떠나시나요?
-      <BottomButton
-        text="여행 생성 완료하기"
-        onClick={() => navigate('/trip-create/complate')}
-      />
+      <strong>{dates}</strong> 여행을 떠나시나요?
+      <BottomButton text="여행 생성 완료하기" onClick={handleCreateTravel} />
     </StepWrapper>
   );
 };

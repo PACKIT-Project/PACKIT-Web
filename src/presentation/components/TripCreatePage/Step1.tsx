@@ -9,25 +9,22 @@ import {
   changeCreateTripState,
   initializeCreateTripInfo,
 } from '../../../application/reducer/slices/createTrip/createTripSlice';
-import BottomButton from '../common/BottomButton';
-import { useNavigate } from 'react-router-dom';
 import Icon from '@components/common/Icon';
+import { TYPOGRAPHY } from '@styles/fonts';
+import useGetDestination from '../../../infrastructure/queries/destination/useGetDestination';
+import DestinationList from './components/DestinationList';
 
 const Step1 = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { state } = useSelector((state: RootState) => state.createTrip);
+  const { state, destinationId } = useSelector(
+    (state: RootState) => state.createTrip
+  );
   const [place, setPlace] = useState('');
-  const recent = [
-    '도쿄',
-    '베를린',
-    '시드니',
-    '상하이',
-    '이스탄불',
-    '유럽',
-    '제주도',
-  ];
+  const { data: destinations } = useGetDestination(place);
+
+  const recentString = localStorage.getItem('recent');
+  const recent = recentString ? JSON.parse(recentString) : [];
 
   useEffect(() => {
     if (state === 'main') {
@@ -44,10 +41,6 @@ const Step1 = () => {
 
   const handleChangeTripPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlace(e.target.value);
-  };
-  const handleClickNextBtn = () => {
-    dispatch(changeCreateTripState({ type: 'tripName', value: place }));
-    navigate('/trip-create/2');
   };
 
   return (
@@ -73,13 +66,16 @@ const Step1 = () => {
           <Icon icon="Search" fill={place !== '' ? '#000' : '#B9BFC7'} />
         </div>
       </InputContainer>
-      {recent && (
+      {place && destinations?.length > 0 && !destinationId && (
+        <DestinationList destinations={destinations} />
+      )}
+      {recent.length > 0 && (
         <>
           <Spacing size={40} />
           <RecentKeyword>
             <div className="title">최근 검색어</div>
             <div className="keywords">
-              {recent.map((keyword) => (
+              {recent.map((keyword: string) => (
                 <div
                   key={keyword}
                   className="keyword"
@@ -92,12 +88,6 @@ const Step1 = () => {
           </RecentKeyword>
         </>
       )}
-
-      <BottomButton
-        disabled={place === '' ? true : false}
-        text="다음"
-        onClick={handleClickNextBtn}
-      />
     </StepWrapper>
   );
 };
@@ -122,12 +112,10 @@ const InputContainer = styled.div`
     outline: none;
     border-bottom: 1px solid #000;
 
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 140%;
-
+    color: ${COLOR.COOL_GRAY_300};
+    ${TYPOGRAPHY.TITLE.SUBHEADING4_MEDIUM};
     &::placeholder {
-      color: #b9bfc7;
+      color: ${COLOR.UI_GRAY_3};
     }
   }
   .icon {
@@ -141,10 +129,8 @@ const RecentKeyword = styled.div`
   flex-direction: column;
   gap: 11px;
 
-  color: ${COLOR.MAIN_BLACK};
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  color: ${COLOR.COOL_GRAY_400};
+  ${TYPOGRAPHY.TEXT.BODY2_BOLD};
 
   .keywords {
     display: flex;
@@ -152,8 +138,8 @@ const RecentKeyword = styled.div`
     gap: 7px;
     overflow: auto;
     height: 100%;
-    font-weight: 500;
-    line-height: 9.8px;
+    color: ${COLOR.COOL_GRAY_200};
+    ${TYPOGRAPHY.TEXT.BODY3_SEMIBOLD};
 
     .keyword {
       padding: 10px;

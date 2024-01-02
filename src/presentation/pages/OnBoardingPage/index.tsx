@@ -8,6 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Step1 from '@components/OnBoardingPage/Step1';
 import Step2 from '@components/OnBoardingPage/Step2';
 import Step3 from '@components/OnBoardingPage/Step3';
+import AppLayout from '@components/common/AppLayout';
 
 const OnBoardingPage = () => {
   const navigate = useNavigate();
@@ -24,14 +25,19 @@ const OnBoardingPage = () => {
   };
 
   return (
-    <OnBoardingWrapper>
-      <CustomSlider {...settings}>
-        <Step1 />
-        <Step2 />
-        <Step3 />
-      </CustomSlider>
-      <BottomButton text="시작하기" onClick={() => navigate('/')} />
-    </OnBoardingWrapper>
+    <AppLayout>
+      <OnBoardingWrapper>
+        <CustomSlider {...settings}>
+          <Step1 />
+          <Step2 />
+          <Step3 />
+        </CustomSlider>
+        <BottomButton
+          text="시작하기"
+          onClick={() => navigate('/onboarding/terms')}
+        />
+      </OnBoardingWrapper>
+    </AppLayout>
   );
 };
 
@@ -43,7 +49,7 @@ const OnBoardingWrapper = styled.div`
 
 const CustomSlider = styled(Slider)`
   top: 25%;
-  padding: 0 25px;
+  padding: 0 5px;
   align-items: center;
 
   .slick-dots {
@@ -56,5 +62,8 @@ const CustomSlider = styled(Slider)`
   .slick-dots li button::before {
     color: #d9d9d9;
     opacity: 1;
+  }
+  .slick-arrow {
+    visibility: hidden;
   }
 `;

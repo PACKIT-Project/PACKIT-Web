@@ -7,6 +7,7 @@ import Step1 from '../../components/TripCreatePage/Step1';
 import Step2 from '../../components/TripCreatePage/Step2';
 import Step3 from '../../components/TripCreatePage/Step3';
 import Step4 from '@components/TripCreatePage/Step4';
+import COLOR from '@styles/colors';
 
 const TripCreatePage = () => {
   const { step } = useParams();
@@ -28,7 +29,9 @@ const TripCreatePage = () => {
 };
 
 const TripCreateTemplate = styled.div`
+  height: 100%;
   padding: 0 20px;
+  background-color: ${COLOR.MAIN_WHITE};
 
   .topWrapper {
     position: relative;

@@ -72,8 +72,6 @@ const BottomNavWrapper = styled.div`
 
   width: 100%;
   height: 84px;
-  background-color: #fff;
-  box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.05);
 
   .container {
     position: absolute;
@@ -88,6 +86,8 @@ const BottomNavWrapper = styled.div`
     box-sizing: border-box;
 
     background-color: ${COLOR.WHITE};
+    box-shadow: 0px -4px 16px 0px rgba(0, 0, 0, 0.05);
+
     @media (min-width: 1024px) {
       width: 390px;
     }

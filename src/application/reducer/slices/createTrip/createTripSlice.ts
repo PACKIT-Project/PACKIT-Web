@@ -7,6 +7,8 @@ import {
 const initialState: CreateTripType = {
   tripType: '',
   tripName: '',
+  destinationId: 0,
+  destination: '',
   tripRange: {
     start: '',
     end: '',

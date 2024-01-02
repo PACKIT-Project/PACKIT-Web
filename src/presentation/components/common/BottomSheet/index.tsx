@@ -55,7 +55,6 @@ const BottomSheet = ({ isVisible, closeModal, children }: BottomSheetType) => {
       {isVisible || isanimating ? (
         <Modal isVisible={isVisible} closeModal={handleClose}>
           <BottomSheetWrapper isanimating={String(isanimating)}>
-            <div className="handle" />
             {children}
           </BottomSheetWrapper>
         </Modal>
@@ -84,8 +83,8 @@ const BottomSheetWrapper = styled.div<{ isanimating: string }>`
   animation: ${(props) => (props.isanimating === 'true' ? slideDown : slideUp)} 0.3s
     forwards;
 
-  @media (min-width: 480px) {
-    width: 480px;
+  @media (min-width: 1024px) {
+    width: 390px;
   }
 
   .handle {

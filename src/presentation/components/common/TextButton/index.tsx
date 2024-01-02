@@ -1,6 +1,6 @@
-import React from "react";
-import COLOR from "@styles/colors";
-import { styled } from "styled-components";
+import React from 'react';
+import COLOR from '@styles/colors';
+import { styled } from 'styled-components';
 
 type TextButtonType = {
   text?: string;
@@ -11,12 +11,14 @@ const TextButton = ({ text, onClick }: TextButtonType) => {
 };
 
 const TextButtonWrapper = styled.div`
-  color: ${COLOR.GRAY_600};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  color: ${COLOR.COOL_GRAY_100};
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20.5px;
+  letter-spacing: -0.5px;
   text-decoration-line: underline;
+
+  cursor: pointer;
 `;
 
 export default TextButton;

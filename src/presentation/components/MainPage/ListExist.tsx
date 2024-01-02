@@ -1,12 +1,10 @@
 import Spacing from '@components/common/Spacing';
 import { styled } from 'styled-components';
 import Icon from '@components/common/Icon';
-import TripList from './components/TripList';
 import useModal from '../../../application/hooks/useModal';
 import Modal from '@components/common/Modal';
 import COLOR from '@styles/colors';
 import { useNavigate } from 'react-router-dom';
-import TemplateModal from './components/TemplateModal';
 import { useDispatch } from 'react-redux';
 import {
   changeCreateTripState,
@@ -15,6 +13,7 @@ import {
 import BottomSheet from '@components/common/BottomSheet';
 import { useEffect, useState } from 'react';
 import CalendarModal from './components/CalendarModal';
+import TripMain from './components/TripMain';
 
 const ListExist = () => {
   const dispatch = useDispatch();
@@ -25,7 +24,6 @@ const ListExist = () => {
     toggleModal: toggleTemplate,
     closeModal: closeTemplate,
   } = useModal();
-
   const [clicked, setClicked] = useState(false); // 템플릿 선택 -> 선택하기 클릭 유무를 통해 캘린더 보여주기 위한 임시 값
 
   useEffect(() => {
@@ -59,7 +57,7 @@ const ListExist = () => {
   return (
     <ListExistWrapper>
       <Spacing size={20} />
-      <TripList />
+      <TripMain />
       <IconWrapper>
         {isShowModal ? (
           <Modal isVisible={isShowModal} closeModal={closeModal}>
@@ -83,9 +81,7 @@ const ListExist = () => {
       </IconWrapper>
 
       <BottomSheet isVisible={isShowTemplate} closeModal={closeTemplate}>
-        {!clicked ? (
-          <TemplateModal setClicked={setClicked} />
-        ) : (
+        {clicked && (
           <CalendarModal closeModal={closeTemplate} setClicked={setClicked} />
         )}
       </BottomSheet>
@@ -93,9 +89,7 @@ const ListExist = () => {
   );
 };
 
-const ListExistWrapper = styled.div`
-  padding: 0 20px;
-`;
+const ListExistWrapper = styled.div``;
 const IconWrapper = styled.div`
   position: fixed;
   bottom: 10px;
