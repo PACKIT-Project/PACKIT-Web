@@ -36,7 +36,9 @@ const TravelTodo = ({
     {}
   );
   const [editTodos, setEditTodos] = useState<{ [key: number]: boolean }>({});
-  const [item, setItem] = useState('');
+  const [categoryItemInputs, setCategoryItemInputs] = useState<{
+    [key: number]: string;
+  }>({});
 
   const handleToggleCategory = (categoryId: number) => {
     setOpenCategories((prevOpenCategories) => ({
@@ -59,11 +61,14 @@ const TravelTodo = ({
     categoryId: number;
   }) => {
     e.preventDefault();
-    const res = await postItem({ categoryId, title: item });
+    const res = await postItem({
+      categoryId,
+      title: categoryItemInputs[categoryId],
+    });
     if (res.message === '새로운 할 일 아이템 생성에 성공했습니다.') {
       await refetch();
       await membersProfileRefetch();
-      setItem('');
+      setCategoryItemInputs({});
     }
   };
 
@@ -226,8 +231,13 @@ const TravelTodo = ({
                           <input
                             type="text"
                             placeholder="항목 추가하기"
-                            value={item}
-                            onChange={(e) => setItem(e.target.value)}
+                            value={categoryItemInputs[category.categoryId] || ''}
+                            onChange={(e) =>
+                              setCategoryItemInputs((prevInputs) => ({
+                                ...prevInputs,
+                                [category.categoryId]: e.target.value,
+                              }))
+                            }
                           />
                         </form>
                       </div>
