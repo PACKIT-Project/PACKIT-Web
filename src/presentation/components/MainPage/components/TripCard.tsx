@@ -20,7 +20,9 @@ const TripCard = ({ travel }: any) => {
           <Icon icon="LocationPin" />
           {travel.destination} · {travel.startDate} -{' '}
           {travel.endDate.split('.').slice(1, 3).join('.')}{' '}
-          <span className="dDay">&nbsp;&nbsp;{travel.dDay}일 남음</span>
+          {travel.dDay > 0 && (
+            <span className="dDay">&nbsp;&nbsp;{travel.dDay}일 남음</span>
+          )}
         </div>
       </div>
     </TripCardWrapper>
