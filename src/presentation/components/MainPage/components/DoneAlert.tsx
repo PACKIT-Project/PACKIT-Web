@@ -26,7 +26,7 @@ const DoneAlert = ({ closeModal }: { closeModal: () => void }) => {
         strokeWidth={6}
         primaryColor={['#0EA8FF', '#28FFCB']}
         width={90}
-        fontSize={16}
+        fontSize={'16'}
         fontColor={COLOR.COOL_GRAY_300}
       />
       <Spacing size={26} />
