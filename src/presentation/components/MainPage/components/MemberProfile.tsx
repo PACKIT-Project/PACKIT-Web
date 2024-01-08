@@ -17,6 +17,7 @@ const MemberProfile = ({ member, onClick }: any) => {
         ) : (
           <Icon icon="Profile" width={48.6} height={48.6} cursor={true} />
         )}
+        {checkPercentage === 100 && <div className="done">🎉</div>}
       </ImgWrapper>
       {member.nickName}
     </MemberProfileWrapper>
@@ -43,6 +44,7 @@ const MemberProfileWrapper = styled.div`
 `;
 
 const ImgWrapper = styled.div<{ percentage: number }>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +52,15 @@ const ImgWrapper = styled.div<{ percentage: number }>`
   height: 54px;
   border-radius: 100%;
   background: ${({ percentage }) =>
-    percentage > 0
+    percentage === 100
+      ? 'linear-gradient(142deg, #00EF4F 11.05%, #00ECA0 53.55%, #00CDED 94.84%)'
+      : percentage > 0
       ? `conic-gradient(${COLOR.MAIN_BLUE} 0% ${percentage}%, ${COLOR.UI_GRAY_3} ${percentage}% 100%)`
       : COLOR.UI_GRAY_3};
+
+  .done {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+  }
 `;
