@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import 'react-circular-progressbar/dist/styles.css';
 import { CircleProgress } from 'react-gradient-progress';
 import COLOR from '@styles/colors';
 import Spacing from '@components/common/Spacing';
