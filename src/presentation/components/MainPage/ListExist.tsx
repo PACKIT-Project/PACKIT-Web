@@ -89,7 +89,10 @@ const ListExist = () => {
   );
 };
 
-const ListExistWrapper = styled.div``;
+const ListExistWrapper = styled.div`
+  height: 100%;
+  background-color: ${COLOR.WHITE};
+`;
 const IconWrapper = styled.div`
   position: fixed;
   bottom: 10px;
