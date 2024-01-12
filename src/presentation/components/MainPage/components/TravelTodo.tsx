@@ -268,6 +268,7 @@ export default TravelTodo;
 
 const TravelTodoWrapper = styled.div`
   padding: 0 15px;
+  height: calc(100% - 229px);
 `;
 
 const ClusterList = styled.div`
@@ -331,6 +332,9 @@ const TodoListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  height: calc(100% - 48px);
+  overflow-y: auto;
 
   .itemInput {
     display: flex;

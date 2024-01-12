@@ -82,7 +82,7 @@ const MainPage = () => {
 };
 
 const MainPageWrapper = styled.div`
-  min-height: 100vh;
+  height: calc(100% - 129px);
   background-color: ${COLOR.WHITE};
 `;
 
