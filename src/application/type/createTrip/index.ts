@@ -1,14 +1,9 @@
 export interface CreateTripType {
-  tripType?: string;
   tripName: string;
   destinationId: number;
   destination: string;
   tripRange: TripRangeType;
-  checkCount?: string;
-  state?: string;
-  tripId?: number;
-  memberNum?: number;
-  [key: string]: number | string | TripRangeType | undefined;
+  [key: string]: number | string | TripRangeType;
 }
 
 export interface TripRangeType {
