@@ -268,7 +268,7 @@ export default TravelTodo;
 
 const TravelTodoWrapper = styled.div`
   padding: 0 15px;
-  height: calc(100% - 229px);
+  height: calc(100% - 253px);
 `;
 
 const ClusterList = styled.div`

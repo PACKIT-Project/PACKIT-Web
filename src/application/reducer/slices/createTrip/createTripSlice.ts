@@ -5,7 +5,6 @@ import {
 } from '../../../../application/type/createTrip';
 
 const initialState: CreateTripType = {
-  tripType: '',
   tripName: '',
   destinationId: 0,
   destination: '',
@@ -13,10 +12,6 @@ const initialState: CreateTripType = {
     start: '',
     end: '',
   },
-  checkCount: '',
-  state: '', // 여행 생성 시작한 페이지 알기 위해 (ex. main)
-  tripId: 0, // 템플릿 불러오기 후 여행 생성을 위해
-  memberNum: 1,
 };
 
 export const createTripSlice = createSlice({
