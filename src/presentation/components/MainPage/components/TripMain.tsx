@@ -135,6 +135,7 @@ const TripMain = () => {
                 key={member.memberId}
                 member={member}
                 onClick={() => setCurrMemberId(member.memberId)}
+                travelId={travel.id}
               />
             ))}
             <button onClick={openInviteModal}>

@@ -86,9 +86,7 @@ const TravelTodo = ({
     }
 
     await refetch();
-    await membersProfileRefetch();
-
-    membersProfileRefetch().then(() => {
+    await membersProfileRefetch().then(() => {
       setMembers(membersProfile.data);
     });
   };
@@ -116,6 +114,11 @@ const TravelTodo = ({
   useEffect(() => {
     if (membersProfile) {
       setMembers(membersProfile.data);
+
+      //자신의 할 일이 100%가 아닌 경우
+      if (membersProfile.data[0].unCheckedNum) {
+        localStorage.removeItem(`state-${travelId}`);
+      }
     }
   }, [membersProfile]);
 
