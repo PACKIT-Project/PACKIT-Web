@@ -8,7 +8,7 @@ import useModal from '@hooks/useModal';
 import BottomSheet from '@components/common/BottomSheet';
 import DoneAlert from './DoneAlert';
 
-const MemberProfile = ({ member, onClick }: any) => {
+const MemberProfile = ({ member, onClick, travelId }: any) => {
   const {
     isShowModal: isShowBottomSheet,
     openModal: openBottomSheet,
@@ -17,21 +17,25 @@ const MemberProfile = ({ member, onClick }: any) => {
   const denominator = member.checkedNum + member.unCheckedNum;
   const checkPercentage =
     denominator !== 0 ? (member.checkedNum / denominator) * 100 : 0;
+  const state = localStorage.getItem(`state-${travelId}`);
 
   useEffect(() => {
     const isDone = checkPercentage === 100;
 
     if (isDone) {
-      // 1초 후에도 100퍼센트인지 확인하고 특별한 동작 수행
+      // 0.5초 후에도 100퍼센트인지 확인
       const timeoutId = setTimeout(() => {
-        if (checkPercentage === 100) {
+        if (checkPercentage === 100 && state === null) {
           openBottomSheet();
+          localStorage.setItem(`state-${travelId}`, 'done');
         }
       }, 500);
 
-      return () => clearTimeout(timeoutId);
+      return () => {
+        clearTimeout(timeoutId);
+      };
     }
-  }, [checkPercentage]);
+  }, [checkPercentage, state]);
 
   return (
     <MemberProfileWrapper>

@@ -86,9 +86,7 @@ const TravelTodo = ({
     }
 
     await refetch();
-    await membersProfileRefetch();
-
-    membersProfileRefetch().then(() => {
+    await membersProfileRefetch().then(() => {
       setMembers(membersProfile.data);
     });
   };
@@ -116,6 +114,11 @@ const TravelTodo = ({
   useEffect(() => {
     if (membersProfile) {
       setMembers(membersProfile.data);
+
+      //자신의 할 일이 100%가 아닌 경우
+      if (membersProfile.data[0].unCheckedNum) {
+        localStorage.removeItem(`state-${travelId}`);
+      }
     }
   }, [membersProfile]);
 
@@ -268,6 +271,7 @@ export default TravelTodo;
 
 const TravelTodoWrapper = styled.div`
   padding: 0 15px;
+  height: calc(100% - 253px);
 `;
 
 const ClusterList = styled.div`
@@ -331,6 +335,9 @@ const TodoListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  height: calc(100% - 48px);
+  overflow-y: auto;
 
   .itemInput {
     display: flex;

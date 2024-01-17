@@ -135,6 +135,7 @@ const TripMain = () => {
                 key={member.memberId}
                 member={member}
                 onClick={() => setCurrMemberId(member.memberId)}
+                travelId={travel.id}
               />
             ))}
             <button onClick={openInviteModal}>
@@ -179,7 +180,9 @@ const TripMain = () => {
 
 export default TripMain;
 
-const TripMainWrapper = styled.div``;
+const TripMainWrapper = styled.div`
+  height: 100%;
+`;
 
 const TripInfoWrapper = styled.div`
   display: flex;
