@@ -15,6 +15,7 @@ import { duplicateNickname, postMember } from '@api/member';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store';
+import { postFCM } from '@api/notification';
 
 const OnBoardingProfilePage = () => {
   const navigate = useNavigate();
@@ -43,6 +44,11 @@ const OnBoardingProfilePage = () => {
       enableNotification,
     });
     if (signUpRes.message === '성공적으로 회원가입되었습니다.') {
+      const token = localStorage.getItem('FCMToken') as string;
+      const fcmRes = await postFCM(token);
+      if (fcmRes.message === '성공적으로 FCM 토큰이 저장되었습니다.') {
+        localStorage.removeItem('FCMToken');
+      }
       navigate('/login/complete', { state: nickname });
     }
   };
