@@ -3,10 +3,15 @@ import styled from 'styled-components';
 import BottomNav from '@components/common/BottomNav';
 import COLOR from '@styles/colors';
 import Icon from '@components/common/Icon';
+import { motion } from 'framer-motion';
 
 const FeedPage = () => {
   return (
-    <FeedPageWrapper>
+    <FeedPageWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <ContentWrapper>
         <Icon icon="FeedMessage" />
         <div>
@@ -22,7 +27,7 @@ const FeedPage = () => {
 
 export default FeedPage;
 
-const FeedPageWrapper = styled.div`
+const FeedPageWrapper = styled(motion.div)`
   position: relative;
   min-height: 100vh;
   background-color: ${COLOR.WHITE};

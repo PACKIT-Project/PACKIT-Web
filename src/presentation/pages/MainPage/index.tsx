@@ -10,6 +10,7 @@ import BottomNav from '@components/common/BottomNav';
 import useGetMyTravel from '@hooks/queries/travel/useGetMyTravel';
 import Header from '@components/MainPage/components/Header';
 import TripMain from '@components/MainPage/components/TripMain';
+import { motion } from 'framer-motion';
 
 const MainPage = () => {
   const { state: locationState } = useLocation();
@@ -30,7 +31,11 @@ const MainPage = () => {
   return (
     <>
       {travelData && (
-        <MainPageWrapper>
+        <MainPageWrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Header />
           {travelData.length > 0 ? <TripMain /> : <ListNotExist />}
           <BottomNav />
@@ -43,7 +48,7 @@ const MainPage = () => {
   );
 };
 
-const MainPageWrapper = styled.div`
+const MainPageWrapper = styled(motion.div)`
   height: calc(100% - 84px);
   background-color: ${COLOR.WHITE};
 `;

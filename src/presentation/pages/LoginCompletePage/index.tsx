@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
+import { motion } from 'framer-motion';
 
 const LoginCompletePage = () => {
   const { state: nickname } = useLocation();
@@ -17,7 +18,11 @@ const LoginCompletePage = () => {
   }, []);
 
   return (
-    <LoginCompleteWrapper>
+    <LoginCompleteWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <TextWrapper>
         <div className="alertText">가입 완료!</div>
         <div className="explainText">
@@ -30,7 +35,7 @@ const LoginCompletePage = () => {
   );
 };
 
-const LoginCompleteWrapper = styled.div`
+const LoginCompleteWrapper = styled(motion.div)`
   position: relative;
   height: 100%;
   background-color: ${COLOR.WHITE};

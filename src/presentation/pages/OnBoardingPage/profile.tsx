@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store';
 import { postFCM } from '@api/notification';
+import { motion } from 'framer-motion';
 
 const OnBoardingProfilePage = () => {
   const navigate = useNavigate();
@@ -92,7 +93,11 @@ const OnBoardingProfilePage = () => {
 
   return (
     <AppLayout>
-      <OnBoardingProfilePageWrapper>
+      <OnBoardingProfilePageWrapper
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <BackHeader />
         <TextBox>사용하실 닉네임을</TextBox>
         <TextBox>입력해주세요</TextBox>
@@ -160,7 +165,7 @@ const OnBoardingProfilePage = () => {
 
 export default OnBoardingProfilePage;
 
-const OnBoardingProfilePageWrapper = styled.div`
+const OnBoardingProfilePageWrapper = styled(motion.div)`
   position: relative;
   height: 100%;
   padding: 0 8px;

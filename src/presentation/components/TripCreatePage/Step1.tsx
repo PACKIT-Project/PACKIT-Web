@@ -13,6 +13,7 @@ import Icon from '@components/common/Icon';
 import { TYPOGRAPHY } from '@styles/fonts';
 import useGetDestination from '../../../infrastructure/queries/destination/useGetDestination';
 import DestinationList from './components/DestinationList';
+import { motion } from 'framer-motion';
 
 const Step1 = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,11 @@ const Step1 = () => {
   };
 
   return (
-    <StepWrapper>
+    <StepWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <TextContainer>
         <TextBox>
           <div>
@@ -92,7 +97,7 @@ const Step1 = () => {
   );
 };
 
-const StepWrapper = styled.div``;
+const StepWrapper = styled(motion.div)``;
 
 const TextContainer = styled.div`
   display: flex;

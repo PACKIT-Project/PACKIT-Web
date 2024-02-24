@@ -5,10 +5,15 @@ import { TERMS_PRIVACY } from '@constants';
 import COLOR from '@styles/colors';
 import Content from './Content';
 import Icon from '@components/common/Icon';
+import { motion } from 'framer-motion';
 
 const Privacy = () => {
   return (
-    <PrivacyWrapper>
+    <PrivacyWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="explain">
         PACKIT은 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고
         개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은
@@ -35,7 +40,7 @@ const Privacy = () => {
 
 export default Privacy;
 
-const PrivacyWrapper = styled.div`
+const PrivacyWrapper = styled(motion.div)`
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
