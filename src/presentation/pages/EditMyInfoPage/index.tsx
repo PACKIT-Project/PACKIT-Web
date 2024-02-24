@@ -10,6 +10,7 @@ import Input from '@components/common/Input';
 import { postImage } from '@api/image';
 import { useDropzone } from 'react-dropzone';
 import useMutateMemberProfile from '../../../infrastructure/queries/members/useMutateMemberProfile';
+import { motion } from 'framer-motion';
 
 const EditMyInfoPage = () => {
   const mutate = useMutateMemberProfile();
@@ -43,7 +44,11 @@ const EditMyInfoPage = () => {
   return (
     <>
       {userData && (
-        <EditMyInfoPageWrapper>
+        <EditMyInfoPageWrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <BackHeader text="프로필 편집" color="#191F28" />
           <Spacing size={39} />
           <ProfileWrapper>
@@ -81,7 +86,7 @@ const EditMyInfoPage = () => {
     </>
   );
 };
-const EditMyInfoPageWrapper = styled.div`
+const EditMyInfoPageWrapper = styled(motion.div)`
   background-color: ${COLOR.WHITE};
   height: 100%;
   padding: 0 25px;

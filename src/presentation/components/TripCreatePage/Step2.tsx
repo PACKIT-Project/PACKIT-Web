@@ -10,6 +10,7 @@ import COLOR from '@styles/colors';
 import { TYPOGRAPHY } from '@styles/fonts';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store';
+import { motion } from 'framer-motion';
 
 const Step2 = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,11 @@ const Step2 = () => {
   };
 
   return (
-    <StepWrapper>
+    <StepWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <TextContainer>
         <TextBox>
           <div>
@@ -55,7 +60,7 @@ const Step2 = () => {
   );
 };
 
-const StepWrapper = styled.div`
+const StepWrapper = styled(motion.div)`
   .subText {
     ${TYPOGRAPHY.DES.CAPTION1_SEMIBOLD};
     color: ${COLOR.COOL_GRAY_100};

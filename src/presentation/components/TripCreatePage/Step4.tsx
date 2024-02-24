@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { createTravel } from '@api/travel';
+import { motion } from 'framer-motion';
 
 const Step4 = () => {
   const navigate = useNavigate();
@@ -28,7 +29,11 @@ const Step4 = () => {
   };
 
   return (
-    <StepWrapper>
+    <StepWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <strong>{destination}</strong> 로 <br />
       <strong>{range}</strong> 까지 <br />
       <strong>{dates}</strong> 여행을 떠나시나요?
@@ -39,7 +44,7 @@ const Step4 = () => {
 
 export default Step4;
 
-const StepWrapper = styled.div`
+const StepWrapper = styled(motion.div)`
   color: #232527;
   font-size: 30px;
   font-weight: 600;

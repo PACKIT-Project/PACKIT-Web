@@ -15,6 +15,8 @@ import { duplicateNickname, postMember } from '@api/member';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store';
+import { postFCM } from '@api/notification';
+import { motion } from 'framer-motion';
 
 const OnBoardingProfilePage = () => {
   const navigate = useNavigate();
@@ -43,6 +45,11 @@ const OnBoardingProfilePage = () => {
       enableNotification,
     });
     if (signUpRes.message === '성공적으로 회원가입되었습니다.') {
+      const token = localStorage.getItem('FCMToken') as string;
+      const fcmRes = await postFCM(token);
+      if (fcmRes.message === '성공적으로 FCM 토큰이 저장되었습니다.') {
+        localStorage.removeItem('FCMToken');
+      }
       navigate('/login/complete', { state: nickname });
     }
   };
@@ -86,7 +93,11 @@ const OnBoardingProfilePage = () => {
 
   return (
     <AppLayout>
-      <OnBoardingProfilePageWrapper>
+      <OnBoardingProfilePageWrapper
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <BackHeader />
         <TextBox>사용하실 닉네임을</TextBox>
         <TextBox>입력해주세요</TextBox>
@@ -154,7 +165,7 @@ const OnBoardingProfilePage = () => {
 
 export default OnBoardingProfilePage;
 
-const OnBoardingProfilePageWrapper = styled.div`
+const OnBoardingProfilePageWrapper = styled(motion.div)`
   position: relative;
   height: 100%;
   padding: 0 8px;

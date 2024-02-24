@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store';
 import CustomCalendar from '@components/common/Calendar';
 import CalendarRange from '@components/common/CalendarRange';
+import { motion } from 'framer-motion';
 
 const Step3 = () => {
   const navigate = useNavigate();
@@ -18,7 +19,11 @@ const Step3 = () => {
   };
 
   return (
-    <StepWrapper>
+    <StepWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <TextBox>
         언제 여행을
         <br />
@@ -39,7 +44,7 @@ const Step3 = () => {
   );
 };
 
-const StepWrapper = styled.div``;
+const StepWrapper = styled(motion.div)``;
 
 const CalendarWrapper = styled.div`
   padding: 16px;

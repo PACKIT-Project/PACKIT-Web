@@ -10,6 +10,7 @@ import { TERMS } from '@constants';
 import { TYPOGRAPHY } from '@styles/fonts';
 import { useDispatch } from 'react-redux';
 import { setTermsInfo } from '@reducer/slices/user/termsInfoSlice';
+import { motion } from 'framer-motion';
 
 const TermsPage = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,11 @@ const TermsPage = () => {
   };
 
   return (
-    <TermsPageWrapper>
+    <TermsPageWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Inner>
         <BackHeader />
         <TextBox>서비스 이용을 위해</TextBox>
@@ -94,7 +99,7 @@ const TermsPage = () => {
 
 export default TermsPage;
 
-const TermsPageWrapper = styled.div`
+const TermsPageWrapper = styled(motion.div)`
   position: relative;
   width: 100%;
   height: 100%;
