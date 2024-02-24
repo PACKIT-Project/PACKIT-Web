@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Spacing from '../Spacing';
 import { TYPOGRAPHY } from '@styles/fonts';
 import { postInvitationCode } from '@api/travel';
+import { motion } from 'framer-motion';
 
 const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
   const [code, setCode] = useState('');
@@ -24,7 +25,11 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
   };
 
   return (
-    <CodeModalWrapper>
+    <CodeModalWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="title">공유 받은 초대 코드 입력</div>
 
       <Spacing size={25} />
@@ -71,7 +76,7 @@ const CodeModal = ({ closeCodeModal }: { closeCodeModal: () => void }) => {
 
 export default CodeModal;
 
-const CodeModalWrapper = styled.div`
+const CodeModalWrapper = styled(motion.div)`
   width: 82%;
   padding: 22px 17px;
 

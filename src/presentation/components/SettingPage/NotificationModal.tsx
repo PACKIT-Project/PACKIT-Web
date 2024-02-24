@@ -7,6 +7,7 @@ import useGetMemberProfile from '../../../infrastructure/queries/members/useGetM
 import { TYPOGRAPHY } from '@styles/fonts';
 import ToggleButton from '@components/common/ToggleButton';
 import { disableNotification, enableNotification } from '@api/member';
+import { motion } from 'framer-motion';
 
 const NotificationModal = ({ closeModal }: { closeModal: () => void }) => {
   const { data, refetch } = useGetMemberProfile();
@@ -26,7 +27,11 @@ const NotificationModal = ({ closeModal }: { closeModal: () => void }) => {
   };
 
   return (
-    <NotficationModalWrapper>
+    <NotficationModalWrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <ModalHeader
         closeModal={closeModal}
         text="앱 알림 설정"
@@ -49,7 +54,7 @@ const NotificationModal = ({ closeModal }: { closeModal: () => void }) => {
 
 export default NotificationModal;
 
-const NotficationModalWrapper = styled.div`
+const NotficationModalWrapper = styled(motion.div)`
   width: 100%;
   height: 100%;
   background-color: ${COLOR.MAIN_WHITE};
