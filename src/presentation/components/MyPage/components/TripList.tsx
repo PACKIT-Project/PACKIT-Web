@@ -62,9 +62,7 @@ const TripList = ({ travel }: { travel: any }) => {
           <div className="dDay">
             {travel.dDay === '0'
               ? 'D-day'
-              : `D${Number(travel.dDay) >= 0 ? '-' : '+'}${
-                  -1 * Number(travel.dDay)
-                }`}
+              : `D${Number(travel.dDay) >= 0 ? '' : '+'}${-1 * Number(travel.dDay)}`}
           </div>
           <div className="person">
             <Icon icon="User" width={14} height={14} color={COLOR.UI_GRAY_5} />
