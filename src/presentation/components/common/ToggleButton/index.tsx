@@ -9,7 +9,7 @@ interface ToggleButtonPropsType {
 
 const ToggleButton = ({ state, onClick }: ToggleButtonPropsType) => {
   return (
-    <ToggleButtonWrapper state={state} onClick={onClick}>
+    <ToggleButtonWrapper state={state.toString()} onClick={onClick}>
       <div className="circle" />
     </ToggleButtonWrapper>
   );
@@ -17,13 +17,14 @@ const ToggleButton = ({ state, onClick }: ToggleButtonPropsType) => {
 
 export default ToggleButton;
 
-const ToggleButtonWrapper = styled.div<{ state: boolean }>`
+const ToggleButtonWrapper = styled.div<{ state: string }>`
   position: relative;
   display: flex;
   align-items: center;
   width: 54px;
   height: 32px;
-  background-color: ${({ state }) => (state ? COLOR.MAIN_BLUE : COLOR.UI_GRAY_3)};
+  background-color: ${({ state }) =>
+    state === 'true' ? COLOR.MAIN_BLUE : COLOR.UI_GRAY_3};
   border-radius: 24px;
   cursor: pointer;
 
@@ -35,7 +36,7 @@ const ToggleButtonWrapper = styled.div<{ state: boolean }>`
     background-color: ${COLOR.MAIN_WHITE};
     margin: 3px;
     box-sizing: border-box;
-    right: ${({ state }) => (state ? 0 : 'initial')};
+    right: ${({ state }) => (state === 'true' ? 0 : 'initial')};
     transition: 0.5s;
   }
 `;
