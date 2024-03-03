@@ -6,21 +6,40 @@ import COLOR from '@styles/colors';
 import useGetMemberProfile from '../../../infrastructure/queries/members/useGetMemberProfile';
 import { TYPOGRAPHY } from '@styles/fonts';
 import ToggleButton from '@components/common/ToggleButton';
-import { disableNotification, enableNotification } from '@api/member';
+import {
+  disableActiveNotification,
+  disableRemindNotification,
+  enableActiveNotification,
+  enableRemindNotification,
+} from '@api/notification';
 import { motion } from 'framer-motion';
 
 const NotificationModal = ({ closeModal }: { closeModal: () => void }) => {
   const { data, refetch } = useGetMemberProfile();
 
-  const handleToggleNotification = async (state: boolean) => {
+  const handleToggleActiveNotification = async (state: boolean) => {
     if (!state) {
-      const res = await enableNotification();
-      if (res === '푸시 알림이 활성화 되었습니다.') {
+      const res = await enableActiveNotification();
+      if (res === '성공적으로 활동 알림 수신이 설정되었습니다.') {
         refetch();
       }
     } else {
-      const res = await disableNotification();
-      if (res === '푸시 알림이 비 활성화 되었습니다.') {
+      const res = await disableActiveNotification();
+      if (res === '성공적으로 활동 알림 수신이 해제되었습니다.') {
+        refetch();
+      }
+    }
+  };
+
+  const handleToggleRemindNotification = async (state: boolean) => {
+    if (!state) {
+      const res = await enableRemindNotification();
+      if (res === '성공적으로 여행 리마이드 알림 수신이 설정되었습니다.') {
+        refetch();
+      }
+    } else {
+      const res = await disableRemindNotification();
+      if (res === '성공적으로 여행 리마이드 알림 수신이 해제되었습니다.') {
         refetch();
       }
     }
@@ -44,8 +63,27 @@ const NotificationModal = ({ closeModal }: { closeModal: () => void }) => {
           모든 여행의 할 일 완료, 재촉 등 알림
         </div>
         <ToggleButton
-          state={data.enableNotification}
-          onClick={() => handleToggleNotification(data.enableNotification)}
+          state={data.notificationConfigStatus.enableActiveNotification}
+          onClick={() =>
+            handleToggleActiveNotification(
+              data.notificationConfigStatus.enableActiveNotification
+            )
+          }
+        />
+      </Notification>
+      <Spacing size={20} />
+      <Notification>
+        <div className="notificationInfo">
+          <div className="title">전체 여행 리마인드 알림</div>
+          설정한 전체 여행 리마인드 알림
+        </div>
+        <ToggleButton
+          state={data.notificationConfigStatus.enableTravelRemindNotification}
+          onClick={() =>
+            handleToggleRemindNotification(
+              data.notificationConfigStatus.enableTravelRemindNotification
+            )
+          }
         />
       </Notification>
     </NotficationModalWrapper>
