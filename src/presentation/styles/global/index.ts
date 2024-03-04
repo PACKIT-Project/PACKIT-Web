@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    font-family: "suit-regular";
+    //font-family: "suit-regular";
   }
 
   body,
