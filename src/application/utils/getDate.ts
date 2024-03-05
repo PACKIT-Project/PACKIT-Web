@@ -82,8 +82,8 @@ export const getTripDate = (date: any, type: string) => {
   const timeDifference: number = endDate.getTime() - startDate.getTime();
   const daysDifference: number = timeDifference / (1000 * 60 * 60 * 24);
 
-  const nights: number = Math.floor(daysDifference) - 1;
-  const days: number = daysDifference;
+  const nights: any = Math.floor(daysDifference) - 1;
+  const days: any = daysDifference;
   const dates = `${nights}박 ${days}일`;
 
   return { range, dates };
