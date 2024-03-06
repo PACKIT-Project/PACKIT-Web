@@ -36,6 +36,7 @@ const TripList = ({ travel }: { travel: any }) => {
     '.'
   );
   const [dropdownVisibility, setDropdownVisibility] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const handleClickDelete = async () => {
     localStorage.setItem('state', 'delete_done');
@@ -46,6 +47,7 @@ const TripList = ({ travel }: { travel: any }) => {
     const deleteStatus = localStorage.getItem('state');
 
     if (deleteStatus === 'delete_done') {
+      setToastMessage('삭제가 완료되었습니다.');
       openToast();
       const timer = setTimeout(() => {
         localStorage.removeItem('state');
@@ -111,11 +113,14 @@ const TripList = ({ travel }: { travel: any }) => {
           <InviteModal
             closeModal={closeInviteModal}
             travel={travel}
-            openToast={openToast}
+            openToast={() => {
+              setToastMessage('복사가 완료되었습니다.');
+              openToast();
+            }}
           />
         </Modal>
       )}
-      {isShowToast && <Toast close={closeToast}>삭제가 완료되었습니다.</Toast>}
+      {isShowToast && <Toast close={closeToast}>{toastMessage}</Toast>}
     </TripWrapper>
   );
 };
