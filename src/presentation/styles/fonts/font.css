@@ -1,6 +1,7 @@
 @font-face {
-  font-family: "suit-regular";
+  font-family: 'suit-regular';
   font-style: normal;
   font-display: swap;
-  src: url("../assets/fonts/SUIT-Regular.woff2") format("woff2");
+  src: url('../assets/fonts/SUIT-Regular.woff2') format('woff2'),
+    url('../assets/fonts/SUIT-Vatiable.ttf') format('ttf');
 }

@@ -76,8 +76,8 @@ export const getTripDate = (date: any, type: string) => {
   )} ~ ${end[0].slice(2)}.${end[1]}.${end[2].slice(0, 2)}`;
 
   // 몇 박 며칠인지 계산
-  const startDate: Date = new Date(date.start);
-  const endDate: Date = new Date(date.end);
+  const startDate: Date = new Date(start.join('/'));
+  const endDate: Date = new Date(end.join('/'));
 
   const timeDifference: number = endDate.getTime() - startDate.getTime();
   const daysDifference: number = timeDifference / (1000 * 60 * 60 * 24);
