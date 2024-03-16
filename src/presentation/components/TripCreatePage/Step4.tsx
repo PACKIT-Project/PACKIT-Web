@@ -14,7 +14,10 @@ const Step4 = () => {
     (state: RootState) => state.createTrip
   );
 
-  const { range, dates } = getTripDate(tripRange, '-');
+  const { range, dates } = getTripDate(
+    { start: tripRange.start.slice(0, 10), end: tripRange.end.slice(0, 10) },
+    '-'
+  );
 
   const handleCreateTravel = async () => {
     const res = await createTravel({
